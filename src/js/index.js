@@ -1,11 +1,15 @@
 const Phaser = require('Phaser');
 const Player = require('./player');  // relative import
+const Hud = require('./lib/hud');  // relative import
+const TextBanner = require('./lib/textBanner');  // relative import
 
 const game = new Phaser.Game(256, 240, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
 var player;
 var cursors;
+console.log("Hud = %h", Hud)
+console.log("TextBanner = %h", TextBanner)
 
 function init() {
   //  Hide the un-scaled game canvas
