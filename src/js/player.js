@@ -1,12 +1,15 @@
 // player.js
+const Actor = require('./actor');
+
 const MOVE_SPEED = 150;
 const Player = function(game) {
   const x = 100;
   const y = 100;
-  Phaser.Sprite.call(this, game, x, y, 'player');
+
+  Actor.call(this, game, x, y, 'player');
   game.physics.arcade.enable(this);
 }
-Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (cursors) {
