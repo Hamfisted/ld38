@@ -9,11 +9,10 @@ const GAME_DIMENSION = { w: 256, h: 240 };
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
-var player;
-var cursors;
-var actorGroup;
-console.log("Hud = %h", Hud)
-console.log("TextBanner = %h", TextBanner)
+let player;
+let cursors;
+let actorGroup;
+let hud;
 
 function init() {
   //  Hide the un-scaled game canvas
@@ -28,10 +27,6 @@ function init() {
   //  Add the scaled canvas to the DOM
   Phaser.Canvas.addToDOM(pixel.canvas);
 
-  const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
-
-  Hud(game, hudDimension);
-
   //  Disable smoothing on the scaled canvas
   Phaser.Canvas.setSmoothingEnabled(pixel.context, false);
 
@@ -45,13 +40,21 @@ function preload() {
   game.load.image('player', 'assets/sprites/player.png');
   game.load.image('npc', 'assets/sprites/npc.png');
   game.load.image('white_box', 'assets/sprites/white_box.png');  // remove me once we have a map
+  game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
 }
 
 function create() {
   // until we have ground, gives a sense of perspective for moving
+  const heartsLocation = { x: 128, y: 32 };
+  const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
   game.add.sprite(0, 0, 'white_box');
 
+  hud = Hud(game, hudDimension, heartsLocation);
+
   player = new Player(this);
+  player.maxHealth = 5;
+  player.health = 3.5;
+  curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
   actorGroup.add(player);
   actorGroup.add(new Npc(this));
@@ -66,6 +69,7 @@ function update() {
 }
 
 function render() {
+  curPlayerHud.render();
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
 }
