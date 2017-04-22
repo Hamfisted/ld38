@@ -82,6 +82,8 @@ function create() {
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 6;
   player.health = 4;
+  player.maxFullness = 100;
+  player.fullness = 100;
 
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
