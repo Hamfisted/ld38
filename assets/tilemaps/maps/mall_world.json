@@ -126,6 +126,20 @@
          "tileheight":16,
          "tilewidth":16,
          "transparentcolor":"#ffc0ff"
+        }, 
+        {
+         "columns":30,
+         "firstgid":901,
+         "image":"..\/tiles\/objects.png",
+         "imageheight":511,
+         "imagewidth":511,
+         "margin":1,
+         "name":"objects",
+         "spacing":1,
+         "tilecount":900,
+         "tileheight":16,
+         "tilewidth":16,
+         "transparentcolor":"#ffc0ff"
         }],
  "tilewidth":16,
  "version":1,
