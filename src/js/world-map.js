@@ -39,18 +39,25 @@ WorldMap.prototype.getCollisionLayer = function(){
 }
 
 WorldMap.prototype.placePlayer = function(player){
-  const playerObj = this.map['objects'][PLAYER_OBJECT_LAYER][0];
+  const playerObj = this.getObjectsLayer(PLAYER_OBJECT_LAYER)[0];
   player.x = playerObj.x;
   player.y = playerObj.y;
-  return player;
 }
 
-WorldMap.prototype.spawnEnemies = function(enemyGroup){
-  return this.map.createFromObjects(ANTS_OBJECT_LAYER, ANT_GID, Ant.getSpriteKey(), 0, true, false, enemyGroup, Ant);
+WorldMap.prototype.getObjects = function() {
+  return this.map.objects;
 }
 
-WorldMap.prototype.spawnNpcs = function(npcGroup){
-  return this.map.createFromObjects(NPCS_OBJECT_LAYER, NPC_GID, Npc.getSpriteKey(), 0, true, false, npcGroup, Npc);
+WorldMap.prototype.getObjectsLayer = function(layerName) {
+  return this.map.objects[layerName];
+}
+
+WorldMap.prototype.spawn = function(game, objectClass, callback) {
+  const objects = this.getObjectsLayer(objectClass.OBJECT_LAYER_NAME);
+  for (let obj of objects) {
+    var objInstance = new objectClass(game, obj['x'], obj['y']);
+    callback(objInstance);
+  }
 }
 
 WorldMap.prototype.constructor = WorldMap;

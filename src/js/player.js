@@ -1,23 +1,21 @@
 const Actor = require('./actor');
 const SPRITE_KEY = 'player';
-const HUNGER_GROWTH_PERIODICITY = 250; // millis
 
+const HUNGER_GROWTH_PERIODICITY = 250; // millis
+const OBJECT_LAYER_NAME = 'PlayerLayer';
 const MOVE_SPEED = 150;
 const sqrt2 = Math.sqrt(2);
 
-const Player = function(game, x=0, y=0, key=SPRITE_KEY, frame=0) {
-  Actor.call(this, game, x, y, key);
-  this.fullness = 100;
-
+const Player = function(game, x=0, y=0) {
+  Actor.call(this, game, x, y, SPRITE_KEY);
   game.physics.arcade.enable(this);
   this.pretzel = null
   this.weapon = null
   game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 }
-Player.getSpriteKey = function() {
-  return SPRITE_KEY;
-}
 
+Player.SPRITE_KEY = SPRITE_KEY;
+Player.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
