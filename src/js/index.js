@@ -21,8 +21,6 @@ let hud;
 let pretzel;
 let hockeyStick;
 let pickupGroup;
-console.log("Hud = %h", Hud)
-console.log("TextBanner = %h", TextBanner)
 
 function init() {
   //  Hide the un-scaled game canvas
@@ -55,7 +53,6 @@ function preload() {
   // Tilemaps
   game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
-  game.load.image('white_box', 'assets/sprites/white_box.png');  // remove me once we have a map
   game.load.image('pretzel', 'assets/sprites/pretzel.png');
   game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
 }
