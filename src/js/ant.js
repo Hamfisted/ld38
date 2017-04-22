@@ -1,3 +1,4 @@
+const Config = require('./config');
 const Actor = require('./actor');
 
 const SPRITE_KEY='ant';
@@ -27,6 +28,9 @@ Ant.SPRITE_KEY = SPRITE_KEY;
 Ant.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 
 Ant.prototype.update = function () {
+  if (!Config.activeEnemies) {
+    return;
+  }
   if (this.state === BehaviorState.WANDER) {
     var distance = this.moveTowards(this.moveTo, WANDER_SPEED);
     if (distance < 20) {

@@ -1,4 +1,5 @@
 const Phaser = require('Phaser');
+const Config = require('./config');
 const Player = require('./player');
 const WorldMap = require('./world-map');
 const Npc = require('./npc');
@@ -7,7 +8,6 @@ const Hud = require('./lib/hud');
 const Pretzel = require('./pretzel');
 const Weapon = require('./weapon');
 
-const DEBUG = true;
 const GAME_DIMENSION = { w: 256, h: 240 };
 
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
@@ -27,7 +27,7 @@ let enemyDetectionSet;
 
 function init() {
   // debug mode cfg
-  if (DEBUG) {
+  if (Config.debug) {
     game.time.advancedTiming = true;
     game.debug.font = '8px Arial';
     game.debug.renderShadow = false;
@@ -109,7 +109,9 @@ function create() {
 function update() {
   player.updateControls(cursors);
   game.physics.arcade.collide(actorGroup);
-  game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
+  if (Config.activeEnemies) {
+    game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
+  }
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
   game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
@@ -132,7 +134,7 @@ function pickupCollisionHandler(player, pickup){
 }
 
 function render() {
-  if (DEBUG) {
+  if (Config.debug) {
     const debugColor = 'rgba(0,255,0,0.8)';
     const debugFont = '10px Arial';
     game.debug.text(`fps ${game.time.fps}` || '-', 2, 10, debugColor, debugFont);
