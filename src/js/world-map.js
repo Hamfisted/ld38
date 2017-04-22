@@ -1,13 +1,3 @@
-// Really ugly and coupled, want to merge and then split up sanely
-const Player = require('./player');
-const Ant = require('./ant');
-const Npc = require('./npc');
-const PLAYER_OBJECT_LAYER = "PlayerLayer";
-const ANTS_OBJECT_LAYER = "Ants";
-const NPCS_OBJECT_LAYER = "Npcs";
-const ANT_GID = 3;
-const NPC_GID = 4;
-
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
 
@@ -38,10 +28,10 @@ WorldMap.prototype.getCollisionLayer = function(){
   return this.collisionLayer;
 }
 
-WorldMap.prototype.placePlayer = function(player){
-  const playerObj = this.getObjectsLayer(PLAYER_OBJECT_LAYER)[0];
-  player.x = playerObj.x;
-  player.y = playerObj.y;
+WorldMap.prototype.initGameObjectPosition = function(object, layerName, index=0){
+  const initObjectPos = this.getObjectsLayer(layerName)[index];
+  object.x = initObjectPos.x;
+  object.y = initObjectPos.y;
 }
 
 WorldMap.prototype.getObjects = function() {
