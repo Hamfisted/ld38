@@ -82,6 +82,8 @@ function create() {
   worldMap.placePlayer(player);
   player.maxHealth = 6;
   player.health = 4;
+  player.maxFullness = 100;
+  player.fullness = 100;
 
   actorGroup = game.add.group();
   enemyGroup = game.add.group();

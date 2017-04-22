@@ -9,15 +9,12 @@ function HeartContainer(game, x, y) {
   heartGroup.add(halfHeart);
   heartGroup.add(emptyHeart);
 
-  console.log("fullHeart")
-
   return {
     render: function(state) {
       fullHeart.alpha = (state === "FULL") ? 1 : 0;
       halfHeart.alpha = (state === "HALF") ? 1 : 0;
       emptyHeart.alpha = (state === "EMPTY") ? 1 : 0;
     },
-
     group: heartGroup
   }
 };
