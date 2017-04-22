@@ -60,8 +60,8 @@ function create() {
   hud = Hud(game, hudDimension, heartsLocation);
 
   player = new Player(this);
-  player.maxHealth = 5;
-  player.health = 3.5;
+  player.maxHealth = 6;
+  player.health = 4;
   curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
   enemyGroup = game.add.group();

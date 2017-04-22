@@ -25,8 +25,6 @@ const Hud = (game, hudDimension, heartsLocation) => {
   bmd.smoothed = false;
 
   const playerHud = (player) => {
-
-
     function drawHeartAtOffsets(heart, offset, end) {
       range(offset, end).map(function (o) {
         bmd.draw(heart, x + heartsLocation.x + o * heartSize, y + heartsLocation.y);
@@ -35,9 +33,13 @@ const Hud = (game, hudDimension, heartsLocation) => {
 
     function drawHearts({ health, maxHealth }) {
       bmd.cls();
-      drawHeartAtOffsets(fullHeart, 0, Math.floor(health));
-      drawHeartAtOffsets(halfHeart, Math.floor(health), Math.ceil(health));
-      drawHeartAtOffsets(emptyHeart, Math.ceil(health), maxHealth);
+
+      const hearts = health / 2;
+      const maxHearts = maxHealth / 2;
+
+      drawHeartAtOffsets(fullHeart, 0, Math.floor(hearts));
+      drawHeartAtOffsets(halfHeart, Math.floor(hearts), Math.ceil(hearts));
+      drawHeartAtOffsets(emptyHeart, Math.ceil(hearts), maxHearts);
     }
 
     return {
@@ -46,15 +48,6 @@ const Hud = (game, hudDimension, heartsLocation) => {
   }
 
   return { playerHud }
-
-
-
-
-
-
-
-
-
 }
 
 module.exports = Hud;
