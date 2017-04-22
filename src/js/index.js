@@ -7,6 +7,7 @@ const Hud = require('./lib/hud');
 const Pretzel = require('./pretzel');
 const Weapon = require('./weapon');
 
+const DEBUG = true;
 const GAME_DIMENSION = { w: 256, h: 240 };
 
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
@@ -24,6 +25,14 @@ let hockeyStick;
 let pickupGroup;
 
 function init() {
+  // debug mode cfg
+  if (DEBUG) {
+    game.time.advancedTiming = true;
+    game.debug.font = '8px Arial';
+    game.debug.renderShadow = false;
+  }
+
+
   //  Hide the un-scaled game canvas
   game.canvas.style['display'] = 'none';
 
@@ -112,6 +121,21 @@ function pickupCollisionHandler(player, pickup){
 }
 
 function render() {
+  if (DEBUG) {
+    const debugColor = 'rgba(0,255,0,0.8)';
+    const debugFont = '10px Arial';
+    game.debug.text(`fps ${game.time.fps}` || '-', 2, 10, debugColor, debugFont);
+    const numAliveChildrenOfGroup = function(group) {
+      if (group.children && group.children.length) {
+        return group.children.reduce(function(acc, child) {
+          return acc + numAliveChildrenOfGroup(child);
+        }, 0);
+      }
+      return group.alive ? 1 : 0;
+    };
+    const numChildren = numAliveChildrenOfGroup(game.world);
+    game.debug.text(`obj ${numChildren}` || '-', 2, 20, debugColor, debugFont);
+  }
   curPlayerHud.render();
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
