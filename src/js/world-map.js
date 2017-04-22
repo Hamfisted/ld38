@@ -52,10 +52,11 @@ WorldMap.prototype.getObjectsLayer = function(layerName) {
   return this.map.objects[layerName];
 }
 
-WorldMap.prototype.spawn = function(game, objectClass, objectGroup) {
+WorldMap.prototype.spawn = function(game, objectClass, callback) {
   const objects = this.getObjectsLayer(objectClass.OBJECT_LAYER_NAME);
   for (let obj of objects) {
-    objectGroup.add(new objectClass(game, obj['x'], obj['y']));
+    var objInstance = new objectClass(game, obj['x'], obj['y']);
+    callback(objInstance);
   }
 }
 

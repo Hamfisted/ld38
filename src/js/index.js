@@ -84,8 +84,8 @@ function create() {
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
   
-  worldMap.spawn(game, Ant, enemyGroup);
-  worldMap.spawn(game, Npc, actorGroup);
+  worldMap.spawn(game, Ant, (ant) => enemyGroup.add(ant));
+  worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
 
   actorGroup.add(player);
 
