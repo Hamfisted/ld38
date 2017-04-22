@@ -67,7 +67,7 @@ function create() {
 
   hud = Hud(game, hudDimension, heartsLocation);
 
-  player = new Player(this);
+  player = new Player(this, 100, 100);
   player.maxHealth = 6;
   player.health = 4;
   curPlayerHud = hud.playerHud(player);
@@ -75,12 +75,11 @@ function create() {
   enemyGroup = game.add.group();
 
   // worldMap.spawnPlayer(player);
-  // worldMap.spawnNpcs(actorGroup);
   worldMap.spawnEnemies(enemyGroup);
+  worldMap.spawnNpcs(actorGroup);
 
   actorGroup.add(player);
-  actorGroup.add(new Npc(this));
-  // enemyGroup.add(new Ant(this));
+  // actorGroup.add(new Npc(this, 200, 200));
 
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();

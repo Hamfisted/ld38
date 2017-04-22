@@ -1,5 +1,9 @@
+const Ant = require('./ant');
+const Npc = require('./npc');
 const ANTS_OBJECT_LAYER = "Ants";
+const NPCS_OBJECT_LAYER = "Npcs";
 const ANT_GID = 3;
+const NPC_GID = 4;
 
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
@@ -32,7 +36,11 @@ WorldMap.prototype.getCollisionLayer = function(){
 }
 
 WorldMap.prototype.spawnEnemies = function(enemyGroup){
-  this.map.createFromObjects(ANTS_OBJECT_LAYER, ANT_GID, 'ant', 0, true, false, enemyGroup);
+  return this.map.createFromObjects(ANTS_OBJECT_LAYER, ANT_GID, Ant.getSpriteKey(), 0, true, false, enemyGroup, Ant);
+}
+
+WorldMap.prototype.spawnNpcs = function(npcGroup){
+  return this.map.createFromObjects(NPCS_OBJECT_LAYER, NPC_GID, Npc.getSpriteKey(), 0, true, false, npcGroup, Npc);
 }
 
 WorldMap.prototype.constructor = WorldMap;
