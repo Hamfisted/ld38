@@ -39,7 +39,6 @@ function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.load.image('player', 'assets/sprites/player.png');
   game.load.image('npc', 'assets/sprites/npc.png');
-  game.load.image('white_box', 'assets/sprites/white_box.png');  // remove me once we have a map
   game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
 }
 
