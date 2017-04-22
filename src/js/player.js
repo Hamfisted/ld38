@@ -1,6 +1,7 @@
 const Actor = require('./actor');
 
 const MOVE_SPEED = 150;
+const sqrt2 = Math.sqrt(2);
 const Player = function(game) {
   const x = 100;
   const y = 100;
@@ -31,6 +32,11 @@ Player.prototype.updateControls = function (cursors) {
   }
   else {
     this.body.velocity.y = 0;
+  }
+
+  if (this.body.velocity.x && this.body.velocity.y) {
+    this.body.velocity.x = Math.floor(this.body.velocity.x / sqrt2);
+    this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
   }
 };
 
