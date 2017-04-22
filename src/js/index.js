@@ -67,7 +67,7 @@ function create() {
 
   hud = Hud(game, hudDimension, heartsLocation);
 
-  player = new Player(this, 100, 100);
+  player = new Player(this);
   player = worldMap.placePlayer(player);
   player.maxHealth = 6;
   player.health = 4;
