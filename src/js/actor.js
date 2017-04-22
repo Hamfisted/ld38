@@ -1,4 +1,5 @@
 const knockbackForce = 1000;
+const DISTANCE_CLOSE_ENOUGH = 5;
 const Actor = function(game, x, y, image, objectLayerName) {
   Phaser.Sprite.call(this, game, x, y, image);
   game.physics.arcade.enable(this);
@@ -29,12 +30,18 @@ Actor.prototype.damage = function (amount) {
 
 Actor.prototype.moveTowards = function (point, speed) {
   var distance = this.body.position.distance(point);
-  var unitVelocity = new Phaser.Point(
-    (point.x - this.body.x) / distance,
-    (point.y - this.body.y) / distance
-  );
-  this.body.velocity.x = unitVelocity.x * speed;
-  this.body.velocity.y = unitVelocity.y * speed;
+  if(distance < DISTANCE_CLOSE_ENOUGH) {
+    this.body.x = point.x;
+    this.body.y = point.y;
+  }
+  else {
+    var unitVelocity = new Phaser.Point(
+      (point.x - this.body.x) / distance,
+      (point.y - this.body.y) / distance
+    );
+    this.body.velocity.x = unitVelocity.x * speed;
+    this.body.velocity.y = unitVelocity.y * speed;
+  }
   return distance;
 }
 
