@@ -1,17 +1,23 @@
 const Actor = require('./actor');
 const SPRITE_KEY = 'player';
+const HUNGER_GROWTH_PERIODICITY = 250; // millis
+
 const MOVE_SPEED = 150;
 const sqrt2 = Math.sqrt(2);
 
 const Player = function(game, x=0, y=0, key=SPRITE_KEY, frame=0) {
   Actor.call(this, game, x, y, key);
+  this.fullness = 100;
+
   game.physics.arcade.enable(this);
   this.pretzel = null
   this.weapon = null
+  game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 }
 Player.getSpriteKey = function() {
   return SPRITE_KEY;
 }
+
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
@@ -56,6 +62,14 @@ Player.prototype.useItem = function(pickup) {
   if (pickup.name == 'weapon') {
     this.weapon = null;
   }
+}
+
+Player.prototype.buildHunger = function (game) {
+  this.fullness--;
+  if (this.fullness <= 0) {
+    this.health = 0;
+  }
+  game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 }
 
 module.exports = Player
