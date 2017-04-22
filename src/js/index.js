@@ -4,7 +4,6 @@ const WorldMap = require('./world-map');
 const Npc = require('./npc');
 const Ant = require('./ant');
 const Hud = require('./lib/hud');
-const TextBanner = require('./lib/textBanner');
 const Pretzel = require('./pretzel');
 const Weapon = require('./weapon');
 
@@ -13,11 +12,13 @@ const GAME_DIMENSION = { w: 256, h: 240 };
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
+let worldMap;
 let player;
 let cursors;
 let actorGroup;
 let enemyGroup;
 let hud;
+let curPlayerHud;
 let pretzel;
 let hockeyStick;
 let pickupGroup;
