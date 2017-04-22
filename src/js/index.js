@@ -68,13 +68,13 @@ function create() {
   hud = Hud(game, hudDimension, heartsLocation);
 
   player = new Player(this, 100, 100);
+  player = worldMap.placePlayer(player);
   player.maxHealth = 6;
   player.health = 4;
   curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
 
-  // worldMap.spawnPlayer(player);
   worldMap.spawnEnemies(enemyGroup);
   worldMap.spawnNpcs(actorGroup);
 

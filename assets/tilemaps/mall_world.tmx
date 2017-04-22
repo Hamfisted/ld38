@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="16" tileheight="16" nextobjectid="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="16" tileheight="16" nextobjectid="19">
  <tileset firstgid="1" name="mall_world" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="900" columns="30">
   <image source="tiles/mall_world.png" trans="ffc0ff" width="511" height="511"/>
  </tileset>
@@ -19,5 +19,8 @@
  </objectgroup>
  <objectgroup name="Npcs">
   <object id="13" name="AlleyMan" type="npc" gid="4" x="176" y="224" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="PlayerLayer">
+  <object id="17" name="Player" gid="5" x="96" y="80" width="16" height="16"/>
  </objectgroup>
 </map>

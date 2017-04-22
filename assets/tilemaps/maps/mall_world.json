@@ -83,8 +83,32 @@
          "width":128,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":128,
+         "name":"PlayerLayer",
+         "objects":[
+                {
+                 "gid":5,
+                 "height":16,
+                 "id":17,
+                 "name":"Player",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":96,
+                 "y":80
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":128,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":15,
+ "nextobjectid":19,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
