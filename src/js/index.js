@@ -4,6 +4,9 @@ const Player = require('./player');  // relative import
 const game = new Phaser.Game(256, 240, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
+var player;
+var cursors;
+
 function init() {
   //  Hide the un-scaled game canvas
   game.canvas.style['display'] = 'none';
@@ -28,15 +31,20 @@ function init() {
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.load.image('player', 'assets/sprites/player.png');
+  game.load.image('white_box', 'assets/sprites/white_box.png');  // remove me once we have a map
 }
 
 function create() {
-  var player = new Player(this);
+  player = new Player(this);
+  game.add.sprite(0, 0, 'white_box');
   game.add.existing(player);
+  game.camera.follow(player);
+  cursors = game.input.keyboard.createCursorKeys();
 }
 
 
 function update() {
+  player.updateControls(cursors);
 }
 
 function render() {
