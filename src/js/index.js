@@ -1,6 +1,7 @@
 const Phaser = require('Phaser');
 const Player = require('./player');
 const Npc = require('./npc');
+const Ant = require('./ant');
 const Hud = require('./lib/hud');
 const TextBanner = require('./lib/textBanner');
 
@@ -12,6 +13,7 @@ const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 let player;
 let cursors;
 let actorGroup;
+let enemyGroup;
 let hud;
 
 function init() {
@@ -38,6 +40,7 @@ function init() {
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.load.image('player', 'assets/sprites/player.png');
+  game.load.image('ant', 'assets/sprites/ant.png');
   game.load.image('npc', 'assets/sprites/npc.png');
   game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
 }
@@ -55,8 +58,10 @@ function create() {
   player.health = 3.5;
   curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
+  enemyGroup = game.add.group();
   actorGroup.add(player);
   actorGroup.add(new Npc(this));
+  enemyGroup.add(new Ant(this));
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
 }
@@ -65,6 +70,12 @@ function create() {
 function update() {
   player.updateControls(cursors);
   game.physics.arcade.collide(actorGroup);
+  game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
+}
+
+function onPlayerHit(player, enemy) {
+  var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
+  player.knockback(angle);
 }
 
 function render() {
