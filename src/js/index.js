@@ -1,4 +1,5 @@
 const Phaser = require('Phaser');
+const Player = require('./player');  // relative import
 
 const game = new Phaser.Game(256, 240, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
@@ -26,9 +27,12 @@ function init() {
 
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+  game.load.image('player', 'src/assets/sprites/player.png');
 }
 
 function create() {
+  var player = new Player(this);
+  game.add.existing(player);
 }
 
 
