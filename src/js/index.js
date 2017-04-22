@@ -23,6 +23,7 @@ let curPlayerHud;
 let pretzel;
 let hockeyStick;
 let pickupGroup;
+let enemyDetectionSet;
 
 function init() {
   // debug mode cfg
@@ -65,6 +66,7 @@ function preload() {
   game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
   game.load.image('pretzel', 'assets/sprites/pretzel.png');
   game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
+  game.load.image('area', 'assets/sprites/area.png');
 }
 
 function create() {
@@ -83,12 +85,15 @@ function create() {
   curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
-  
-  worldMap.spawn(game, Ant, (ant) => enemyGroup.add(ant));
+  enemyDetectionSet = [];
+
+  worldMap.spawn(game, Ant, (ant) => {
+    enemyGroup.add(ant);
+    enemyDetectionSet.push(ant.detectionBubble);
+  });
   worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
 
   actorGroup.add(player);
-
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
@@ -103,16 +108,22 @@ function create() {
 
 function update() {
   player.updateControls(cursors);
-  game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(actorGroup);
   game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
+  game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
+  game.physics.arcade.collide(player, worldMap.getCollisionLayer());
+  game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
 }
 
 function onPlayerHit(player, enemy) {
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
   player.damage(1);
   player.knockback(angle);
+}
+
+function onEnemyDetect(player, bubble) {
+  bubble.parent.seePlayer(player);
 }
 
 function pickupCollisionHandler(player, pickup){
