@@ -73,9 +73,15 @@ function create() {
   curPlayerHud = hud.playerHud(player);
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
+
+  // worldMap.spawnPlayer(player);
+  // worldMap.spawnNpcs(actorGroup);
+  worldMap.spawnEnemies(enemyGroup);
+
   actorGroup.add(player);
   actorGroup.add(new Npc(this));
-  enemyGroup.add(new Ant(this));
+  // enemyGroup.add(new Ant(this));
+
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter

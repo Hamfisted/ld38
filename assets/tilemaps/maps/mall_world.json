@@ -23,8 +23,44 @@
          "width":128,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":128,
+         "name":"Ants",
+         "objects":[
+                {
+                 "gid":3,
+                 "height":16,
+                 "id":9,
+                 "name":"StartAnt",
+                 "rotation":0,
+                 "type":"ant",
+                 "visible":true,
+                 "width":16,
+                 "x":48,
+                 "y":176
+                }, 
+                {
+                 "gid":3,
+                 "height":16,
+                 "id":11,
+                 "name":"SecondAnt",
+                 "rotation":0,
+                 "type":"ant",
+                 "visible":true,
+                 "width":16,
+                 "x":32.25,
+                 "y":400.25
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":128,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":1,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
