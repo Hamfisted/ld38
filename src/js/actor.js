@@ -9,6 +9,7 @@ const Actor = function(game, x, y, image) {
 
   this.knockbackForce = 0;
   this.knockbackVelocity = new Phaser.Point();
+  this.invincible = false;
 }
 Actor.prototype = Object.create(Phaser.Sprite.prototype);
 Actor.prototype.constructor = Actor;
@@ -21,6 +22,14 @@ Actor.prototype.update = function () {
   }
 }
 
+Actor.prototype.damage = function (amount) {
+  if (!this.invincible) {
+    this.invincible = true;
+    this.health -= amount;
+    this.game.time.events.add(30, this.stopInvincibility, this);
+  }
+}
+
 Actor.prototype.knockback = function (angle) {
   this.knockbackForce = knockbackForce;
   this.knockbackVelocity.x = Math.cos(angle) * knockbackForce;
@@ -30,6 +39,10 @@ Actor.prototype.knockback = function (angle) {
 
 Actor.prototype.stopKnockback = function () {
   this.knockbackForce = 0;
+}
+
+Actor.prototype.stopInvincibility = function () {
+  this.invincible = false;
 }
 
 module.exports = Actor;
