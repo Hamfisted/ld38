@@ -5,6 +5,8 @@ const Npc = require('./npc');
 const Ant = require('./ant');
 const Hud = require('./lib/hud');
 const TextBanner = require('./lib/textBanner');
+const Pretzel = require('./pretzel');
+const Weapon = require('./weapon');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -16,6 +18,9 @@ let cursors;
 let actorGroup;
 let enemyGroup;
 let hud;
+let pretzel;
+let hockeyStick;
+let pickupGroup;
 
 function init() {
   //  Hide the un-scaled game canvas
@@ -48,6 +53,8 @@ function preload() {
   // Tilemaps
   game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
+  game.load.image('pretzel', 'assets/sprites/pretzel.png');
+  game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
 }
 
 function create() {
@@ -70,6 +77,11 @@ function create() {
   enemyGroup.add(new Ant(this));
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
+  pretzel = new Pretzel(this, 150, 150, 1);
+  hockeyStick = new Weapon(this, 120, 120, 'hockey_stick')
+  pickupGroup = game.add.group();
+  pickupGroup.add(pretzel);
+  pickupGroup.add(hockeyStick);
 }
 
 
@@ -78,12 +90,18 @@ function update() {
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(actorGroup);
   game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
+  game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
 }
 
 function onPlayerHit(player, enemy) {
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
   player.damage(1);
   player.knockback(angle);
+}
+
+function pickupCollisionHandler(player, pickup){
+  player.pickupItem(pickup);
+  pickup.kill();
 }
 
 function render() {
