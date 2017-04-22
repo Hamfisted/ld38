@@ -1,15 +1,16 @@
 const Actor = require('./actor');
-
+const SPRITE_KEY = 'player';
 const MOVE_SPEED = 150;
 const sqrt2 = Math.sqrt(2);
-const Player = function(game) {
-  const x = 100;
-  const y = 100;
 
-  Actor.call(this, game, x, y, 'player');
+const Player = function(game, x=0, y=0, key=SPRITE_KEY, frame=0) {
+  Actor.call(this, game, x, y, key);
   game.physics.arcade.enable(this);
   this.pretzel = null
   this.weapon = null
+}
+Player.getSpriteKey = function() {
+  return SPRITE_KEY;
 }
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
