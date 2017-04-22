@@ -82,6 +82,7 @@ function update() {
 
 function onPlayerHit(player, enemy) {
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
+  player.damage(1);
   player.knockback(angle);
 }
 
