@@ -76,16 +76,23 @@ function create() {
   const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
-  hud = Hud(game, hudDimension, heartsLocation);
+
 
   player = new Player(this);
   worldMap.placePlayer(player);
   player.maxHealth = 6;
   player.health = 4;
-  curPlayerHud = hud.playerHud(player);
+
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
   enemyDetectionSet = [];
+  pickupGroup = game.add.group();
+  hudGroup = game.add.group();
+  hudGroup.fixedToCamera = true;
+
+  hud = Hud(game, hudDimension, heartsLocation);
+
+  hudGroup.add(hud.group)
 
   worldMap.spawn(game, Ant, (ant) => {
     enemyGroup.add(ant);
@@ -100,9 +107,11 @@ function create() {
 
   pretzel = new Pretzel(this, 150, 150, 1);
   hockeyStick = new Weapon(this, 120, 120, 'hockey_stick')
-  pickupGroup = game.add.group();
+
   pickupGroup.add(pretzel);
   pickupGroup.add(hockeyStick);
+
+  curPlayerHud = hud.playerHud(player);
 }
 
 
@@ -149,7 +158,9 @@ function render() {
     const numChildren = numAliveChildrenOfGroup(game.world);
     game.debug.text(`obj ${numChildren}` || '-', 2, 20, debugColor, debugFont);
   }
-  curPlayerHud.render(player);
+
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
+
+  curPlayerHud.render(player);
 }

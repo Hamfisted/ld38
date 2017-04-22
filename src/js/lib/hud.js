@@ -4,8 +4,7 @@ const HeartContainer = require('./heartContainer');
 const Hud = (game, hudDimension, heartsLocation) => {
   const { x, y, w, h } = hudDimension;
 
-  const hudGroup = game.add.group();
-  hudGroup.fixedToCamera = true;
+  const hudGroup = game.make.group();
 
   var graphics = game.make.graphics(x, y);
 
@@ -47,11 +46,11 @@ const Hud = (game, hudDimension, heartsLocation) => {
     }
 
     return {
-      render: (player) => { drawHearts(player) }
+      render: (player) => { drawHearts(player) },
     }
   }
 
-  return { playerHud }
+  return { playerHud, group: hudGroup }
 }
 
 module.exports = Hud;
