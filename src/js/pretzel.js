@@ -5,10 +5,10 @@ const Pretzel = function(game, x, y, type) {
   Pickup.call(this, game, x, y, 'pretzel')
   this.name = 'pretzel'
   this.type = type
-  if (type == 1){
+  if (type === 1){
     this.hp = 10
   }
-  else if (type == 2){
+  else if (type === 2){
     this.hp = 20
   }
   else {
