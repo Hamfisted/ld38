@@ -1,13 +1,15 @@
 const Phaser = require('Phaser');
-const Player = require('./player');  // relative import
-const Hud = require('./lib/hud');  // relative import
-const TextBanner = require('./lib/textBanner');  // relative import
+const Player = require('./player');
+const Npc = require('./npc');
+const Hud = require('./lib/hud');
+const TextBanner = require('./lib/textBanner');
 
 const game = new Phaser.Game(256, 240, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
 var player;
 var cursors;
+var actorGroup;
 console.log("Hud = %h", Hud)
 console.log("TextBanner = %h", TextBanner)
 
@@ -35,13 +37,18 @@ function init() {
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.load.image('player', 'assets/sprites/player.png');
+  game.load.image('npc', 'assets/sprites/npc.png');
   game.load.image('white_box', 'assets/sprites/white_box.png');  // remove me once we have a map
 }
 
 function create() {
-  player = new Player(this);
+  // until we have ground, gives a sense of perspective for moving
   game.add.sprite(0, 0, 'white_box');
-  game.add.existing(player);
+
+  player = new Player(this);
+  actorGroup = game.add.group();
+  actorGroup.add(player);
+  actorGroup.add(new Npc(this));
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
 }
@@ -49,6 +56,7 @@ function create() {
 
 function update() {
   player.updateControls(cursors);
+  game.physics.arcade.collide(actorGroup);
 }
 
 function render() {
