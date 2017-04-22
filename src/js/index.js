@@ -1,5 +1,6 @@
 const Phaser = require('Phaser');
 const Player = require('./player');
+const WorldMap = require('./world-map');
 const Npc = require('./npc');
 const Ant = require('./ant');
 const Hud = require('./lib/hud');
@@ -43,13 +44,18 @@ function preload() {
   game.load.image('ant', 'assets/sprites/ant.png');
   game.load.image('npc', 'assets/sprites/npc.png');
   game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
+
+  // Tilemaps
+  game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
+  game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
 }
 
 function create() {
-  // until we have ground, gives a sense of perspective for moving
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  worldMap = new WorldMap(game, 'mall_world', 'tiles', 'tilemap');
+
   const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
-  game.add.sprite(0, 0, 'white_box');
 
   hud = Hud(game, hudDimension, heartsLocation);
 
@@ -69,6 +75,7 @@ function create() {
 
 function update() {
   player.updateControls(cursors);
+  game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(actorGroup);
   game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
 }
