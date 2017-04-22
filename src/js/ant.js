@@ -16,9 +16,9 @@ const Ant = function(game, x, y) {
   Actor.call(this, game, x, y, SPRITE_KEY);
   game.physics.arcade.enable(this);
   this.body.immovable = true;
-  this.state = BehaviorState.WANDER;
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
+  this.setState(BehaviorState.WANDER);
 }
 
 Ant.prototype = Object.create(Actor.prototype);
