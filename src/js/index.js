@@ -3,7 +3,9 @@ const Player = require('./player');  // relative import
 const Hud = require('./lib/hud');  // relative import
 const TextBanner = require('./lib/textBanner');  // relative import
 
-const game = new Phaser.Game(256, 240, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
+const GAME_DIMENSION = { w: 256, h: 240 };
+
+const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
 var player;
@@ -23,6 +25,10 @@ function init() {
 
   //  Add the scaled canvas to the DOM
   Phaser.Canvas.addToDOM(pixel.canvas);
+
+  const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
+
+  Hud(game, hudDimension);
 
   //  Disable smoothing on the scaled canvas
   Phaser.Canvas.setSmoothingEnabled(pixel.context, false);
