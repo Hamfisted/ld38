@@ -21,18 +21,22 @@ Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (cursors) {
   if (cursors.left.isDown) {
+    this.frame = 3;
     this.body.velocity.x = -MOVE_SPEED;
   }
   else if (cursors.right.isDown) {
+    this.frame = 1;
     this.body.velocity.x = MOVE_SPEED;
   }
   else {
     this.body.velocity.x = 0;
   }
   if (cursors.up.isDown) {
+    this.frame = 0;
     this.body.velocity.y = -MOVE_SPEED;
   }
   else if (cursors.down.isDown) {
+    this.frame = 2;
     this.body.velocity.y = MOVE_SPEED;
   }
   else {

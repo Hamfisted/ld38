@@ -56,7 +56,7 @@ function init() {
 
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-  game.load.image('player', 'assets/sprites/player.png');
+  game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
   game.load.image('ant', 'assets/sprites/ant.png');
   game.load.image('npc', 'assets/sprites/npc.png');
   game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
