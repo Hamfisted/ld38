@@ -1,9 +1,13 @@
 const { range } = require('./utils');
+const HeartContainer = require('./heartContainer');
 
 const Hud = (game, hudDimension, heartsLocation) => {
   const { x, y, w, h } = hudDimension;
 
-  var graphics = game.add.graphics(x, y);
+  const hudGroup = game.add.group();
+  hudGroup.fixedToCamera = true;
+
+  var graphics = game.make.graphics(x, y);
 
   graphics.beginFill(0x0000FF);
 
@@ -16,34 +20,34 @@ const Hud = (game, hudDimension, heartsLocation) => {
   graphics.lineTo(x, y);
   graphics.endFill();
 
-  const fullHeart = game.make.sprite(0,0, 'hearts', 0);
-  const halfHeart = game.make.sprite(0,0, 'hearts', 1);
-  const emptyHeart = game.make.sprite(0,0, 'hearts', 2);
+  hudGroup.add(graphics);
 
-  let bmd = game.add.bitmapData(game.width, game.height);
-  bmd.addToWorld();
-  bmd.smoothed = false;
+  const playerHud = ({ maxHealth }) => {
+    const heartContainers = range(Math.ceil(maxHealth / 2)).map(function (o) {
+      return HeartContainer(game, x + heartsLocation.x + o * heartSize, y + heartsLocation.y);
+    });
 
-  const playerHud = (player) => {
-    function drawHeartAtOffsets(heart, offset, end) {
-      range(offset, end).map(function (o) {
-        bmd.draw(heart, x + heartsLocation.x + o * heartSize, y + heartsLocation.y);
-      });
+    heartContainers.map(function (heart) {
+      hudGroup.add(heart.group);
+    });
+
+    function drawHeartAtOffsets(heartType, offset, end) {
+      heartContainers.slice(offset, end).map(function (heartContainer) {
+        heartContainer.render(heartType);
+      })
     }
 
     function drawHearts({ health, maxHealth }) {
-      bmd.cls();
-
       const hearts = health / 2;
       const maxHearts = maxHealth / 2;
 
-      drawHeartAtOffsets(fullHeart, 0, Math.floor(hearts));
-      drawHeartAtOffsets(halfHeart, Math.floor(hearts), Math.ceil(hearts));
-      drawHeartAtOffsets(emptyHeart, Math.ceil(hearts), maxHearts);
+      drawHeartAtOffsets('FULL', 0, Math.floor(hearts));
+      drawHeartAtOffsets('HALF', Math.floor(hearts), Math.ceil(hearts));
+      drawHeartAtOffsets('EMPTY', Math.ceil(hearts), maxHearts);
     }
 
     return {
-      render: () => { drawHearts(player); }
+      render: (player) => { drawHearts(player) }
     }
   }
 
