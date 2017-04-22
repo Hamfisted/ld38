@@ -66,11 +66,12 @@ Ant.prototype.wander = function () {
 }
 
 Ant.prototype.addDetectionBubble = function () {
-  this.detectionBubble = new Phaser.Sprite(this.game, 0, 0, 'area');
+  // can't ever give this an image, because phaser is friggin zany
+  // http://www.html5gamedevs.com/topic/25475-spritebody-bounding-box-ignores-sprite-anchorsetto/
+  const RADIUS = 64;
+  this.detectionBubble = new Phaser.Sprite(this.game, 0, 0, null);
   this.game.physics.arcade.enable(this.detectionBubble);
-  this.detectionBubble.anchor.x = 0.5;
-  this.detectionBubble.anchor.y = 0.5;
-  this.detectionBubble.body.setCircle(64);
+  this.detectionBubble.body.setCircle(RADIUS, -RADIUS, -RADIUS);
   this.addChild(this.detectionBubble);
 };
 
