@@ -77,6 +77,8 @@ function create() {
   enemyGroup.add(new Ant(this));
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
+  game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
+
   pretzel = new Pretzel(this, 150, 150, 1);
   hockeyStick = new Weapon(this, 120, 120, 'hockey_stick')
   pickupGroup = game.add.group();

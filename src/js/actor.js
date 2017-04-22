@@ -16,7 +16,6 @@ Actor.prototype.constructor = Actor;
 
 Actor.prototype.update = function () {
   if (this.knockbackForce !== 0) {
-    console.log(this.body.velocity);
     this.body.velocity.x = this.knockbackVelocity.x;
     this.body.velocity.y = this.knockbackVelocity.y;
   }
