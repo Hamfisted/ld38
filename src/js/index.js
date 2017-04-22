@@ -27,7 +27,7 @@ function init() {
 
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-  game.load.image('player', 'src/assets/sprites/player.png');
+  game.load.image('player', 'assets/sprites/player.png');
 }
 
 function create() {
