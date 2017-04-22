@@ -1,5 +1,5 @@
 const knockbackForce = 1000;
-const Actor = function(game, x, y, image) {
+const Actor = function(game, x, y, image, objectLayerName) {
   Phaser.Sprite.call(this, game, x, y, image);
   game.physics.arcade.enable(this);
   this.anchor.x = 0.5;
