@@ -79,7 +79,6 @@ function create() {
   worldMap.spawnNpcs(actorGroup);
 
   actorGroup.add(player);
-  // actorGroup.add(new Npc(this, 200, 200));
 
   game.camera.follow(player);
   cursors = game.input.keyboard.createCursorKeys();
