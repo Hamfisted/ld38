@@ -1,4 +1,3 @@
-// player.js
 const Actor = require('./actor');
 
 const MOVE_SPEED = 150;
