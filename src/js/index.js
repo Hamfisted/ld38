@@ -136,7 +136,7 @@ function render() {
     const numChildren = numAliveChildrenOfGroup(game.world);
     game.debug.text(`obj ${numChildren}` || '-', 2, 20, debugColor, debugFont);
   }
-  curPlayerHud.render();
+  curPlayerHud.render(player);
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
 }
