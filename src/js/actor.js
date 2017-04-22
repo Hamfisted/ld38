@@ -25,14 +25,11 @@ Actor.prototype.knockback = function (angle) {
   this.knockbackForce = knockbackForce;
   this.knockbackVelocity.x = Math.cos(angle) * knockbackForce;
   this.knockbackVelocity.y = Math.sin(angle) * knockbackForce;
-  this.game.time.events.add(30, stopKnockback(this), this);
+  this.game.time.events.add(30, this.stopKnockback, this);
 };
 
-var stopKnockback = function (self) {
-  // XXX: greg how do i .bind?
-  return function () {
-    self.knockbackForce = 0;
-  };
+Actor.prototype.stopKnockback = function () {
+  this.knockbackForce = 0;
 }
 
 module.exports = Actor;
