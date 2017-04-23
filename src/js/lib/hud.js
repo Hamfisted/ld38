@@ -3,6 +3,7 @@ const HeartContainer = require('./heartContainer');
 const Stomach = require('./stomach');
 const Bar = require('./bar');
 const ItemContainer = require('./itemContainer');
+const InsectPartCounter = require('./insectPartCounter')
 
 function Hud(game, hudDimension, heartsLocation, pickupGroup) {
   const { x, y, w, h } = hudDimension;
@@ -26,10 +27,16 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
     const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
     const pretzelContainer = ItemContainer(game, {x: 80, y: 10, w: 50, h: 20}, pickupGroup, 'pretzel');
     const weaponContainer = ItemContainer(game, {x: 120, y: 10, w: 50, h: 20}, pickupGroup, 'weapon');
+    const yellowInsectPart = InsectPartCounter(game, {x: 190, y: 0, w: 50, h: 20}, 'yellow');
+    const greenInsectPart = InsectPartCounter(game, {x: 190, y: 10, w: 50, h: 20}, 'green');
+    const pinkInsectPart = InsectPartCounter(game, {x: 190, y: 20, w: 50, h: 20}, 'pink');
 
     hudGroup.add(stomach.group);
     hudGroup.add(pretzelContainer.group);
     hudGroup.add(weaponContainer.group);
+    hudGroup.add(yellowInsectPart.group);
+    hudGroup.add(greenInsectPart.group);
+    hudGroup.add(pinkInsectPart.group);
 
     function drawHeartAtOffsets(heartType, offset, end) {
       heartContainers.slice(offset, end).map(function (heartContainer) {
@@ -51,6 +58,9 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
       updateHearts(player);
       pretzelContainer.update(player);
       weaponContainer.update(player);
+      yellowInsectPart.update(player);
+      greenInsectPart.update(player);
+      pinkInsectPart.update(player);
     }
 
     return { update };

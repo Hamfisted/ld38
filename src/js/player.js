@@ -11,8 +11,15 @@ const Player = function Player(game, x=0, y=0) {
   game.physics.arcade.enable(this);
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
+  this.quest = null;
+  this.insectParts = {
+    yellow: 0,
+    green: 0,
+    pink: 0
+  };
   this.pretzel = null;
   this.weapon = null;
+
   this.swingTimeout = 300; // ms
   this.canSwing = true;
   this.isInDialogue = false;
@@ -83,11 +90,20 @@ Player.prototype.swing = function () {
 };
 
 Player.prototype.pickupItem = function(pickup) {
-  if (pickup.name == 'pretzel') {
+  if (pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) {
     this.pretzel = pickup.getMetaData();
   }
+
   if (pickup.type == 'weapon') {
     this.weapon = pickup.getMetaData();
+  }
+
+  if (pickup.type == 'quest') {
+    this.quest = pickup.getMetaData();
+  }
+
+  if (pickup.name == 'insectPart') {
+    this.insectParts[pickup.color]++;
   }
 }
 Player.prototype.useItem = function(pickup) {

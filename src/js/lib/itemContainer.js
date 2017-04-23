@@ -3,8 +3,6 @@ function ItemContainer(game, dimensions, pickupGroup, itemType) {
   itemGroup.x = dimensions.x;
   itemGroup.y = dimensions.y;
 
-  const padding = 1;
-
   const pickupables = pickupGroup.children.map((i) => i.name)
 
   const spritesPairs = pickupables.map(function (name) {

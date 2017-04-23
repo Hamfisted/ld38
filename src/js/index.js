@@ -10,6 +10,7 @@ const PinkAnt = require('./ants/pink-ant');
 const Hud = require('./lib/hud');
 const Pretzel = require('./pretzel');
 const Weapon = require('./weapon');
+const InsectPart = require('./insect-part');
 const PinkPretzelMaker = require('./pink-pretzel-maker');
 const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
@@ -122,9 +123,11 @@ function create() {
 
   pretzel = new Pretzel(this, 400, 400, 1);
   hockeyStick = new Weapon(this, 320, 300, 'hockey_stick');
+  insectPart = new InsectPart(this, 500, 500, 1);
 
   pickupGroup.add(pretzel);
   pickupGroup.add(hockeyStick);
+  pickupGroup.add(insectPart);
 
   hud = Hud(game, hudDimension, heartsLocation, pickupGroup);
 
