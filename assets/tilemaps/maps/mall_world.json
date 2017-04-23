@@ -50,7 +50,7 @@
         }, 
         {
          "draworder":"topdown",
-         "height":60,
+         "height":0,
          "name":"GreenAnts",
          "objects":[
                 {
@@ -68,13 +68,13 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":99,
+         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":60,
+         "height":0,
          "name":"PinkAnts",
          "objects":[
                 {
@@ -92,13 +92,13 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":99,
+         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":60,
+         "height":0,
          "name":"YellowAnts",
          "objects":[
                 {
@@ -116,7 +116,7 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":99,
+         "width":0,
          "x":0,
          "y":0
         }, 
