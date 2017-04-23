@@ -72,9 +72,7 @@ function init() {
 function preload() {
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-  // Tilemaps
-  game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
-  game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
+  WorldMap.preload(game);
 
   // moved all the "game.load.image()" things in here
   preloadSprites(game);
@@ -82,7 +80,7 @@ function preload() {
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  worldMap = new WorldMap(game, 'mall_world', 'tiles', 'tilemap');
+  worldMap = new WorldMap(game);
 
   const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
@@ -111,6 +109,7 @@ function create() {
     enemyGroup.add(ant);
     enemyDetectionSet.push(ant.detectionBubble);
   });
+  
   worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
 
   actorGroup.add(player);

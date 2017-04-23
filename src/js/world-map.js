@@ -1,13 +1,25 @@
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
 
+// DO NOT CHANGE, TILED MAP REQUIRES NAMED TILESETS!
+const MALL_WORLD_TILESET = "mall_world";
+const SCENE_OBJECT_TILESET = "scene_objects";
+// END DO NOT CHANGE
+
+const MALL_WORLD_TILEMAP = "mall_world_tilemap";
+const SCENE_OBJECT_TILES = "scene_objects_tiles";
+const MALL_WORLD_TILES = "mall_world_tiles";
+
+// new WorldMap(game, 'mall_world', 'tiles', 'tilemap')
+// function(game, tileset, tiles, tilemap)
 // map.js
-const WorldMap = function(game, tileset, tiles, tilemap) {
+const WorldMap = function(game) {
   // Tilemap object
-  this.map = game.add.tilemap(tilemap);
+  this.map = game.add.tilemap(MALL_WORLD_TILEMAP);
 
   // Kinda vauge, but works. Maybe cleanup later
-  this.map.addTilesetImage(tileset, tiles);
+  this.map.addTilesetImage(MALL_WORLD_TILESET, MALL_WORLD_TILES);
+  this.map.addTilesetImage(SCENE_OBJECT_TILESET, SCENE_OBJECT_TILES);
 
   // Background layer is the floor, mostly
   this.backgroundlayer = this.map.createLayer(BACKGROUND_TILE_LAYER);
@@ -20,7 +32,14 @@ const WorldMap = function(game, tileset, tiles, tilemap) {
   this.collisionLayer.resizeWorld();
 }
 
-WorldMap.prototype.getMap = function(){
+WorldMap.preload = function(game) {
+  // PRELOAD
+  game.load.tilemap(MALL_WORLD_TILEMAP, 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
+  game.load.image(MALL_WORLD_TILES, 'assets/tilemaps/tiles/mall_world.png');
+  game.load.image(SCENE_OBJECT_TILES, 'assets/tilemaps/tiles/scene_objects.png');
+}
+
+WorldMap.prototype.getMap = function() {
   return this.map;
 }
 
