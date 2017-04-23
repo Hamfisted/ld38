@@ -23,6 +23,7 @@ const Player = function Player(game, x=0, y=0) {
   };
 
   this.direction = 'down';
+  this.currentAnimation = 'bob';
   this.changeAnimation('bob');
 
   this.quest = null;
@@ -53,28 +54,24 @@ Player.prototype.updateControls = function (cursors) {
     return;
   }
 
-  if (cursors.left.isDown) {
-    this.direction = 'left';
-    this.changeAnimation('walk');
-    this.body.velocity.x = -MOVE_SPEED;
-  } else if (cursors.right.isDown) {
-    this.direction = 'right';
-    this.changeAnimation('walk');
-    this.body.velocity.x = MOVE_SPEED;
-  } else {
-    this.body.velocity.x = 0;
-  }
-
   if (cursors.up.isDown) {
     this.direction = 'up';
-    this.changeAnimation('walk');
     this.body.velocity.y = -MOVE_SPEED;
   } else if (cursors.down.isDown) {
     this.direction = 'down';
-    this.changeAnimation('walk');
     this.body.velocity.y = MOVE_SPEED;
   } else {
     this.body.velocity.y = 0;
+  }
+
+  if (cursors.left.isDown) {
+    this.direction = 'left';
+    this.body.velocity.x = -MOVE_SPEED;
+  } else if (cursors.right.isDown) {
+    this.direction = 'right';
+    this.body.velocity.x = MOVE_SPEED;
+  } else {
+    this.body.velocity.x = 0;
   }
 
   if (this.body.velocity.x && this.body.velocity.y) {
@@ -82,12 +79,14 @@ Player.prototype.updateControls = function (cursors) {
     this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
   }
 
-  if (!this.body.velocity.x && !this.body.velocity.y) {
-    this.changeAnimation('bob');
-  }
-
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     this.swing();
+  }
+
+  if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
+    this.changeAnimation('walk');
+  } else {
+    this.changeAnimation('bob');
   }
 };
 
