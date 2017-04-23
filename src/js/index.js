@@ -116,6 +116,7 @@ function create() {
 
 
 function update() {
+  curPlayerHud.update(player);
   player.updateControls(cursors);
   game.physics.arcade.collide(actorGroup);
   if (Config.activeEnemies) {

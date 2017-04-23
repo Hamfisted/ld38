@@ -41,16 +41,15 @@ const Hud = (game, hudDimension, heartsLocation) => {
       drawHeartAtOffsets('EMPTY', Math.ceil(hearts), maxHearts);
     }
 
-    function drawStomach(player) {
-      stomach.render(player);
-    }
-
     function render(player) {
       drawHearts(player);
-      drawStomach(player);
     }
 
-    return { render };
+    function update(player) {
+      stomach.update(player);
+    }
+
+    return { render, update };
   }
 
   return { playerHud, group: hudGroup };

@@ -1,14 +1,24 @@
 const Bar = require('./bar');
 
-function Stomach(game, outerMeterDimensions) {
+function Stomach(game, dimensions) {
   const stomachGroup = game.make.group();
+  stomachGroup.x = dimensions.x;
+  stomachGroup.y = dimensions.y;
 
   const padding = 1;
+
+  const outerMeterDimensions = {
+    x: 0,
+    y: 0,
+    w: dimensions.w,
+    h: dimensions.h
+  }
+
   const meterDimensions = {
-    x: outerMeterDimensions.x + padding,
-    y: outerMeterDimensions.y + padding,
-    w: outerMeterDimensions.w - padding * 2,
-    h: outerMeterDimensions.h - padding * 2
+    x: padding,
+    y: padding,
+    w: dimensions.w - padding * 2,
+    h: dimensions.h - padding * 2
   }
 
   const outerBar = Bar(game, outerMeterDimensions, 0x00FF00);
@@ -18,7 +28,7 @@ function Stomach(game, outerMeterDimensions) {
   stomachGroup.add(innerBar);
 
   return {
-    render: function({ maxFullness, fullness }) {
+    update: function({ maxFullness, fullness }) {
       innerBar.width = (fullness / maxFullness) * meterDimensions.w;
     },
     group: stomachGroup
