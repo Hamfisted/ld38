@@ -74,8 +74,10 @@ function preload() {
   // Tilemaps
   game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
+
   game.load.image('pretzel', 'assets/sprites/pretzel.png');
   game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
+
   game.load.image('area', 'assets/sprites/area.png');
   game.load.image('yellowPretzelMaker', 'assets/sprites/yellowPretzelMaker.png');
   game.load.image('greenPretzelMaker', 'assets/sprites/greenPretzelmaker.png');
@@ -107,9 +109,7 @@ function create() {
   textBoxGroup = this.game.add.group();
   textBoxGroup.fixedToCamera = true;
 
-  hud = Hud(game, hudDimension, heartsLocation);
 
-  hudGroup.add(hud.group)
 
   worldMap.spawn(game, Ant, (ant) => {
     enemyGroup.add(ant);
@@ -124,11 +124,15 @@ function create() {
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
-  pretzel = new Pretzel(this, 150, 150, 1);
+  pretzel = new Pretzel(this, 400, 400, 1);
   hockeyStick = new Weapon(this, 320, 300, 'hockey_stick');
 
   pickupGroup.add(pretzel);
   pickupGroup.add(hockeyStick);
+
+  hud = Hud(game, hudDimension, heartsLocation, pickupGroup);
+
+  hudGroup.add(hud.group)
 
   curPlayerHud = hud.playerHud(player);
   // pretzel makers
@@ -197,6 +201,4 @@ function render() {
 
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
-
-  curPlayerHud.render(player);
 }

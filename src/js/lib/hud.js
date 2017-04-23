@@ -2,8 +2,9 @@ const { range } = require('./utils');
 const HeartContainer = require('./heartContainer');
 const Stomach = require('./stomach');
 const Bar = require('./bar');
+const ItemContainer = require('./itemContainer');
 
-const Hud = (game, hudDimension, heartsLocation) => {
+function Hud(game, hudDimension, heartsLocation, pickupGroup) {
   const { x, y, w, h } = hudDimension;
   const hudGroup = game.make.group();
   const heartSize = 7
@@ -22,17 +23,19 @@ const Hud = (game, hudDimension, heartsLocation) => {
       hudGroup.add(heart.group);
     });
 
-    const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20})
+    const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
+    const itemContainer = ItemContainer(game, {x: 80, y: 10, w: 50, h: 20}, pickupGroup);
 
     hudGroup.add(stomach.group);
+    hudGroup.add(itemContainer.group);
 
     function drawHeartAtOffsets(heartType, offset, end) {
       heartContainers.slice(offset, end).map(function (heartContainer) {
-        heartContainer.render(heartType);
+        heartContainer.update(heartType);
       });
     }
 
-    function drawHearts({ health, maxHealth }) {
+    function updateHearts({ health, maxHealth }) {
       const hearts = health / 2;
       const maxHearts = maxHealth / 2;
 
@@ -41,15 +44,13 @@ const Hud = (game, hudDimension, heartsLocation) => {
       drawHeartAtOffsets('EMPTY', Math.ceil(hearts), maxHearts);
     }
 
-    function render(player) {
-      drawHearts(player);
-    }
-
     function update(player) {
       stomach.update(player);
+      updateHearts(player);
+      itemContainer.update(player);
     }
 
-    return { render, update };
+    return { update };
   }
 
   return { playerHud, group: hudGroup };
