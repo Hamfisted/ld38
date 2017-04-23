@@ -20,9 +20,15 @@ const Player = function Player(game, x=0, y=0) {
       rate: 10,
       shouldLoop: true,
     },
+    attack: {
+      rate: 18,
+      shouldLoop: false,
+      frames: [1, 2, 3, 4], // skip the first one
+    },
   };
 
   this.direction = 'down';
+  this.currentAnimation = 'bob';
   this.changeAnimation('bob');
 
   this.quest = null;
@@ -34,7 +40,9 @@ const Player = function Player(game, x=0, y=0) {
   this.pretzel = null;
   this.weapon = null;
 
-  this.swingTimeout = 300; // ms
+  this.swingTimeout = 360; // ms
+  this.swingTimer = this.game.time.create(false);
+  this.swingTimer.start();
   this.canSwing = true;
   this.isInDialogue = false;
   game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
@@ -53,28 +61,24 @@ Player.prototype.updateControls = function (cursors) {
     return;
   }
 
-  if (cursors.left.isDown) {
-    this.direction = 'left';
-    this.changeAnimation('walk');
-    this.body.velocity.x = -MOVE_SPEED;
-  } else if (cursors.right.isDown) {
-    this.direction = 'right';
-    this.changeAnimation('walk');
-    this.body.velocity.x = MOVE_SPEED;
-  } else {
-    this.body.velocity.x = 0;
-  }
-
   if (cursors.up.isDown) {
     this.direction = 'up';
-    this.changeAnimation('walk');
     this.body.velocity.y = -MOVE_SPEED;
   } else if (cursors.down.isDown) {
     this.direction = 'down';
-    this.changeAnimation('walk');
     this.body.velocity.y = MOVE_SPEED;
   } else {
     this.body.velocity.y = 0;
+  }
+
+  if (cursors.left.isDown) {
+    this.direction = 'left';
+    this.body.velocity.x = -MOVE_SPEED;
+  } else if (cursors.right.isDown) {
+    this.direction = 'right';
+    this.body.velocity.x = MOVE_SPEED;
+  } else {
+    this.body.velocity.x = 0;
   }
 
   if (this.body.velocity.x && this.body.velocity.y) {
@@ -82,12 +86,20 @@ Player.prototype.updateControls = function (cursors) {
     this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
   }
 
-  if (!this.body.velocity.x && !this.body.velocity.y) {
-    this.changeAnimation('bob');
-  }
-
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     this.swing();
+  }
+
+  if (false /* todo: is getting hurt */) {
+    // todo
+  } else if (this.swingTimer.length) {
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
+    // continue playing animation
+  } else if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
+    this.changeAnimation('walk');
+  } else {
+    this.changeAnimation('bob');
   }
 };
 
@@ -99,7 +111,7 @@ Player.prototype.changeAnimation = function(type) {
     return;
   }
   this.loadTexture(name, 0);
-  this.animations.add(name);
+  this.animations.add(name, animData.frames || null);
   this.animations.play(name, animData.rate, animData.shouldLoop);
 };
 
@@ -108,9 +120,10 @@ Player.prototype.swing = function () {
     return;
   }
   console.log('swing');
+  this.changeAnimation('attack');
 
   this.canSwing = false;
-  this.game.time.events.add(this.swingTimeout, function() {
+  this.swingTimer.add(this.swingTimeout, function() {
     this.canSwing = true;
   }, this);
 };
