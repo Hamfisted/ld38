@@ -1,9 +1,22 @@
-function HeartContainer(game, x, y) {
+function HeartContainer(game, heartDimensions) {
+  const { x, y, h } = heartDimensions;
+
+
 
   const heartGroup = game.make.group();
-  const fullHeart = game.make.sprite(x, y, 'hearts', 0);
-  const halfHeart = game.make.sprite(x, y, 'hearts', 1);
-  const emptyHeart = game.make.sprite(x, y, 'hearts', 2);
+  heartGroup.x = x;
+  heartGroup.y = y;
+
+
+  const fullHeart = game.make.sprite(0, 0, 'hearts', 0);
+  const halfHeart = game.make.sprite(0, 0, 'hearts', 1);
+  const emptyHeart = game.make.sprite(0, 0, 'hearts', 2);
+
+  const scalingParameter = h / fullHeart.height;
+
+
+
+  heartGroup.scale.setTo(scalingParameter , scalingParameter);
 
   heartGroup.add(fullHeart);
   heartGroup.add(halfHeart);
