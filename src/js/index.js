@@ -31,6 +31,7 @@ let hudGroup;
 let hud;
 let curPlayerHud;
 let pretzel;
+let insectPart;
 let hockeyStick;
 let pickupGroup;
 let enemyDetectionSet;
@@ -110,7 +111,7 @@ function create() {
     enemyGroup.add(ant);
     enemyDetectionSet.push(ant.detectionBubble);
   });
-  
+
   worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
 
   actorGroup.add(player);
@@ -120,9 +121,9 @@ function create() {
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
-  pretzel = new Pretzel(this, 400, 400, 1);
-  hockeyStick = new Weapon(this, 320, 300, 'hockey_stick');
-  insectPart = new InsectPart(this, 500, 500, 1);
+  pretzel = new Pretzel(game, 400, 400, 1);
+  hockeyStick = new Weapon(game, 320, 300, 'hockey_stick');
+  insectPart = new InsectPart(game, 500, 500, 1);
 
   pickupGroup.add(pretzel);
   pickupGroup.add(hockeyStick);
@@ -134,12 +135,12 @@ function create() {
 
   curPlayerHud = hud.playerHud(player);
   // pretzel makers
-  pinkPretzelMaker = new PinkPretzelMaker(this, 200, 200);
-  greenPretzelMaker = new GreenPretzelMaker(this, 260, 200);
-  yellowPretzelMaker = new YellowPretzelMaker(this, 320, 200);
-  pretzelMakerGroup.add(pinkPretzelMaker);
-  pretzelMakerGroup.add(greenPretzelMaker);
+  yellowPretzelMaker = new YellowPretzelMaker(game, 200, 200);
+  greenPretzelMaker = new GreenPretzelMaker(game, 260, 200);
+  pinkPretzelMaker = new PinkPretzelMaker(game, 320, 200);
   pretzelMakerGroup.add(yellowPretzelMaker);
+  pretzelMakerGroup.add(greenPretzelMaker);
+  pretzelMakerGroup.add(pinkPretzelMaker);
 
   //text box
   textBox = new TextBox(this.game, 50, 100, player);
