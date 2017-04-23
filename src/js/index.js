@@ -180,6 +180,8 @@ function pickupCollisionHandler(player, pickup){
 
 function pretzelMakerCollisionHandler(player, pretzelMaker){
   textBox.displayText(pretzelMaker.textString);
+  const pretzelEjecttionY = 60;
+  pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, 2));
 }
 
 function render() {

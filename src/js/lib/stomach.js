@@ -29,7 +29,7 @@ function Stomach(game, dimensions) {
 
   return {
     update: function({ maxFullness, fullness }) {
-      innerBar.width = (fullness / maxFullness) * meterDimensions.w;
+      innerBar.width = (Math.max(fullness, 0) / maxFullness) * meterDimensions.w;
     },
     group: stomachGroup
   }
