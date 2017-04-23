@@ -84,7 +84,6 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   worldMap = new WorldMap(game);
 
-  const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
   player = new Player(game);
@@ -140,7 +139,7 @@ function create() {
   pickupGroup.add(hockeyStick);
   pickupGroup.add(insectPart);
 
-  hud = Hud(game, hudDimension, heartsLocation, pickupGroup);
+  hud = Hud(game, hudDimension, pickupGroup);
 
   hudGroup.add(hud.group);
 

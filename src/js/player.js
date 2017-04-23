@@ -120,7 +120,7 @@ Player.prototype.buildHunger = function (game) {
   if (this.fullness <= 0) {
     this.health = 0;
   }
-  game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
+  // game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 }
 
 module.exports = Player

@@ -2,15 +2,15 @@ function insectPartCounter(game, dimensions, insectPartColor) {
   const itemGroup = game.make.group();
   itemGroup.x = dimensions.x;
   itemGroup.y = dimensions.y;
+  itemGroup.height = dimensions.h;
 
-  const height = 12;
+  const height = dimensions.h;
 
   const style = {
     font: height + 'px Arial',
     fill: '#fff',
     align: 'center',
-    wordWrap: true,
-    wordWrapWidth: this.width - 20,
+    wordWrap: true
   };
 
   const textObj = game.add.text(0, 0, '0 x', style);
