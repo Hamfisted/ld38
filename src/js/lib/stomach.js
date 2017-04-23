@@ -13,6 +13,7 @@ function Stomach(game, outerMeterDimensions) {
 
   const outerBar = Bar(game, outerMeterDimensions, 0x00FF00);
   const innerBar = Bar(game, meterDimensions, 0xFF0000);
+
   stomachGroup.add(outerBar);
   stomachGroup.add(innerBar);
 

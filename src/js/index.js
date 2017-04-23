@@ -76,8 +76,6 @@ function create() {
   const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
-
-
   player = new Player(this);
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 6;
