@@ -16,6 +16,7 @@ const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
 const TextBox = require('./narrative/text-box');
 const preloadSprites = require('./preload-sprites');
+const preloadBeats = require('./preload-beats');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -78,6 +79,7 @@ function preload() {
 
   // moved all the "game.load.image()" things in here
   preloadSprites(game);
+  preloadBeats(game);
 }
 
 function create() {
@@ -155,6 +157,10 @@ function create() {
   //text box
   textBox = new TextBox(this.game, 50, 100, player);
   textBoxGroup.add(textBox);
+
+  const shitdawg = game.add.audio('shitdawg');
+
+  shitdawg.loopFull(0.6);
 
 }
 
