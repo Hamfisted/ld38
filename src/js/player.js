@@ -53,6 +53,22 @@ Player.prototype.updateControls = function (cursors) {
     return;
   }
 
+  if (cursors.up.isDown) {
+    this.direction = 'up';
+    if (!cursors.left.isDown && !cursors.right.isDown) {
+      this.changeAnimation('walk');
+    }
+    this.body.velocity.y = -MOVE_SPEED;
+  } else if (cursors.down.isDown) {
+    this.direction = 'down';
+    if (!cursors.left.isDown && !cursors.right.isDown) {
+      this.changeAnimation('walk');
+    }
+    this.body.velocity.y = MOVE_SPEED;
+  } else {
+    this.body.velocity.y = 0;
+  }
+
   if (cursors.left.isDown) {
     this.direction = 'left';
     this.changeAnimation('walk');
@@ -63,18 +79,6 @@ Player.prototype.updateControls = function (cursors) {
     this.body.velocity.x = MOVE_SPEED;
   } else {
     this.body.velocity.x = 0;
-  }
-
-  if (cursors.up.isDown) {
-    this.direction = 'up';
-    this.changeAnimation('walk');
-    this.body.velocity.y = -MOVE_SPEED;
-  } else if (cursors.down.isDown) {
-    this.direction = 'down';
-    this.changeAnimation('walk');
-    this.body.velocity.y = MOVE_SPEED;
-  } else {
-    this.body.velocity.y = 0;
   }
 
   if (this.body.velocity.x && this.body.velocity.y) {
