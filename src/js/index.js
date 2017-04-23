@@ -101,10 +101,13 @@ function create() {
 
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
+  pretzelMakerGroup = game.add.group();
   enemyDetectionSet = [];
   pickupGroup = game.add.group();
   hudGroup = game.add.group();
   hudGroup.fixedToCamera = true;
+  textBoxGroup = this.game.add.group();
+  textBoxGroup.fixedToCamera = true;
 
   hud = Hud(game, hudDimension, heartsLocation);
 
@@ -134,15 +137,12 @@ function create() {
   pinkPretzelMaker = new PinkPretzelMaker(this, 200, 200);
   greenPretzelMaker = new GreenPretzelMaker(this, 230, 200);
   yellowPretzelMaker = new YellowPretzelMaker(this, 260, 200);
-  pretzelMakerGroup = game.add.group();
   pretzelMakerGroup.add(pinkPretzelMaker);
   pretzelMakerGroup.add(greenPretzelMaker);
   pretzelMakerGroup.add(yellowPretzelMaker);
 
   //text box
   textBox = new TextBox(this.game, 50, 100, player);
-  textBoxGroup = this.game.add.group();
-  textBoxGroup.fixedToCamera = true;
   textBoxGroup.add(textBox);
 }
 
