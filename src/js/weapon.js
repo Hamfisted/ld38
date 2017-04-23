@@ -2,8 +2,9 @@
 const Pickup = require('./pickup');
 
 const Weapon = function(game, x, y, name) {
-  Pickup.call(this, game, x, y, name)
-  this.name = name
+  Pickup.call(this, game, x, y, name);
+  this.type = 'weapon';
+  this.name = name;
 }
 Weapon.prototype = Object.create(Pickup.prototype);
 Weapon.prototype.constructor = Weapon
