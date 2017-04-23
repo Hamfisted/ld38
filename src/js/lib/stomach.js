@@ -15,7 +15,7 @@ function Stomach(game, dimensions) {
   }
 
   const meterDimensions = {
-    x: padding,
+    x: 0,
     y: padding,
     w: dimensions.w - padding * 2,
     h: dimensions.h - padding * 2
