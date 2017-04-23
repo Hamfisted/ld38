@@ -24,14 +24,14 @@ module.exports = function preloadSprites(game) {
   game.load.spritesheet('player_left_walk', 'assets/sprites/player/left_walk.png', 32, 32);
   game.load.spritesheet('player_right_walk', 'assets/sprites/player/right_walk.png', 32, 32);
 
-  game.load.spritesheet('player_up_attack', 'assets/sprites/player/up_attack.png', 32, 32);
+  // todo
+  // game.load.spritesheet('player_up_attack', 'assets/sprites/player/up_attack.png', 32, 32);
   game.load.spritesheet('player_down_attack', 'assets/sprites/player/down_attack.png', 32, 32);
   game.load.spritesheet('player_left_attack', 'assets/sprites/player/left_attack.png', 32, 32);
   game.load.spritesheet('player_right_attack', 'assets/sprites/player/right_attack.png', 32, 32);
 
 
   game.load.image('ant', 'assets/sprites/ant.png');
-  game.load.image('ant_antenna', 'assets/sprites/ant_antenna.png');
   game.load.image('npc', 'assets/sprites/npc.png');
   game.load.image('old_guy', 'assets/sprites/old_guy.png');
   game.load.image('pretzel', 'assets/sprites/pretzel.png');
@@ -41,7 +41,8 @@ module.exports = function preloadSprites(game) {
   game.load.image('ant_yellow_part', 'assets/sprites/ant_yellow_part.png');
   game.load.image('ant_green_part', 'assets/sprites/ant_green_part.png');
   game.load.image('ant_pink_part', 'assets/sprites/ant_pink_part.png');
-  game.load.image('yellow_pretzel', 'assets/sprites/yellow_pretzel.png');
+  // todo
+  // game.load.image('yellow_pretzel', 'assets/sprites/yellow_pretzel.png');
   game.load.image('green_pretzel', 'assets/sprites/green_pretzel.png');
   game.load.image('pink_pretzel', 'assets/sprites/pink_pretzel.png');
   game.load.image('yellow_pretzel_stand', 'assets/sprites/yellow_pretzel_stand.png');
