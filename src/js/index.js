@@ -178,12 +178,16 @@ function update() {
   if (Config.activeEnemyCollision) {
     game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
   }
+
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
   game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
   game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
+
+  game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
+
 }
 
 function onPlayerHit(player, enemy) {

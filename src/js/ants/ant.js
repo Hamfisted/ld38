@@ -13,7 +13,6 @@ const BehaviorState = {
 const Ant = function(game, x, y, imageName) {
   Actor.call(this, game, x, y, imageName || SPRITE_KEY);
   game.physics.arcade.enable(this);
-  this.body.immovable = true;
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
   this.setState(BehaviorState.WANDER);
