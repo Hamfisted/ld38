@@ -104,11 +104,13 @@ function create() {
 
   actorGroup.add(player);
   game.camera.follow(player);
+  // keep the spacebar event from propagating up to the browser
+  game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
   pretzel = new Pretzel(this, 150, 150, 1);
-  hockeyStick = new Weapon(this, 120, 120, 'hockey_stick')
+  hockeyStick = new Weapon(this, 320, 300, 'hockey_stick');
 
   pickupGroup.add(pretzel);
   pickupGroup.add(hockeyStick);
