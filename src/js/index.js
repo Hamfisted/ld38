@@ -14,6 +14,7 @@ const PinkPretzelMaker = require('./pink-pretzel-maker');
 const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
 const TextBox = require('./narrative/text-box');
+const preloadSprites = require('./preload-sprites');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -75,34 +76,8 @@ function preload() {
   game.load.tilemap('tilemap', 'assets/tilemaps/maps/mall_world.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'assets/tilemaps/tiles/mall_world.png');
 
-  // sheets
-  game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
-  game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
-  game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
-  game.load.spritesheet('ant_green_walk', 'assets/sprites/ant_green_walk.png', 32, 32);
-  game.load.spritesheet('ant_pink_walk', 'assets/sprites/ant_pink_walk.png', 32, 32);
-  game.load.spritesheet('ant_yellow_flying', 'assets/sprites/ant_yellow_flying.png', 32, 32);
-
-  game.load.image('ant', 'assets/sprites/ant.png');
-  game.load.image('ant_antenna', 'assets/sprites/ant_antenna.png');
-  game.load.image('npc', 'assets/sprites/npc.png');
-  game.load.image('old_guy', 'assets/sprites/old_guy.png');
-  game.load.image('pretzel', 'assets/sprites/pretzel.png');
-  game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
-  game.load.image('baseball_bat', 'assets/sprites/baseball_bat.png');
-
-  game.load.image('ant_yellow_part', 'assets/sprites/ant_yellow_part.png');
-  game.load.image('ant_green_part', 'assets/sprites/ant_green_part.png');
-  game.load.image('ant_pink_part', 'assets/sprites/ant_pink_part.png');
-  game.load.image('yellow_pretzel', 'assets/sprites/yellow_pretzel.png');
-  game.load.image('green_pretzel', 'assets/sprites/green_pretzel.png');
-  game.load.image('pink_pretzel', 'assets/sprites/pink_pretzel.png');
-  game.load.image('yellow_pretzel_stand', 'assets/sprites/yellow_pretzel_stand.png');
-  game.load.image('green_pretzel_stand', 'assets/sprites/green_pretzel_stand.png');
-  game.load.image('pink_pretzel_stand', 'assets/sprites/pink_pretzel_stand.png');
-
-  game.load.image('area', 'assets/sprites/area.png');
-  game.load.image('textbox', 'assets/sprites/textbox.png');
+  // moved all the "game.load.image()" things in here
+  preloadSprites(game);
 }
 
 function create() {
@@ -112,7 +87,7 @@ function create() {
   const heartsLocation = { x: 128, y: 32 };
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
-  player = new Player(this);
+  player = new Player(game);
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 6;
   player.health = 4;

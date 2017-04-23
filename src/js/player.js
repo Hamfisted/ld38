@@ -32,20 +32,20 @@ Player.prototype.updateControls = function (cursors) {
   }
 
   if (cursors.left.isDown) {
-    this.frame = 3;
+    this.changeAnimation('player_left_walk');
     this.body.velocity.x = -MOVE_SPEED;
   } else if (cursors.right.isDown) {
-    this.frame = 1;
+    this.changeAnimation('player_right_walk');
     this.body.velocity.x = MOVE_SPEED;
   } else {
     this.body.velocity.x = 0;
   }
 
   if (cursors.up.isDown) {
-    this.frame = 0;
+    this.changeAnimation('player_up_walk');
     this.body.velocity.y = -MOVE_SPEED;
   } else if (cursors.down.isDown) {
-    this.frame = 2;
+    this.changeAnimation('player_down_walk');
     this.body.velocity.y = MOVE_SPEED;
   } else {
     this.body.velocity.y = 0;
@@ -59,6 +59,15 @@ Player.prototype.updateControls = function (cursors) {
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     this.swing();
   }
+};
+
+// pretty broken
+Player.prototype.changeAnimation = function(name) {
+  this.loadTexture(name, 0);
+  this.animations.add('walk');
+  const rate = 10;
+  const shouldLoop = true;
+  this.animations.play('walk', rate, shouldLoop);
 };
 
 Player.prototype.swing = function () {
