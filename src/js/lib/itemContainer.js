@@ -11,6 +11,18 @@ function ItemContainer(game, dimensions, pickupGroup, itemType) {
     return [name, sprite];
   });
 
+  const style = {
+    font: '10px Arial',
+    fill: '#fff',
+    align: 'center',
+    wordWrap: true,
+    wordWrapWidth: this.width - 20,
+  };
+
+  const textObj = game.add.text(0, dimensions.h - 10, itemType, style);
+
+  itemGroup.add(textObj);
+
   return {
     update: function(player) {
       const pickupName = player[itemType] && player[itemType].name;

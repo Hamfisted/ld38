@@ -1,21 +1,39 @@
 const { range } = require('./utils');
 const HeartContainer = require('./heartContainer');
-const Stomach = require('./stomach');
+// const Stomach = require('./stomach');
 const Bar = require('./bar');
 const ItemContainer = require('./itemContainer');
 const InsectPartCounter = require('./insectPartCounter')
 
-function Hud(game, hudDimension, heartsLocation, pickupGroup) {
+function Hud(game, hudDimension, pickupGroup) {
+
+
   const { x, y, w, h } = hudDimension;
   const hudGroup = game.make.group();
   const heartSize = 7
 
-  hudGroup.add(Bar(game, hudDimension, 0x0000FF));
+  hudGroup.add(Bar(game, hudDimension, 0x000000));
 
   function playerHud(player) {
     // console.log("player = %j", player)
-
     const { maxHealth } = player;
+
+
+
+
+
+
+    // const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
+    const weaponContainer = ItemContainer(game, {x: 5, y: 5, w: 50, h: 40}, pickupGroup, 'weapon');
+    const pretzelContainer = ItemContainer(game, {x: 45, y: 5, w: 50, h: 40}, pickupGroup, 'pretzel');
+    const questContainer = ItemContainer(game, {x: 85, y: 5, w: 50, h: 40}, pickupGroup, 'item');
+
+    const yellowInsectPart = InsectPartCounter(game, {x: 120, y: 2, w: 50, h: 15}, 'yellow');
+    const greenInsectPart = InsectPartCounter(game, {x: 120, y: 15, w: 50, h: 15}, 'green');
+    const pinkInsectPart = InsectPartCounter(game, {x: 120, y: 28, w: 50, h: 15}, 'pink');
+
+    const heartsLocation = { x: 160, y: 35 };
+
     const heartContainers = range(Math.ceil(maxHealth / 2)).map(function (o) {
       return HeartContainer(game, x + heartsLocation.x + o * heartSize, y + heartsLocation.y);
     });
@@ -24,16 +42,10 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
       hudGroup.add(heart.group);
     });
 
-    const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
-    const pretzelContainer = ItemContainer(game, {x: 80, y: 10, w: 50, h: 20}, pickupGroup, 'pretzel');
-    const weaponContainer = ItemContainer(game, {x: 120, y: 10, w: 50, h: 20}, pickupGroup, 'weapon');
-    const yellowInsectPart = InsectPartCounter(game, {x: 190, y: 0, w: 50, h: 20}, 'yellow');
-    const greenInsectPart = InsectPartCounter(game, {x: 190, y: 10, w: 50, h: 20}, 'green');
-    const pinkInsectPart = InsectPartCounter(game, {x: 190, y: 20, w: 50, h: 20}, 'pink');
-
-    hudGroup.add(stomach.group);
+    // hudGroup.add(stomach.group);
     hudGroup.add(pretzelContainer.group);
     hudGroup.add(weaponContainer.group);
+    hudGroup.add(questContainer.group);
     hudGroup.add(yellowInsectPart.group);
     hudGroup.add(greenInsectPart.group);
     hudGroup.add(pinkInsectPart.group);
@@ -54,10 +66,11 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
     }
 
     function update(player) {
-      stomach.update(player);
+      // stomach.update(player);
       updateHearts(player);
       pretzelContainer.update(player);
       weaponContainer.update(player);
+      questContainer.update(player);
       yellowInsectPart.update(player);
       greenInsectPart.update(player);
       pinkInsectPart.update(player);
