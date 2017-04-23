@@ -10,8 +10,6 @@ const MALL_WORLD_TILEMAP = "mall_world_tilemap";
 const SCENE_OBJECT_TILES = "scene_objects_tiles";
 const MALL_WORLD_TILES = "mall_world_tiles";
 
-// new WorldMap(game, 'mall_world', 'tiles', 'tilemap')
-// function(game, tileset, tiles, tilemap)
 // map.js
 const WorldMap = function(game) {
   // Tilemap object
