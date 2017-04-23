@@ -33,13 +33,85 @@
                  "gid":901,
                  "height":16,
                  "id":22,
-                 "name":"",
+                 "name":"Old Ant",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
                  "x":192,
                  "y":432
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":0,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":0,
+         "name":"GreenAnts",
+         "objects":[
+                {
+                 "gid":904,
+                 "height":16,
+                 "id":27,
+                 "name":"Green Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":576
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":0,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":0,
+         "name":"PinkAnts",
+         "objects":[
+                {
+                 "gid":905,
+                 "height":16,
+                 "id":29,
+                 "name":"Pink Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":304,
+                 "y":640
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":0,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":0,
+         "name":"YellowAnts",
+         "objects":[
+                {
+                 "gid":906,
+                 "height":16,
+                 "id":28,
+                 "name":"Yellow Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":256,
+                 "y":576
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -98,7 +170,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":23,
+ "nextobjectid":30,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
