@@ -7,6 +7,10 @@ const Ant = require('./ant');
 const Hud = require('./lib/hud');
 const Pretzel = require('./pretzel');
 const Weapon = require('./weapon');
+const PinkPretzelMaker = require('./pink-pretzel-maker');
+const GreenPretzelMaker = require('./green-pretzel-maker');
+const YellowPretzelMaker = require('./yellow-pretzel-maker');
+const TextBox = require('./text-box');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -24,6 +28,12 @@ let pretzel;
 let hockeyStick;
 let pickupGroup;
 let enemyDetectionSet;
+let pinkPretzelMaker;
+let yellowPretzelMaker;
+let greenPretzelMaker;
+let pretzelMakerGroup;
+let textBox;
+let textBoxGroup;
 
 function init() {
   // debug mode cfg
@@ -67,6 +77,10 @@ function preload() {
   game.load.image('pretzel', 'assets/sprites/pretzel.png');
   game.load.image('hockey_stick', 'assets/sprites/hockey_stick.png');
   game.load.image('area', 'assets/sprites/area.png');
+  game.load.image('yellowPretzelMaker', 'assets/sprites/yellowPretzelMaker.png');
+  game.load.image('greenPretzelMaker', 'assets/sprites/greenPretzelmaker.png');
+  game.load.image('pinkPretzelMaker', 'assets/sprites/pinkPretzelMaker.png');
+  game.load.image('textbox', 'assets/sprites/textbox.png');
 }
 
 function create() {
@@ -116,6 +130,20 @@ function create() {
   pickupGroup.add(hockeyStick);
 
   curPlayerHud = hud.playerHud(player);
+  // pretzel makers
+  pinkPretzelMaker = new PinkPretzelMaker(this, 200, 200);
+  greenPretzelMaker = new GreenPretzelMaker(this, 230, 200);
+  yellowPretzelMaker = new YellowPretzelMaker(this, 260, 200);
+  pretzelMakerGroup = game.add.group();
+  pretzelMakerGroup.add(pinkPretzelMaker);
+  pretzelMakerGroup.add(greenPretzelMaker);
+  pretzelMakerGroup.add(yellowPretzelMaker);
+
+  //text box
+  textBox = new TextBox(this.game, 50, 100, player);
+  textBoxGroup = this.game.add.group();
+  textBoxGroup.fixedToCamera = true;
+  textBoxGroup.add(textBox);
 }
 
 
@@ -129,6 +157,7 @@ function update() {
   game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
+  game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
 }
 
 function onPlayerHit(player, enemy) {
@@ -144,6 +173,10 @@ function onEnemyDetect(player, bubble) {
 function pickupCollisionHandler(player, pickup){
   player.pickupItem(pickup);
   pickup.kill();
+}
+
+function pretzelMakerCollisionHandler(player, pretzelMaker){
+  textBox.displayText(pretzelMaker.textString);
 }
 
 function render() {
