@@ -10,7 +10,7 @@ const Weapon = require('./weapon');
 const PinkPretzelMaker = require('./pink-pretzel-maker');
 const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
-const TextBox = require('./text-box');
+const TextBox = require('./narrative/text-box');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -22,6 +22,7 @@ let player;
 let cursors;
 let actorGroup;
 let enemyGroup;
+let hudGroup;
 let hud;
 let curPlayerHud;
 let pretzel;
@@ -99,11 +100,12 @@ function create() {
   player.maxFullness = 100;
   player.fullness = 100;
 
+  // sprite group creation - order matters!
+  pretzelMakerGroup = game.add.group();
+  pickupGroup = game.add.group();
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
-  pretzelMakerGroup = game.add.group();
   enemyDetectionSet = [];
-  pickupGroup = game.add.group();
   hudGroup = game.add.group();
   hudGroup.fixedToCamera = true;
   textBoxGroup = this.game.add.group();
@@ -132,13 +134,13 @@ function create() {
 
   hud = Hud(game, hudDimension, heartsLocation, pickupGroup);
 
-  hudGroup.add(hud.group)
+  hudGroup.add(hud.group);
 
   curPlayerHud = hud.playerHud(player);
   // pretzel makers
   pinkPretzelMaker = new PinkPretzelMaker(this, 200, 200);
-  greenPretzelMaker = new GreenPretzelMaker(this, 230, 200);
-  yellowPretzelMaker = new YellowPretzelMaker(this, 260, 200);
+  greenPretzelMaker = new GreenPretzelMaker(this, 240, 200);
+  yellowPretzelMaker = new YellowPretzelMaker(this, 280, 200);
   pretzelMakerGroup.add(pinkPretzelMaker);
   pretzelMakerGroup.add(greenPretzelMaker);
   pretzelMakerGroup.add(yellowPretzelMaker);
@@ -179,7 +181,7 @@ function pickupCollisionHandler(player, pickup){
 }
 
 function pretzelMakerCollisionHandler(player, pretzelMaker){
-  textBox.displayText(pretzelMaker.textString);
+  pretzelMaker.configPrompt(player, textBox);
   const pretzelEjecttionY = 60;
   pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, 2));
 }
