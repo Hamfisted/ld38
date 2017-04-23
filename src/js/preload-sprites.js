@@ -2,6 +2,8 @@ module.exports = function preloadSprites(game) {
   // sheets
   game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
   game.load.spritesheet('hearts', 'assets/sprites/hearts.png', 7, 7);
+  game.load.spritesheet('hearts42x14', 'assets/sprites/hearts42x14.png', 7, 7);
+  game.load.spritesheet('hearts63x21', 'assets/sprites/hearts63x21.png', 21, 21);
   game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
   game.load.spritesheet('ant_green_walk', 'assets/sprites/ant_green_walk.png', 32, 32);
   game.load.spritesheet('ant_pink_walk', 'assets/sprites/ant_pink_walk.png', 32, 32);
