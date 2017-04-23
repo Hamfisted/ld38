@@ -40,7 +40,7 @@ function init() {
   if (Config.debug) {
     game.time.advancedTiming = true;
     game.debug.font = '8px Arial';
-    game.debug.renderShadow = false;
+    game.debug.renderShadow = true;
   }
 
 
