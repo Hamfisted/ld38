@@ -81,6 +81,7 @@ function preload() {
   // moved all the "game.load.image()" things in here
   preloadSprites(game);
   preloadBeats(game);
+  game.load.bitmapFont('pixel8px', 'assets/fonts/pixel.png', 'assets/fonts/pixel.xml');
 }
 
 function create() {

@@ -6,14 +6,8 @@ const TextBox = function(game, x, y, player) {
   this.player = player;
   this.visible = false;
   this.isPrompting = false;
-  this.style = {
-    font: '10px Arial',
-    fill: '#fff',
-    align: 'center',
-    wordWrap: true,
-    wordWrapWidth: this.width - 20,
-  };
-  this.textObj = this.game.add.text(10, 10, '', this.style);
+  this.textObj = this.game.add.bitmapText(10, 10, 'pixel8px', '', 8);
+  this.textObj.maxWidth = this.width - 20;
   this.addChild(this.textObj);
 
   // text animation timer

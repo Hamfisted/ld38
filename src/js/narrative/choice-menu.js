@@ -2,25 +2,17 @@ const ChoiceMenu = function(game, choices, x, y) {
   Phaser.Sprite.call(this, game, x, y);
   this.choices = choices;
 
-  this.activeFill = '#FFF';
-  this.inactiveFill = '#CCC';
-
-  this.style = {
-    font: '10px Arial',
-    fill: this.activeFill,
-    align: 'center',
-    wordWrap: true,
-    wordWrapWidth: this.width - 20,
-  };
+  this.activeAlpha = 1;
+  this.inactiveAlpha = 0.5;
 
   this.choiceTextObjects = [];
   this.highlightedChoiceIndex = 0;
 
 
   choices.forEach(function(choice, i) {
-    const text = this.game.add.text(10, 10*i, choice.message, this.style);
+    const text = this.game.add.bitmapText(10, 10*i, 'pixel8px', choice.message, 8);
     if (i > 0) {
-      text.fill = this.inactiveFill;
+      text.alpha = this.inactiveAlpha;
     }
     this.choiceTextObjects.push(text);
     this.addChild(text);
@@ -47,9 +39,9 @@ ChoiceMenu.prototype.onCursorInput = function(direction) {
 
 ChoiceMenu.prototype.highlightChoice = function(index) {
   this.choiceTextObjects.forEach(function(obj) {
-    obj.fill = this.inactiveFill;
+    obj.alpha = this.inactiveAlpha;
   }, this);
-  this.choiceTextObjects[index].fill = this.activeFill;
+  this.choiceTextObjects[index].alpha = this.activeAlpha;
 };
 
 ChoiceMenu.prototype.selectChoice = function() {
