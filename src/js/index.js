@@ -28,6 +28,7 @@ let player;
 let cursors;
 let actorGroup;
 let enemyGroup;
+let npcGroup;
 let hudGroup;
 let hud;
 let curPlayerHud;
@@ -100,6 +101,7 @@ function create() {
   pickupGroup = game.add.group();
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
+  npcGroup = game.add.group();
   enemyDetectionSet = [];
 
   // Example to load ants
@@ -124,7 +126,10 @@ function create() {
   textBoxGroup = this.game.add.group();
   textBoxGroup.fixedToCamera = true;
 
-  worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
+  worldMap.spawn(game, Npc, (npc) => {
+    actorGroup.add(npc)
+    npcGroup.add(npc);
+  });
 
   actorGroup.add(player);
   game.camera.follow(player);
@@ -177,6 +182,7 @@ function update() {
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
+  game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
 }
 
 function onPlayerHit(player, enemy) {
@@ -198,6 +204,10 @@ function pretzelMakerCollisionHandler(player, pretzelMaker){
   pretzelMaker.configPrompt(player, textBox);
   const pretzelEjecttionY = 60;
   pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, 2));
+}
+
+function npcHandler(player, npc) {
+  console.log("grunts")
 }
 
 function render() {

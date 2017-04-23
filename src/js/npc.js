@@ -1,5 +1,5 @@
 const Actor = require('./actor');
-const SPRITE_KEY = 'npc';
+const SPRITE_KEY = 'old_guy';
 const OBJECT_LAYER_NAME = 'Npcs';
 
 const Npc = function(game, x, y) {
