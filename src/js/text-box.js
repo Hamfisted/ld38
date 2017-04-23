@@ -8,7 +8,6 @@ const TextBox = function(game, x, y, player) {
         align: "center",
         wordWrap: true, wordWrapWidth: this.width - 20
   };
-  game.physics.arcade.enable(this);
 }
 
 TextBox.prototype = Object.create(Phaser.Sprite.prototype);
