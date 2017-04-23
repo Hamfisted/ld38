@@ -24,10 +24,12 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
     });
 
     const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
-    const itemContainer = ItemContainer(game, {x: 80, y: 10, w: 50, h: 20}, pickupGroup);
+    const pretzelContainer = ItemContainer(game, {x: 80, y: 10, w: 50, h: 20}, pickupGroup, 'pretzel');
+    const weaponContainer = ItemContainer(game, {x: 120, y: 10, w: 50, h: 20}, pickupGroup, 'weapon');
 
     hudGroup.add(stomach.group);
-    hudGroup.add(itemContainer.group);
+    hudGroup.add(pretzelContainer.group);
+    hudGroup.add(weaponContainer.group);
 
     function drawHeartAtOffsets(heartType, offset, end) {
       heartContainers.slice(offset, end).map(function (heartContainer) {
@@ -47,7 +49,8 @@ function Hud(game, hudDimension, heartsLocation, pickupGroup) {
     function update(player) {
       stomach.update(player);
       updateHearts(player);
-      itemContainer.update(player);
+      pretzelContainer.update(player);
+      weaponContainer.update(player);
     }
 
     return { update };

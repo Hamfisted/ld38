@@ -1,4 +1,4 @@
-function ItemContainer(game, dimensions, pickupGroup) {
+function ItemContainer(game, dimensions, pickupGroup, itemType) {
   const itemGroup = game.make.group();
   itemGroup.x = dimensions.x;
   itemGroup.y = dimensions.y;
@@ -15,12 +15,10 @@ function ItemContainer(game, dimensions, pickupGroup) {
 
   return {
     update: function(player) {
-      const { weapon, pretzel } = player;
-      const weaponName = weapon && weapon.name;
-      const pretzelName = pretzel && pretzel.name;
+      const pickupName = player[itemType] && player[itemType].name;
 
       spritesPairs.forEach(function ([name, sprite]) {
-        sprite.alpha = ((name === weaponName) ? 1 : 0) || ((name === pretzelName) ? 1 : 0);
+        sprite.alpha = ((name === pickupName) ? 1 : 0);
       });
     },
     group: itemGroup
