@@ -3,8 +3,6 @@ const Pickup = require('./pickup');
 
 const InsectPart = function(game, x, y, type) {
 
-
-
   this.type = type
   this.name = 'insectPart';
   if (this.type === 1){
