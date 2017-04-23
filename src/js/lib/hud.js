@@ -20,14 +20,14 @@ function Hud(game, hudDimension, pickupGroup) {
 
     // const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
     const weaponContainer = ItemContainer(game, {x: 5, y: 5, w: 50, h: 40}, pickupGroup, 'weapon');
-    const pretzelContainer = ItemContainer(game, {x: 45, y: 5, w: 50, h: 40}, pickupGroup, 'pretzel');
-    const questContainer = ItemContainer(game, {x: 85, y: 5, w: 50, h: 40}, pickupGroup, 'item');
+    const pretzelContainer = ItemContainer(game, {x: 55, y: 5, w: 50, h: 40}, pickupGroup, 'pretzel');
+    const questContainer = ItemContainer(game, {x: 105, y: 5, w: 50, h: 40}, pickupGroup, 'item');
 
-    const yellowInsectPart = InsectPartCounter(game, {x: 120, y: 2, w: 50, h: 15}, 'yellow');
-    const greenInsectPart = InsectPartCounter(game, {x: 120, y: 15, w: 50, h: 15}, 'green');
-    const pinkInsectPart = InsectPartCounter(game, {x: 120, y: 28, w: 50, h: 15}, 'pink');
+    const yellowInsectPart = InsectPartCounter(game, {x: 140, y: 2, w: 50, h: 15}, 'yellow');
+    const greenInsectPart = InsectPartCounter(game, {x: 140, y: 15, w: 50, h: 15}, 'green');
+    const pinkInsectPart = InsectPartCounter(game, {x: 140, y: 28, w: 50, h: 15}, 'pink');
 
-    const heartSetLocation = { x: 170, y: 30, h: 14 };
+    const heartSetLocation = { x: 190, y: 30, h: 14 };
 
     const heartContainers = range(Math.ceil(maxHealth / 2)).map(function (o) {
 

@@ -11,16 +11,7 @@ function ItemContainer(game, dimensions, pickupGroup, itemType) {
     return [name, sprite];
   });
 
-  const style = {
-    font: '10px Arial',
-    fill: '#fff',
-    align: 'center',
-    wordWrap: true,
-    wordWrapWidth: this.width - 20,
-  };
-
-  const textObj = game.add.text(0, dimensions.h - 10, itemType, style);
-
+  const textObj = game.add.bitmapText(0, dimensions.h - 8, 'pixel8px', itemType, 8);
   itemGroup.add(textObj);
 
   return {

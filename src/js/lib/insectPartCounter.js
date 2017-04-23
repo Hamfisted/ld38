@@ -6,14 +6,11 @@ function insectPartCounter(game, dimensions, insectPartColor) {
 
   const height = dimensions.h;
 
-  const style = {
-    font: height + 'px Arial',
-    fill: '#fff',
-    align: 'center',
-    wordWrap: true
-  };
+  const scaleInteger = Math.floor(dimensions.h / 8);
+  const numberSize = (scaleInteger * 8);
+  const textHeight = Math.floor((height - numberSize) / 2);
 
-  const textObj = game.add.text(18, 0, 'x 0', style);
+  const textObj = game.add.bitmapText(17, textHeight, 'pixel8px', 'x 0', numberSize);
 
   const sprite = game.make.sprite(0, 0, 'ant_' + insectPartColor + '_part');
   const scalingParameter = height / sprite.height;
