@@ -25,6 +25,11 @@ const Player = function Player(game, x=0, y=0) {
       shouldLoop: false,
       frames: [1, 2, 3, 4], // skip the first one
     },
+    hurt: {
+      rate: 7,
+      shouldLoop: false,
+      frames: [1, 2],
+    },
   };
 
   this.direction = 'down';
@@ -46,6 +51,8 @@ const Player = function Player(game, x=0, y=0) {
   this.canSwing = true;
   this.isInDialogue = false;
   game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
+
+  this.hitStunTimeout = 300;
 };
 
 Player.SPRITE_KEY = SPRITE_KEY;
@@ -54,31 +61,31 @@ Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (cursors) {
-  if (this.isInDialogue) {
+  if (this.isInDialogue || this.inHitStun || this.swingTimer.length) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
-    this.changeAnimation('bob');
-    return;
-  }
-
-  if (cursors.up.isDown) {
-    this.direction = 'up';
-    this.body.velocity.y = -MOVE_SPEED;
-  } else if (cursors.down.isDown) {
-    this.direction = 'down';
-    this.body.velocity.y = MOVE_SPEED;
+  } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+    this.swing();
   } else {
-    this.body.velocity.y = 0;
-  }
+    if (cursors.up.isDown) {
+      this.direction = 'up';
+      this.body.velocity.y = -MOVE_SPEED;
+    } else if (cursors.down.isDown) {
+      this.direction = 'down';
+      this.body.velocity.y = MOVE_SPEED;
+    } else {
+      this.body.velocity.y = 0;
+    }
 
-  if (cursors.left.isDown) {
-    this.direction = 'left';
-    this.body.velocity.x = -MOVE_SPEED;
-  } else if (cursors.right.isDown) {
-    this.direction = 'right';
-    this.body.velocity.x = MOVE_SPEED;
-  } else {
-    this.body.velocity.x = 0;
+    if (cursors.left.isDown) {
+      this.direction = 'left';
+      this.body.velocity.x = -MOVE_SPEED;
+    } else if (cursors.right.isDown) {
+      this.direction = 'right';
+      this.body.velocity.x = MOVE_SPEED;
+    } else {
+      this.body.velocity.x = 0;
+    }
   }
 
   if (this.body.velocity.x && this.body.velocity.y) {
@@ -86,16 +93,10 @@ Player.prototype.updateControls = function (cursors) {
     this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
   }
 
-  if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-    this.swing();
-  }
-
-  if (false /* todo: is getting hurt */) {
-    // todo
-  } else if (this.swingTimer.length) {
-    this.body.velocity.x = 0;
-    this.body.velocity.y = 0;
+  if (this.swingTimer.length) {
     // continue playing animation
+  } else if (this.inHitStun) {
+    this.changeAnimation('hurt');
   } else if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
     this.changeAnimation('walk');
   } else {
@@ -103,7 +104,6 @@ Player.prototype.updateControls = function (cursors) {
   }
 };
 
-// pretty broken
 Player.prototype.changeAnimation = function(type) {
   const animData = this.animationData[type];
   const name = `player_${this.direction}_${type}`;
