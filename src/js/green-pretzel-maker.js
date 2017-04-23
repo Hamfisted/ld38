@@ -3,7 +3,7 @@ const PretzelMaker = require('./pretzel-maker');
 
 const GreenPretzelMaker = function(game, x, y) {
   this.type = 2;
-  this.imageName = 'greenPretzelMaker';
+  this.imageName = 'green_pretzel_stand';
   this.pretzelColor = 'green';
   PretzelMaker.call(this, game, x, y)
 }
