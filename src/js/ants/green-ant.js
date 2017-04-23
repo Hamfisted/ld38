@@ -6,7 +6,7 @@ const GreenAnt = function(game, x, y) {
   Ant.call(this, game, x, y, 'ant_green_walk');
 };
 
-GreenAnt.prototype = Object.create(GreenAnt.prototype);
+GreenAnt.prototype = Object.create(Ant.prototype);
 GreenAnt.prototype.constructor = GreenAnt;
 GreenAnt.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 

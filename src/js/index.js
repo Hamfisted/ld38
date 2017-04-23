@@ -100,17 +100,28 @@ function create() {
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
   enemyDetectionSet = [];
+
+  // Example to load ants
+  worldMap.spawn(game, GreenAnt, (ant) => {
+    enemyGroup.add(ant);
+    enemyDetectionSet.push(ant.detectionBubble);
+  });
+
+  worldMap.spawn(game, PinkAnt, (ant) => {
+    enemyGroup.add(ant);
+    enemyDetectionSet.push(ant.detectionBubble);
+  });
+
+  worldMap.spawn(game, YellowAnt, (ant) => {
+    enemyGroup.add(ant);
+    enemyDetectionSet.push(ant.detectionBubble);
+  });
+  // End ants example
+
   hudGroup = game.add.group();
   hudGroup.fixedToCamera = true;
   textBoxGroup = this.game.add.group();
   textBoxGroup.fixedToCamera = true;
-
-
-
-  worldMap.spawn(game, Ant, (ant) => {
-    enemyGroup.add(ant);
-    enemyDetectionSet.push(ant.detectionBubble);
-  });
 
   worldMap.spawn(game, Npc, (npc) => actorGroup.add(npc));
 
@@ -145,6 +156,7 @@ function create() {
   //text box
   textBox = new TextBox(this.game, 50, 100, player);
   textBoxGroup.add(textBox);
+
 }
 
 
