@@ -11,6 +11,20 @@ const Player = function Player(game, x=0, y=0) {
   game.physics.arcade.enable(this);
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
+  this.animationData = {
+    bob: {
+      rate: 3,
+      shouldLoop: true,
+    },
+    walk: {
+      rate: 10,
+      shouldLoop: true,
+    },
+  };
+
+  this.direction = 'down';
+  this.changeAnimation('bob');
+
   this.quest = null;
   this.insectParts = {
     yellow: 0,
@@ -35,24 +49,29 @@ Player.prototype.updateControls = function (cursors) {
   if (this.isInDialogue) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
+    this.changeAnimation('bob');
     return;
   }
 
   if (cursors.left.isDown) {
-    this.changeAnimation('player_left_walk');
+    this.direction = 'left';
+    this.changeAnimation('walk');
     this.body.velocity.x = -MOVE_SPEED;
   } else if (cursors.right.isDown) {
-    this.changeAnimation('player_right_walk');
+    this.direction = 'right';
+    this.changeAnimation('walk');
     this.body.velocity.x = MOVE_SPEED;
   } else {
     this.body.velocity.x = 0;
   }
 
   if (cursors.up.isDown) {
-    this.changeAnimation('player_up_walk');
+    this.direction = 'up';
+    this.changeAnimation('walk');
     this.body.velocity.y = -MOVE_SPEED;
   } else if (cursors.down.isDown) {
-    this.changeAnimation('player_down_walk');
+    this.direction = 'down';
+    this.changeAnimation('walk');
     this.body.velocity.y = MOVE_SPEED;
   } else {
     this.body.velocity.y = 0;
@@ -63,18 +82,25 @@ Player.prototype.updateControls = function (cursors) {
     this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
   }
 
+  if (!this.body.velocity.x && !this.body.velocity.y) {
+    this.changeAnimation('bob');
+  }
+
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     this.swing();
   }
 };
 
 // pretty broken
-Player.prototype.changeAnimation = function(name) {
+Player.prototype.changeAnimation = function(type) {
+  const animData = this.animationData[type];
+  const name = `player_${this.direction}_${type}`;
+  if (this.animations.name === name) {
+    return;
+  }
   this.loadTexture(name, 0);
-  this.animations.add('walk');
-  const rate = 10;
-  const shouldLoop = true;
-  this.animations.play('walk', rate, shouldLoop);
+  this.animations.add(name);
+  this.animations.play(name, animData.rate, animData.shouldLoop);
 };
 
 Player.prototype.swing = function () {
