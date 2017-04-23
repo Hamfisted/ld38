@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script>
+      window.addEventListener('error', function (e) {
+        var h1 = document.getElementById('loading');
+        h1.textContent = 'error';
+      });
+    </script>
+    <div class="loading-container">
+      <h1 id="loading">Loading...</h1>
+    </div>
+    <div id="game"></div>
+    <pre class="controls">Controls:
+Arrow keys / WASD / ZQSD to move
+Space to attack/interact
+F to eat a pretzel
+
+</pre>
+    <pre class="credits">Created in 72 hours for&nbsp;<a href="https://ldjam.com/events/ludum-dare/38/mall-world">Ludum Dare 38</a>&nbsp;by:
+      <pre>-- Art &amp; Animation--
+Chris Scott
+Xing Ye
+
+-- Music --
+James Do
+
+-- Programming --
+Matt Dannenberg
+Chris Kim
+Diane Losardo
+Tyler Parker
+Brian Shaginaw
+Greg Thompson
+
+-- Writing --
+Leo Faierman
+Laura Patterson</pre></pre>
+    <script src="src/js/vendor/phaser-v2.6.2.min.js"></script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
