@@ -1,5 +1,5 @@
-const Config = require('./config');
-const Actor = require('./actor');
+const Config = require('../config');
+const Actor = require('../actor');
 
 const SPRITE_KEY='ant';
 const OBJECT_LAYER_NAME='Ants';
@@ -13,8 +13,8 @@ const BehaviorState = {
 const ATTACK_SPEED = 90;
 const WANDER_SPEED = 50;
 
-const Ant = function(game, x, y) {
-  Actor.call(this, game, x, y, SPRITE_KEY);
+const Ant = function(game, x, y, imageName) {
+  Actor.call(this, game, x, y, imageName || SPRITE_KEY);
   game.physics.arcade.enable(this);
   this.body.immovable = true;
   this.moveTo = new Phaser.Point(100, 100);

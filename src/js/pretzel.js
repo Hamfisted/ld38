@@ -2,7 +2,7 @@
 const Pickup = require('./pickup');
 
 const Pretzel = function(game, x, y, type) {
-  Pickup.call(this, game, x, y, 'pretzel')
+  Pickup.call(this, game, x, y, 'green_pretzel');
   this.name = 'pretzel'
   this.type = type
   if (type === 1){
