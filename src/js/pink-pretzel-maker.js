@@ -4,6 +4,7 @@ const PretzelMaker = require('./pretzel-maker');
 const PinkPretzelMaker = function(game, x, y) {
   this.type = 3;
   this.imageName = 'pinkPretzelMaker';
+  this.pretzelColor = 'pink';
   PretzelMaker.call(this, game, x, y)
 }
 PinkPretzelMaker.prototype = Object.create(PretzelMaker.prototype);
