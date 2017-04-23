@@ -91,7 +91,7 @@ function create() {
   player = new Player(game);
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 6;
-  player.health = 4;
+  player.health = 5;
   player.maxFullness = 100;
   player.fullness = 100;
 

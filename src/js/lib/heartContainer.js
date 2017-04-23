@@ -8,13 +8,11 @@ function HeartContainer(game, heartDimensions) {
   heartGroup.y = y;
 
 
-  const fullHeart = game.make.sprite(0, 0, 'hearts', 0);
-  const halfHeart = game.make.sprite(0, 0, 'hearts', 1);
-  const emptyHeart = game.make.sprite(0, 0, 'hearts', 2);
+  const fullHeart = game.make.sprite(0, 0, 'hearts42x14', 0);
+  const halfHeart = game.make.sprite(0, 0, 'hearts42x14', 1);
+  const emptyHeart = game.make.sprite(0, 0, 'hearts42x14', 2);
 
   const scalingParameter = h / fullHeart.height;
-
-
 
   heartGroup.scale.setTo(scalingParameter , scalingParameter);
 
