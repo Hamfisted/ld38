@@ -18,11 +18,6 @@ function Hud(game, hudDimension, pickupGroup) {
     // console.log("player = %j", player)
     const { maxHealth } = player;
 
-
-
-
-
-
     // const stomach = Stomach(game, {x: 10, y: 10, w: 50, h: 20});
     const weaponContainer = ItemContainer(game, {x: 5, y: 5, w: 50, h: 40}, pickupGroup, 'weapon');
     const pretzelContainer = ItemContainer(game, {x: 45, y: 5, w: 50, h: 40}, pickupGroup, 'pretzel');
@@ -32,10 +27,16 @@ function Hud(game, hudDimension, pickupGroup) {
     const greenInsectPart = InsectPartCounter(game, {x: 120, y: 15, w: 50, h: 15}, 'green');
     const pinkInsectPart = InsectPartCounter(game, {x: 120, y: 28, w: 50, h: 15}, 'pink');
 
-    const heartsLocation = { x: 160, y: 35 };
+    const heartSetLocation = { x: 160, y: 23, h: 20 };
 
     const heartContainers = range(Math.ceil(maxHealth / 2)).map(function (o) {
-      return HeartContainer(game, x + heartsLocation.x + o * heartSize, y + heartsLocation.y);
+
+      const heartDim = {
+        x: x + heartSetLocation.x + o * heartSetLocation.h,
+        y: y + heartSetLocation.y,
+        h: heartSetLocation.h
+      }
+      return HeartContainer(game, heartDim);
     });
 
     heartContainers.map(function (heart) {
