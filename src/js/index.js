@@ -163,7 +163,7 @@ function update() {
   curPlayerHud.update(player);
   player.updateControls(cursors);
   game.physics.arcade.collide(actorGroup);
-  if (Config.activeEnemies) {
+  if (Config.activeEnemyCollision) {
     game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
   }
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);

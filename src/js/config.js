@@ -1,4 +1,5 @@
 module.exports = {
   debug: true,
-  activeEnemies: false,
+  activeEnemies: true,
+  activeEnemyCollision: false,
 };
