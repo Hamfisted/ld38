@@ -50,6 +50,78 @@
         }, 
         {
          "draworder":"topdown",
+         "height":60,
+         "name":"GreenAnts",
+         "objects":[
+                {
+                 "gid":904,
+                 "height":16,
+                 "id":27,
+                 "name":"Green Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":208,
+                 "y":576
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":99,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":60,
+         "name":"PinkAnts",
+         "objects":[
+                {
+                 "gid":905,
+                 "height":16,
+                 "id":29,
+                 "name":"Pink Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":304,
+                 "y":640
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":99,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":60,
+         "name":"YellowAnts",
+         "objects":[
+                {
+                 "gid":906,
+                 "height":16,
+                 "id":28,
+                 "name":"Yellow Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":256,
+                 "y":576
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":99,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "height":0,
          "name":"GreenAnts",
          "objects":[
