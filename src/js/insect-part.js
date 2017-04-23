@@ -2,8 +2,11 @@
 const Pickup = require('./pickup');
 
 const InsectPart = function(game, x, y, type) {
-  Pickup.call(this, game, x, y, type)
+
+
+
   this.type = type
+  this.name = 'insectPart';
   if (this.type === 1){
     this.color = 'yellow'
   }
@@ -13,6 +16,8 @@ const InsectPart = function(game, x, y, type) {
   else if (this.type === 3){
     this.color = 'pink'
   }
+
+  Pickup.call(this, game, x, y, 'ant_' + this.color + '_part')
 }
 InsectPart.prototype = Object.create(Pickup.prototype);
 InsectPart.prototype.constructor = InsectPart
@@ -20,6 +25,4 @@ InsectPart.prototype.constructor = InsectPart
 InsectPart.prototype.getMetaData = function() {
   return {type: this.type, color: this.color}
 }
-module.exports = InsectPart
-
-
+module.exports = InsectPart;

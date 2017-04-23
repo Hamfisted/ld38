@@ -3,7 +3,7 @@ const Pickup = require('./pickup');
 
 const Pretzel = function(game, x, y, type) {
   Pickup.call(this, game, x, y, 'green_pretzel');
-  this.name = 'pretzel'
+  this.name = 'green_pretzel'
   this.type = type
   if (type === 1){
     this.hp = 10
