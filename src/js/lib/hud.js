@@ -27,7 +27,7 @@ function Hud(game, hudDimension, pickupGroup) {
     const greenInsectPart = InsectPartCounter(game, {x: 140, y: 15, w: 50, h: 15}, 'green');
     const pinkInsectPart = InsectPartCounter(game, {x: 140, y: 28, w: 50, h: 15}, 'pink');
 
-    const heartSetLocation = { x: 190, y: 30, h: 14 };
+    const heartSetLocation = { x: 180, y: 30, h: 14 };
 
     const heartContainers = range(Math.ceil(maxHealth / 2)).map(function (o) {
 
