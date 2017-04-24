@@ -112,6 +112,13 @@ function create() {
 }
 
 function reset() {
+  if(enemyGroup) {
+    enemyGroup.forEach(function (e) {
+      // debugger;
+      e.damageHurtBox.destroy();
+    })
+  }
+
   resetGameGroup.forEach(function (c) {
     c.forEach(function (d) {
       d.destroy();
@@ -186,9 +193,6 @@ function reset() {
   });
   // End ants example
 
-
-
-
   worldMap.spawn(game, Npc, (npc) => {
     actorGroup.add(npc)
     npcGroup.add(npc);
@@ -234,12 +238,15 @@ function reset() {
 
 function update() {
   inputState.update(); // let this go first plz
-  debugInfo.update(inputState.keys);
-
   if (inputState.keys.restart.wasJustReleased) {
     // press R
-    console.log('todo: restart game');
+    reset()
+    return;
   }
+
+  debugInfo.update(inputState.keys);
+
+
 
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
