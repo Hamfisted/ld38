@@ -244,6 +244,7 @@ function pretzelMakerCollisionHandler(player, pretzelMaker){
 }
 
 function npcHandler(player, npc) {
+  npc.chooseText(textBox);
   console.log("grunts")
 }
 
