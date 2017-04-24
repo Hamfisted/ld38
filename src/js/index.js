@@ -216,18 +216,18 @@ function reset() {
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
   const greenPretzel = new Pretzel(game, -10, -10, 'green');
-  // hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
   hockeyStick = new Weapon(game, -10, -10, 'hockey_stick');
-  insectPart = new InsectPart(game, 500, 500, 'green');
+  // insectPart = new InsectPart(game, 500, 500, 'green');
 
   pickupGroup.add(yellowPretzel);
   pickupGroup.add(pinkPretzel);
   pickupGroup.add(greenPretzel);
   pickupGroup.add(hockeyStick);
-  pickupGroup.add(insectPart);
+  // pickupGroup.add(insectPart);
 
   const oldGuyPhoto = new OldGuyPhoto(game, 600, 600);
-  const key = new Key(game, 700, 600);
+  // const key = new Key(game, 700, 600);
+  const key = new Key(game, -10, -10);
   const questPretzel = new QuestPretzel(game, 400, 400);
 
   pickupGroup.add(oldGuyPhoto);

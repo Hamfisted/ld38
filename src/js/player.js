@@ -55,9 +55,9 @@ const Player = function Player(game, x=0, y=0, questState) {
 
   this.quest = null;
   this.insectParts = {
-    yellow: 7,
+    yellow: 0,
     green: 0,
-    pink: 0
+    pink: 0,
   };
   this.pretzel = null;
   this.weapon = null;
@@ -224,11 +224,12 @@ Player.prototype.facingUnitVector = function() {
 };
 
 Player.prototype.pickupItem = function(pickup) {
-  console.log('pickupitem', pickup.getMetaData());
   if (pickup.type === 'quest' && !this.quest) {
     this.quest = pickup.getMetaData();
     if (this.quest.name === 'yellow_pretzel') { //todo
       this.questState.hasPickedUpQuestPretzel = true;
+    } else if (this.quest.name === 'old_guy_photo') {
+      this.questState.hasPickedUpOldGuyPhoto = true;
     }
     return true;
   }

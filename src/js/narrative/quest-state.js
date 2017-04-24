@@ -1,5 +1,7 @@
 const questDefinitions = require('./quest-definitions');
 const Weapon = require('../Weapon');
+const OldGuyPhoto = require('../old-guy-photo');
+const Key = require('../key');
 
 function QuestState(game, pickupGroup) {
   this.game = game;
@@ -12,6 +14,7 @@ function QuestState(game, pickupGroup) {
   this.currentQuestItem = null;
   this.hasTalkedToNpc = false;
   this.hasPickedUpQuestPretzel = false;
+  this.hasPickedUpOldGuyPhoto = false;
 }
 
 QuestState.prototype.setPlayer = function (player) {
@@ -63,6 +66,16 @@ QuestState.prototype.removeQuestItem = function() {
 QuestState.prototype.giveWeaponToPlayer = function(type) {
   const weapon = new Weapon(this.game, this.player.x, this.player.y, type);
   this.pickupGroup.add(weapon);
+}
+
+QuestState.prototype.giveQuestItemToPlayer = function(type) {
+  let questItem;
+  if (type === 'old_guy_photo') {
+    questItem = new OldGuyPhoto(this.game, this.player.x, this.player.y);
+  } else if (type === 'key') {
+    questItem = new Key(this.game, this.player.x, this.player.y);
+  }
+  this.pickupGroup.add(questItem);
 };
 
 module.exports = QuestState;
