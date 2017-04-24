@@ -185,8 +185,8 @@ function update() {
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
   game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
-
   game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
+  game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
 }
 
 function onPlayerHit(player, enemy) {
