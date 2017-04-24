@@ -23,8 +23,9 @@ Actor.prototype.update = function () {
 
 Actor.prototype.damage = function (amount) {
   if (this.inHitStun) {
-    return;
+    return false;
   }
+
   this.inHitStun = true;
   this.health -= amount;
   this.game.time.events.add(this.hitStunTimeout, this.stopHitStun, this);
@@ -32,6 +33,8 @@ Actor.prototype.damage = function (amount) {
     console.log('actor dead');
     this.kill();
   }
+
+  return true;
 };
 
 Actor.prototype.moveTowards = function (point, speed) {

@@ -4,6 +4,7 @@ const soundFiles = {
   'ludumdare38loopable': 'assets/sounds/ludumdare38loopable.m4a',
   'player_hit': 'assets/sounds/Hit_Hurt44.wav',
   'whoosh': 'assets/sounds/whoosh.wav',
+  'hit_enemy': 'assets/sounds/hit_enemy.wav',
 };
 
 function load(game) {

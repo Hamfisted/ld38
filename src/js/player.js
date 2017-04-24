@@ -165,7 +165,7 @@ Player.prototype.isSwinging = function () {
 };
 
 Player.prototype.hitEnemy = function (enemy) {
-  const angle = Math.atan2(this.body.y - enemy.body.y, this.body.x - enemy.body.x);
+  const angle = -Math.atan2(this.attackHitbox.body.y - enemy.body.y, this.attackHitbox.body.x - enemy.body.x);
   enemy.knockback(angle);
   enemy.damage(1);
 };

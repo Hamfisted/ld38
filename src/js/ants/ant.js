@@ -1,5 +1,6 @@
 const Config = require('../config');
 const Actor = require('../actor');
+const sounds = require('../sounds');
 
 const SPRITE_KEY='ant';
 const OBJECT_LAYER_NAME='Ants';
@@ -61,6 +62,11 @@ Ant.prototype.update = function () {
     this.scale.x = 1; // facing default direction
   }
 };
+
+Ant.prototype.damage = function () {
+  const isDamageSuccess = Actor.prototype.damage.call(this);
+  if(isDamageSuccess) { sounds.play('hit_enemy'); }
+}
 
 Ant.prototype.setState = function (state) {
   this.game.time.events.remove(this.event);
