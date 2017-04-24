@@ -3,6 +3,7 @@ const soundEmitter = new (require('events').EventEmitter);
 const soundFiles = {
   'ludumdare38loopable': 'assets/sounds/ludumdare38loopable.m4a',
   'player_hit': 'assets/sounds/Hit_Hurt44.wav',
+  'whoosh': 'assets/sounds/whoosh.wav',
 };
 
 function load(game) {

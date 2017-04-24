@@ -120,7 +120,7 @@ Player.prototype.swing = function () {
   if (!this.weapon || !this.canSwing) {
     return;
   }
-  console.log('swing');
+  sounds.play('whoosh', 0.5);
   this.changeAnimation('attack');
 
   this.canSwing = false;
