@@ -200,7 +200,20 @@ function onEnemyHit(playerAttackHitbox, enemy) {
   if (playerAttackHitbox.parent) {
     playerAttackHitbox.parent.hitEnemy(enemy);
     enemy.damage(1);
-    this.game.camera.shake(0.005, 500);
+
+    game.camera.shake(0.005, 500);
+
+    const emitter = this.game.add.emitter(enemy.body.x, enemy.body.y, 15);
+
+    emitter.makeParticles( [ 'muzzleflash2', 'muzzleflash4' ] );
+    emitter.gravity = 1000;
+    emitter.setAlpha(1, 0, 3000);
+    emitter.setScale(0.05, 0, 0.05, 0, 3000);
+
+    emitter.start(false, 3000, 5);
+
+    game.time.events.add(600, () => {emitter.destroy()}, this);
+
   }
 }
 

@@ -56,4 +56,13 @@ module.exports = function preloadSprites(game) {
 
   game.load.image('area', 'assets/sprites/area.png');
   game.load.image('textbox', 'assets/sprites/textbox.png');
+
+  game.load.image('fire1', 'assets/sprites/fire1.png');
+  game.load.image('fire2', 'assets/sprites/fire2.png');
+  game.load.image('fire3', 'assets/sprites/fire3.png');
+  game.load.image('flame1', 'assets/sprites/flame1.png');
+  game.load.image('flame2', 'assets/sprites/flame2.png');
+  game.load.image('flame2', 'assets/sprites/flame2.png');
+  game.load.image('muzzleflash2', 'assets/sprites/muzzleflash2.png');
+  game.load.image('muzzleflash4', 'assets/sprites/muzzleflash4.png');
 };
