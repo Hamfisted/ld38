@@ -272,7 +272,7 @@ function update() {
 }
 
 function onPlayerHit(player, enemyHurtBox) {
-  if (player.inHitStun) {
+  if (player.inHitStun || !enemyHurtBox.parent.alive) {
     return;
   }
   sounds.play('player_hit', 0.1);
