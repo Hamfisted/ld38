@@ -16,7 +16,7 @@ const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
 const TextBox = require('./narrative/text-box');
 const preloadSprites = require('./preload-sprites');
-const preloadBeats = require('./preload-beats');
+const sounds = require('./sounds');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -43,6 +43,7 @@ let greenPretzelMaker;
 let pretzelMakerGroup;
 let textBox;
 let textBoxGroup;
+let soundsInit;
 
 function init() {
   // debug mode cfg
@@ -80,7 +81,7 @@ function preload() {
 
   // moved all the "game.load.image()" things in here
   preloadSprites(game);
-  preloadBeats(game);
+  soundsInit = sounds.load(game)
   game.load.bitmapFont('pixel8px', 'assets/fonts/pixel.png', 'assets/fonts/pixel.xml');
 }
 
@@ -164,8 +165,8 @@ function create() {
   textBox = new TextBox(this.game, 50, 100, player);
   textBoxGroup.add(textBox);
 
-  const ludumdare38loopable = game.add.audio('ludumdare38loopable');
-  ludumdare38loopable.play(null, 12000, 0.2, true);
+  soundsInit.init(game);
+  sounds.play('ludumdare38loopable', 0.2, true);
 }
 
 
@@ -188,6 +189,8 @@ function update() {
 }
 
 function onPlayerHit(player, enemy) {
+  sounds.play('ludumdare38loopable')
+  console.log("playing again")
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
   player.damage(1);
   player.knockback(angle);
