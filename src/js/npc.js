@@ -5,9 +5,9 @@ const OBJECT_LAYER_NAME = 'Npcs';
 
 const Npc = function(game, x, y) {
   Actor.call(this, game, x, y, SPRITE_KEY);
-  game.physics.arcade.enable(this);
   this.initialDialogue = "Hello young fellow";
   this.body.immovable = true;
+  this.body.setSize(16, 16, 8, 16);  // w h x y
   this.bob();
   this.state = 0;
 

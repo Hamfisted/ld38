@@ -37,7 +37,7 @@ DebugInfo.prototype.update = function update(keys) {
   this.numAliveChildren = numChildrenOfGroup(this.game.world, true);
 };
 
-DebugInfo.prototype.render = function render(player, enemyGroup) {
+DebugInfo.prototype.render = function render(player, actorGroup, enemyArr) {
   if (!Config.debug) {
     return;
   }
@@ -50,10 +50,14 @@ DebugInfo.prototype.render = function render(player, enemyGroup) {
     game.debug.body(player.attackHitbox, hitboxColor);
   }
 
-  game.debug.body(player, hurtboxColor);
-  enemyGroup.forEach(function(enemy) {
+  actorGroup.forEach(function(actor) {
+    if (actor.alive) {
+      game.debug.body(actor, hurtboxColor);
+    }
+  });
+
+  enemyArr.forEach(function(enemy) {
     if (enemy.alive) {
-      game.debug.body(enemy, hurtboxColor);
       game.debug.body(enemy.damageHurtBox, enemyDamagebox);
     }
   });
