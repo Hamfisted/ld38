@@ -130,28 +130,18 @@ function reset() {
   player.health = 8;
   player.maxFullness = 100;
   player.fullness = 100;
-  player.events.onKilled.add(function () {
+  player.onDie(function () {
     textBox.displayPrompt(
-      "Would you like to play again?",
-      [
-        {
-          message: 'yes',
-          onChoose: function() {
-            textBox.clearPrompt();
-            reset()
-            return true;
-          }.bind(this),
-        },
-        {
-          message: 'no',
-          onChoose: function() {
-            textBox.clearPrompt();
-            return false;
-          }.bind(this),
-        }
-      ]
+      'Would you like to play again?',
+      [{
+        message: 'yes',
+        onChoose: function() {
+          textBox.clearPrompt();
+          reset();
+        }.bind(this)
+      }]
     );
-  })
+  }.bind(this));
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
 
   // sprite group creation - order matters!
@@ -284,7 +274,7 @@ function update() {
 }
 
 function onPlayerHit(player, enemyHurtBox) {
-  if (player.inHitStun || !enemyHurtBox.parent.alive) {
+  if (!player.alive || player.inHitStun || !enemyHurtBox.parent.alive) {
     return;
   }
   sounds.play('player_hit', 0.1);

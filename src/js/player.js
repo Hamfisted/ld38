@@ -178,6 +178,10 @@ Player.prototype.die = function () {
   this.alive = false;
   this.health = 0;
   this.changeAnimation('death');
+  if (this.onDieCallback) {
+    this.onDieCallback();
+    this.onDieCallback = null;
+  }
 };
 
 Player.prototype.isSwinging = function () {
@@ -244,5 +248,9 @@ Player.prototype.buildHunger = function (game) {
   }
   // game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 }
+
+Player.prototype.onDie = function(callback) {
+  this.onDieCallback = callback;
+};
 
 module.exports = Player

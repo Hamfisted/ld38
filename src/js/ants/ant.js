@@ -138,7 +138,7 @@ Ant.prototype.giveUp = function () {
 };
 
 Ant.prototype.seePlayer = function (player) {
-  if (!Config.activeEnemies) {
+  if (!Config.activeEnemies || !player.alive) {
     return;
   }
   this.moveTo.x = player.x;
