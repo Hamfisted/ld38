@@ -23,7 +23,7 @@ PretzelMaker.prototype.configPrompt = function(player, textBox, pickupGroup) {
       onChoose: function() {
         if (player.insectParts[this.pretzelColor] < numInsectPartsToCreatePretzel) {
           textBox.clearPrompt();
-          textBox.displayText(`Not enough ${this.pretzelColor} pretzels!`);
+          textBox.displayText(`Not enough ${this.pretzelColor} bug parts!`);
           console.log("not enough pretzel pieces");
         } else if (player.insectParts[this.pretzelColor] >= numInsectPartsToCreatePretzel) {
           console.log(player.insectParts[this.pretzelColor]);
