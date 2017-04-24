@@ -2,6 +2,7 @@ const Player = require('./player');
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
 const DOORWAY_TILE_LAYER = "DoorwayLayer";
+const OUTDOORWAY_TILE_LAYER = "OutDoorwayLayer";
 const SCENARY_TILE_LAYER = "ScenaryLayer";
 const VOID_TILE_LAYER = "VoidLayer";
 const sounds = require('./sounds');
@@ -106,13 +107,19 @@ WorldMap.prototype.setEnvironment = function(game, env_key) {
   //Change the world size to match the size of this layer
   this.collisionLayer.resizeWorld();
   this.doorwayLayer = this.map.createLayer(DOORWAY_TILE_LAYER);
+  this.outDoorwayLayer = this.map.createLayer(OUTDOORWAY_TILE_LAYER);
   this.map.setCollisionByExclusion([], true, DOORWAY_TILE_LAYER);
+  this.map.setCollisionByExclusion([], true, OUTDOORWAY_TILE_LAYER);
   this.scenaryLayer = this.map.createLayer(SCENARY_TILE_LAYER);
 
 };
 
 WorldMap.prototype.getDoorwayLayer = function() {
   return this.doorwayLayer;
+};
+
+WorldMap.prototype.getOutDoorwayLayer = function() {
+  return this.outDoorwayLayer;
 };
 
 WorldMap.prototype.getVoidLayer = function() {
@@ -141,6 +148,19 @@ WorldMap.prototype.doorwayHandlerGenerator = function(game) {
     }
     worldMapRef.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME, worldMapRef.getEnvironmentKey());
   });
+};
+
+WorldMap.prototype.outDoorwayHandlerGenerator = function(player, layer) {
+  return (function(player, layer){
+    if (player.quest) {
+      if (player.quest.name === 'key'){
+        this.map.removeTile(161, 44, layer.layer.name);
+        this.map.removeTile(162, 44, layer.layer.name);
+        this.map.removeTile(161, 45, layer.layer.name);
+        this.map.removeTile(162, 45, layer.layer.name);
+      }
+    }
+  }).bind(this);
 };
 
 WorldMap.prototype.constructor = WorldMap;

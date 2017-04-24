@@ -271,6 +271,7 @@ function update() {
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
   game.physics.arcade.collide(player, npcArr, npcHandler, null, this);
   game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
+  game.physics.arcade.collide(player, worldMap.getOutDoorwayLayer(), worldMap.outDoorwayHandlerGenerator(game), null, this);
   game.physics.arcade.collide(actorGroup, worldMap.getDoorwayLayer());
 
   game.physics.arcade.collide(actorGroup, worldMap.getVoidLayer());
