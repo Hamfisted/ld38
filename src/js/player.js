@@ -129,7 +129,6 @@ Player.prototype.changeAnimation = function(type) {
 Player.prototype.swing = function () {
   sounds.play('whoosh', 0.5);
   this.changeAnimation('attack');
-  this.attackHitbox.body.enable = true;
 
   // calculate attack hitbox
   let w = this.attackHitboxDepth;
@@ -155,6 +154,10 @@ Player.prototype.swing = function () {
   this.swingTimer.add(this.swingTimeout, function() {
     this.canSwing = true;
     this.attackHitbox.body.enable = false;
+  }, this);
+  // a hack to fix the delayed hitbox position jumping
+  this.swingTimer.add(1, function() {
+    this.attackHitbox.body.enable = true;
   }, this);
 };
 
