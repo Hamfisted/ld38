@@ -1,19 +1,14 @@
 // insect-part.js
 const Pickup = require('./pickup');
 
-const InsectPart = function(game, x, y, type) {
-
-  this.type = type
+const InsectPart = function(game, x, y, color) {
   this.name = 'insectPart';
-  if (this.type === 1){
-    this.color = 'yellow'
-  }
-  else if (this.type === 2){
-    this.color = 'green'
-  }
-  else if (this.type === 3){
-    this.color = 'pink'
-  }
+  this.color = color;
+
+  this.type = 1;
+  if(color === 'yellow') { this.type = 1; }
+  if(color === 'green')  { this.type = 2; }
+  if(color === 'pink')   { this.type = 3; }
 
   Pickup.call(this, game, x, y, 'ant_' + this.color + '_part')
 }

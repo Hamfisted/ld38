@@ -1,6 +1,7 @@
 const Config = require('../config');
 const Actor = require('../actor');
 const sounds = require('../sounds');
+const InsectPart = require('../insect-part');
 
 const SPRITE_KEY= 'ant';
 const OBJECT_LAYER_NAME='Ants';
@@ -23,6 +24,7 @@ const Ant = function(game, x, y, imageName) {
   this.addDetectionBubble();
   this.addHurtBox();
   this.setState(BehaviorState.WANDER);
+  this.pickupGroup = null;
 
   this.animations.add('walk');
   const rate = 10;
@@ -97,6 +99,10 @@ Ant.prototype.wander = function () {
   this.moveTo.y = this.body.y + Math.sin(heading) * distance;
 };
 
+Ant.prototype.setPickupGroup = function (pickupGroup) {
+  this.pickupGroup = pickupGroup;
+};
+
 Ant.prototype.kill = function () {
   Actor.prototype.kill.call(this);
   const emitter = this.game.add.emitter(this.x, this.y, 15);
@@ -114,6 +120,8 @@ Ant.prototype.kill = function () {
 
   this.game.time.events.add(600, function () {
     emitter.destroy();
+    // TODO random offset
+    this.pickupGroup.add(new InsectPart(this.game, this.body.x, this.body.y, this.color))
   }, this);
 }
 

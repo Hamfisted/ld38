@@ -115,16 +115,11 @@ function create() {
 
 function reset() {
   if(enemyGroup) {
-    enemyGroup.forEach(function (e) {
-      // debugger;
-      e.damageHurtBox.destroy();
-    })
+    enemyGroup.forEach(function (e) { e.damageHurtBox.destroy(); })
   }
 
   resetGameGroup.forEach(function (c) {
-    c.forEach(function (d) {
-      d.destroy();
-    });
+    c.forEach(function (d) { d.destroy(); });
     c.removeAll();
   });
   player = new Player(game);
@@ -181,6 +176,7 @@ function reset() {
 
   // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
+    ant.setPickupGroup(pickupGroup);
     actorGroup.add(ant);
     enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
@@ -188,6 +184,7 @@ function reset() {
   });
 
   worldMap.spawn(game, PinkAnt, (ant) => {
+    ant.setPickupGroup(pickupGroup);
     actorGroup.add(ant);
     enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
@@ -195,6 +192,7 @@ function reset() {
   });
 
   worldMap.spawn(game, YellowAnt, (ant) => {
+    ant.setPickupGroup(pickupGroup);
     actorGroup.add(ant);
     enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
@@ -215,7 +213,7 @@ function reset() {
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
   const greenPretzel = new Pretzel(game, 400, 400, 'green');
   hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
-  insectPart = new InsectPart(game, 500, 500, 1);
+  insectPart = new InsectPart(game, 500, 500, 'green');
 
   pickupGroup.add(yellowPretzel);
   pickupGroup.add(pinkPretzel);

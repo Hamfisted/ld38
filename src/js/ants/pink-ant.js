@@ -3,6 +3,7 @@ const Ant = require('./ant');
 const OBJECT_LAYER_NAME = 'PinkAnts';
 
 const PinkAnt = function(game, x, y) {
+  this.color = 'pink'
   this.spriteName = 'ant_pink_walk';
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 130;
