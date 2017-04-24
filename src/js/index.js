@@ -20,6 +20,9 @@ const sounds = require('./sounds');
 const InputState = require('./input-state');
 const DebugInfo = require('./debug-info');
 
+const OldGuyPhoto = require('./old-guy-photo');
+const Key = require('./key');
+
 const GAME_DIMENSION = { w: 256, h: 240 };
 
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, 'game', { init: init, preload: preload, create: create, update: update, render: render });
@@ -220,6 +223,9 @@ function reset() {
   pickupGroup.add(greenPretzel);
   pickupGroup.add(hockeyStick);
   pickupGroup.add(insectPart);
+
+  pickupGroup.add(new OldGuyPhoto(game, 600, 600));
+  pickupGroup.add(new Key(game, 700, 600));
 
   hud = Hud(game, hudDimension, pickupGroup);
 

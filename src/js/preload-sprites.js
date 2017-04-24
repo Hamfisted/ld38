@@ -69,4 +69,7 @@ module.exports = function preloadSprites(game) {
   game.load.image('flame2', 'assets/sprites/flame2.png');
   game.load.image('muzzleflash2', 'assets/sprites/muzzleflash2.png');
   game.load.image('muzzleflash4', 'assets/sprites/muzzleflash4.png');
+
+  game.load.image('old_guy_phot', 'assets/sprites/old_guy_photo.png');
+  game.load.image('key', 'assets/sprites/key.png');
 };
