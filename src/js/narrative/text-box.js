@@ -2,11 +2,17 @@
 const ChoiceMenu = require('./choice-menu');
 
 const TextBox = function(game, x, y) {
-  Phaser.Sprite.call(this, game, x, y, 'textbox');
+  Phaser.Sprite.call(this, game, x, y, null);
+
+  this.targetWidth = 200;
+  this.background = this.createBackground();
+  this.addChild(this.background);
+
+
   this.visible = false;
   this.isPrompting = false;
-  this.textObj = this.game.add.bitmapText(10, 10, 'pixel8px', '', 8);
-  this.textObj.maxWidth = this.width - 20;
+  this.textObj = this.game.add.bitmapText(16, 10, 'pixel8px', '', 8);
+  this.textObj.maxWidth = this.targetWidth - 20;
   this.addChild(this.textObj);
 
   // text animation timer
@@ -28,10 +34,23 @@ TextBox.prototype.reset = function() {
   this.releasePlayer();
 };
 
+TextBox.prototype.createBackground = function() {
+  const w = this.targetWidth;
+  const h = 80;
+  const bmd = this.game.add.bitmapData(0, 0);
+  // draw to the canvas context like normal
+  bmd.ctx.beginPath();
+  bmd.ctx.rect(0, 0, w, h);
+  bmd.ctx.fillStyle = '#000000';
+  bmd.ctx.fill();
+  // use the bitmap data as the texture for the sprite
+  return this.game.add.sprite(0, 0, bmd);
+};
+
 TextBox.prototype.displayPrompt = function(textString, choices) {
   this.isPrompting = true;
   this.displayText(textString)
-  this.choiceMenu = new ChoiceMenu(this.game, choices, 10, 40);
+  this.choiceMenu = new ChoiceMenu(this.game, choices, 16, 40);
   this.addChild(this.choiceMenu);
 };
 
