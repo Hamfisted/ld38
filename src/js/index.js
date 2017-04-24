@@ -166,7 +166,7 @@ function create() {
   textBoxGroup.add(textBox);
 
   soundsInit.init(game);
-  sounds.play('ludumdare38loopable', 0.2, true);
+  sounds.play('mainloop', 0.2, true);
 }
 
 

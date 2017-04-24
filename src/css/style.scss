@@ -3,3 +3,16 @@
 html, body {
   height: 100%;
 }
+
+#loading {
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+canvas {
+  margin: 0 auto;
+}

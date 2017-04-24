@@ -3,6 +3,13 @@ html(lang='en')
   head
     link(rel='stylesheet', href='style.css')
   body
-    //- fixme, gulp should copy everything from src to dist/
+    script.
+      window.addEventListener('error', function (e) {
+        var h1 = document.getElementById('loading');
+        h1.textContent = 'error';
+      });
+    .loading-container
+      h1#loading loading...
+
     script(src='src/js/vendor/phaser-v2.6.2.min.js')
     script(src='bundle.js')
