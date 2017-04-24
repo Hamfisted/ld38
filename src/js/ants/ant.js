@@ -21,6 +21,7 @@ const Ant = function(game, x, y, imageName) {
 
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
+  this.addHurtBox();
   this.setState(BehaviorState.WANDER);
 
   this.animations.add('walk');
@@ -124,6 +125,24 @@ Ant.prototype.addDetectionBubble = function () {
   this.game.physics.arcade.enable(this.detectionBubble);
   this.detectionBubble.body.setCircle(RADIUS, -RADIUS, -RADIUS);
   this.addChild(this.detectionBubble);
+};
+
+Ant.prototype.addHurtBox = function () {
+  this.damageHurtBox = new Phaser.Sprite(this.game, 0, 0, null);
+  this.game.physics.arcade.enable(this.damageHurtBox);
+  hurtboxScale = 0.7;
+
+  const scaledWidth = this.body.width * hurtboxScale;;
+  const scaledHeight = this.body.height * hurtboxScale;
+  const hurtbox = {
+    x: -(scaledWidth / 2),
+    y: -(scaledHeight / 2),
+    w: scaledWidth,
+    h: scaledHeight,
+  }
+  const { x, y, w, h } = hurtbox;
+  this.damageHurtBox.body.setSize(w, h, x, y);
+  this.addChild(this.damageHurtBox);
 };
 
 Ant.prototype.giveUp = function () {

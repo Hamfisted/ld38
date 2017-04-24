@@ -163,22 +163,26 @@ function reset() {
   resetGameGroup.add(hudGroup)
 
   enemyDetectionSet = [];
+  enemyHurtBoxSet = [];
 
 
   // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
     enemyGroup.add(ant);
     enemyDetectionSet.push(ant.detectionBubble);
+    enemyHurtBoxSet.push(ant.damageHurtBox)
   });
 
   worldMap.spawn(game, PinkAnt, (ant) => {
     enemyGroup.add(ant);
     enemyDetectionSet.push(ant.detectionBubble);
+    enemyHurtBoxSet.push(ant.damageHurtBox)
   });
 
   worldMap.spawn(game, YellowAnt, (ant) => {
     enemyGroup.add(ant);
     enemyDetectionSet.push(ant.detectionBubble);
+    enemyHurtBoxSet.push(ant.damageHurtBox)
   });
   // End ants example
 
@@ -241,7 +245,7 @@ function update() {
   player.updateControls(inputState.keys);
   game.physics.arcade.collide(actorGroup);
   if (Config.activeEnemyCollision) {
-    game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
+    game.physics.arcade.overlap(player, enemyHurtBoxSet, onPlayerHit, null, this);
   }
 
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
@@ -259,9 +263,9 @@ function update() {
   game.physics.arcade.collide(enemyGroup, worldMap.getVoidLayer());
 }
 
-function onPlayerHit(player, enemy) {
+function onPlayerHit(player, enemyHurtBox) {
   sounds.play('player_hit', 0.1);
-  const angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
+  const angle = Math.atan2(player.body.y - enemyHurtBox.body.y, player.body.x - enemyHurtBox.body.x);
   player.knockback(angle);
   player.damage(1);
 }

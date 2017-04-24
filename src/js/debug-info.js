@@ -44,6 +44,7 @@ DebugInfo.prototype.render = function render(player, enemyGroup) {
   const game = this.game;
   const hitboxColor = 'rgba(255, 0, 0, 0.3)';
   const hurtboxColor = 'rgba(0, 255, 255, 0.2)';
+  const enemyDamagebox = 'rgba(0, 255, 0, 0.4)';
 
   if (player.attackHitbox.body.enable) {
     game.debug.body(player.attackHitbox, hitboxColor);
@@ -53,6 +54,7 @@ DebugInfo.prototype.render = function render(player, enemyGroup) {
   enemyGroup.forEach(function(enemy) {
     if (enemy.alive) {
       game.debug.body(enemy, hurtboxColor);
+      game.debug.body(enemy.damageHurtBox, enemyDamagebox);
     }
   });
 
