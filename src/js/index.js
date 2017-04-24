@@ -24,6 +24,7 @@ const GAME_DIMENSION = { w: 256, h: 240 };
 
 const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, 'game', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
+const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
 let worldMap;
 let player;
@@ -44,6 +45,7 @@ let pinkPretzelMaker;
 let yellowPretzelMaker;
 let greenPretzelMaker;
 let pretzelMakerGroup;
+let resetGameGroup;
 let textBox;
 let textBoxGroup;
 let cutscene;
@@ -92,17 +94,57 @@ function create() {
     Phaser.Keyboard.RIGHT,
   ]);
   worldMap = new WorldMap(game);
-
-  const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
-
   inputState = new InputState(game);
   debugInfo = new DebugInfo(game);
+
+  game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
+
+  resetGameGroup = game.add.group();
+  textBoxGroup = game.add.group();
+  textBoxGroup.fixedToCamera = true;
+  textBox = new TextBox(game, 50, 100);
+  textBoxGroup.add(textBox);
+
+  soundsInit.init(game);
+  sounds.play('mainloop', 0.2, true);
+
+  reset();
+}
+
+function reset() {
+  resetGameGroup.forEach(function (c) {
+    c.forEach(function (d) {
+      d.destroy();
+    });
+  });
   player = new Player(game);
-  worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 8;
-  player.health = 5;
+  player.health = 8;
   player.maxFullness = 100;
   player.fullness = 100;
+  player.events.onKilled.add(function () {
+    textBox.displayPrompt(
+      "Would you like to play again?",
+      [
+        {
+          message: 'yes',
+          onChoose: function() {
+            textBox.clearPrompt();
+            reset()
+            return true;
+          }.bind(this),
+        },
+        {
+          message: 'no',
+          onChoose: function() {
+            textBox.clearPrompt();
+            return false;
+          }.bind(this),
+        }
+      ]
+    );
+  })
+  worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
 
   // sprite group creation - order matters!
   pretzelMakerGroup = game.add.group();
@@ -110,11 +152,18 @@ function create() {
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
   npcGroup = game.add.group();
-  enemyDetectionSet = [];
   hudGroup = game.add.group();
   hudGroup.fixedToCamera = true;
-  textBoxGroup = this.game.add.group();
-  textBoxGroup.fixedToCamera = true;
+
+  resetGameGroup.add(pretzelMakerGroup)
+  resetGameGroup.add(pickupGroup)
+  resetGameGroup.add(actorGroup)
+  resetGameGroup.add(enemyGroup)
+  resetGameGroup.add(npcGroup)
+  resetGameGroup.add(hudGroup)
+
+  enemyDetectionSet = [];
+
 
   // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
@@ -134,6 +183,8 @@ function create() {
   // End ants example
 
 
+
+
   worldMap.spawn(game, Npc, (npc) => {
     actorGroup.add(npc)
     npcGroup.add(npc);
@@ -142,7 +193,6 @@ function create() {
   actorGroup.add(player);
   game.camera.follow(player);
   // cursors = game.input.keyboard.createCursorKeys();
-  game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
@@ -170,13 +220,11 @@ function create() {
   pretzelMakerGroup.add(pinkPretzelMaker);
 
   //text box
-  textBox = new TextBox(this.game, 50, 100, player);
-  textBoxGroup.add(textBox);
-  cutscene = new Cutscene(this.game, inputState, textBox);
-  hudGroup.add(cutscene); // idk where this belongs but it doesn't really matter
 
-  soundsInit.init(game);
-  sounds.play('mainloop', 0.2, true);
+  textBox.setPlayer(player);
+
+  cutscene = new Cutscene(game, inputState, textBox);
+  hudGroup.add(cutscene); // idk where this belongs but it doesn't really matter
 }
 
 

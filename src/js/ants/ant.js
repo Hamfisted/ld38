@@ -76,6 +76,7 @@ Ant.prototype.damage = function (amount) {
 }
 
 Ant.prototype.setState = function (state) {
+  if(!this.game) { return; }
   this.game.time.events.remove(this.event);
   this.state = state;
   if (this.state === BehaviorState.WAIT) {
@@ -87,6 +88,7 @@ Ant.prototype.setState = function (state) {
 };
 
 Ant.prototype.wander = function () {
+  if(!this.game) { return; }
   this.setState(BehaviorState.WANDER);
   var heading = this.game.rnd.realInRange(0, Phaser.Math.PI2);
   var distance = this.game.rnd.integerInRange(1, 3) * 75;

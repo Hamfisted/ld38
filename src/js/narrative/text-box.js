@@ -1,9 +1,8 @@
 //text-box.js
 const ChoiceMenu = require('./choice-menu');
 
-const TextBox = function(game, x, y, player) {
+const TextBox = function(game, x, y) {
   Phaser.Sprite.call(this, game, x, y, 'textbox');
-  this.player = player;
   this.visible = false;
   this.isPrompting = false;
   this.textObj = this.game.add.bitmapText(10, 10, 'pixel8px', '', 8);
@@ -45,12 +44,16 @@ TextBox.prototype.clearPrompt = function() {
 };
 
 TextBox.prototype.displayText = function(textString) {
-  this.player.isInDialogue = true;
+  if(this.player) { this.player.isInDialogue = true; }
   this.visible = true;
   this.textString = textString;
   this.textObj.text = '';
   this.addCharByChar(this.textObj, textString);
 };
+
+TextBox.prototype.setPlayer = function(player) {
+  this.player = player;
+}
 
 TextBox.prototype.update = function() {
   // Input handling
@@ -80,7 +83,7 @@ TextBox.prototype.update = function() {
 };
 
 TextBox.prototype.releasePlayer = function() {
-  this.player.isInDialogue = false;
+  if(this.player) { this.player.isInDialogue = false; }
 }
 
 TextBox.prototype.onKeyUp = function() {
