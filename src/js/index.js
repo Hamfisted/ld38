@@ -184,6 +184,11 @@ function update() {
   inputState.update(); // let this go first plz
   debugInfo.update(inputState.keys);
 
+  if (inputState.keys.restart.wasJustReleased) {
+    // press R
+    console.log('todo: restart game');
+  }
+
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
   game.physics.arcade.collide(actorGroup);
