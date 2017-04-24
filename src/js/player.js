@@ -68,29 +68,29 @@ Player.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
-Player.prototype.updateControls = function (cursors) {
+Player.prototype.updateControls = function (keys) {
   if (this.isInDialogue || this.swingTimer.length) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
   } else if (this.inHitStun) {
     // do nothing, maintain knockback velocity
-  } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+  } else if (keys.interact.isDown) {
     this.swing();
   } else {
-    if (cursors.up.isDown) {
+    if (keys.up.isDown) {
       this.direction = 'up';
       this.body.velocity.y = -MOVE_SPEED;
-    } else if (cursors.down.isDown) {
+    } else if (keys.down.isDown) {
       this.direction = 'down';
       this.body.velocity.y = MOVE_SPEED;
     } else {
       this.body.velocity.y = 0;
     }
 
-    if (cursors.left.isDown) {
+    if (keys.left.isDown) {
       this.direction = 'left';
       this.body.velocity.x = -MOVE_SPEED;
-    } else if (cursors.right.isDown) {
+    } else if (keys.right.isDown) {
       this.direction = 'right';
       this.body.velocity.x = MOVE_SPEED;
     } else {

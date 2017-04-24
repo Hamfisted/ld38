@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'pixelmix';
+  src: url('assets/fonts/pixelmix.ttf');
+}
+// todo: ship without the above font
+
 @import 'vendor/normalize-3.0.2';
 
 html, body {
@@ -14,5 +20,6 @@ html, body {
 }
 
 canvas {
+  position: relative;
   margin: 0 auto;
 }

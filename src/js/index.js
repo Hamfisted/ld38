@@ -3,7 +3,6 @@ const Config = require('./config');
 const Player = require('./player');
 const WorldMap = require('./world-map');
 const Npc = require('./npc');
-const Ant = require('./ants/ant');
 const YellowAnt = require('./ants/yellow-ant');
 const GreenAnt = require('./ants/green-ant');
 const PinkAnt = require('./ants/pink-ant');
@@ -17,22 +16,25 @@ const YellowPretzelMaker = require('./yellow-pretzel-maker');
 const TextBox = require('./narrative/text-box');
 const preloadSprites = require('./preload-sprites');
 const sounds = require('./sounds');
+const InputState = require('./input-state');
+const DebugInfo = require('./debug-info');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
-const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, '', { init: init, preload: preload, create: create, update: update, render: render });
+const game = new Phaser.Game(GAME_DIMENSION.w, GAME_DIMENSION.h, Phaser.CANVAS, 'game', { init: init, preload: preload, create: create, update: update, render: render });
 const pixel = { scale: 3, canvas: null, context: null, width: 0, height: 0 };
 
 let worldMap;
 let player;
-let cursors;
+// let cursors;
+let inputState;
+let debugInfo;
 let actorGroup;
 let enemyGroup;
 let npcGroup;
 let hudGroup;
 let hud;
 let curPlayerHud;
-let pretzel;
 let insectPart;
 let hockeyStick;
 let pickupGroup;
@@ -49,7 +51,7 @@ function init() {
   // debug mode cfg
   if (Config.debug) {
     game.time.advancedTiming = true;
-    game.debug.font = '8px Arial';
+    // game.debug.font = '8px Arial';
     game.debug.renderShadow = true;
   }
 
@@ -64,7 +66,7 @@ function init() {
   pixel.context = pixel.canvas.getContext('2d');
 
   //  Add the scaled canvas to the DOM
-  Phaser.Canvas.addToDOM(pixel.canvas);
+  Phaser.Canvas.addToDOM(pixel.canvas, 'game');
 
   //  Disable smoothing on the scaled canvas
   Phaser.Canvas.setSmoothingEnabled(pixel.context, false);
@@ -87,10 +89,20 @@ function preload() {
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
+  // keep the space/arrow key events from propagating up to the browser
+  game.input.keyboard.addKeyCapture([
+    Phaser.Keyboard.SPACEBAR,
+    Phaser.Keyboard.UP,
+    Phaser.Keyboard.DOWN,
+    Phaser.Keyboard.LEFT,
+    Phaser.Keyboard.RIGHT,
+  ]);
   worldMap = new WorldMap(game);
 
   const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
+  inputState = new InputState(game);
+  debugInfo = new DebugInfo(game);
   player = new Player(game);
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
   player.maxHealth = 6;
@@ -135,9 +147,7 @@ function create() {
 
   actorGroup.add(player);
   game.camera.follow(player);
-  // keep the spacebar event from propagating up to the browser
-  game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
-  cursors = game.input.keyboard.createCursorKeys();
+  // cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
@@ -175,8 +185,11 @@ function create() {
 
 
 function update() {
+  inputState.update(); // let this go first plz
+  debugInfo.update(inputState.keys);
+
   curPlayerHud.update(player);
-  player.updateControls(cursors);
+  player.updateControls(inputState.keys);
   game.physics.arcade.collide(actorGroup);
   if (Config.activeEnemyCollision) {
     game.physics.arcade.overlap(player, enemyGroup, onPlayerHit, null, this);
@@ -199,7 +212,7 @@ function update() {
 
 function onPlayerHit(player, enemy) {
   sounds.play('player_hit', 0.1);
-  var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
+  const angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
   player.knockback(angle);
   player.damage(1);
 }
@@ -243,30 +256,7 @@ function npcHandler(player, npc) {
 }
 
 function render() {
-  if (Config.debug) {
-    if (player.attackHitbox.body.enable) {
-      game.debug.body(player.attackHitbox, 'rgba(255, 0, 0, 0.3)');
-    }
-
-    const debugColor = 'rgba(0,255,0,0.8)';
-    const debugFont = '10px Arial';
-    game.debug.text(`fps ${game.time.fps}` || '-', 2, 10, debugColor, debugFont);
-    const numAliveChildrenOfGroup = function(group) {
-      if (group.children && group.children.length) {
-        return group.children.reduce(function(acc, child) {
-          return acc + numAliveChildrenOfGroup(child);
-        }, 0);
-      }
-      return group.alive ? 1 : 0;
-    };
-    const numChildren = numAliveChildrenOfGroup(game.world);
-    game.debug.text(`obj ${numChildren}` || '-', 2, 20, debugColor, debugFont);
-    let i = 0;
-    for (let key in Config){
-      i = i + 10;
-      game.debug.text(`${key}: ${Config[key]}`, 35, i, debugColor, debugFont);
-    }
-  }
+  debugInfo.render(player);
 
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);

@@ -9,7 +9,15 @@ html(lang='en')
         h1.textContent = 'error';
       });
     .loading-container
-      h1#loading loading...
+      h1#loading Loading...
+    #game
+    pre.
+      Controls:
+      Arrow keys / WASD / ZQSD to move
+      Space to attack/interact
+      F to eat a pretzel (todo)
+      R to restart (todo)
+      T to toggle debug info
 
     script(src='src/js/vendor/phaser-v2.6.2.min.js')
     script(src='bundle.js')
