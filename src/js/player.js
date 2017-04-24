@@ -1,4 +1,5 @@
 const Actor = require('./actor');
+const sounds = require('./sounds');
 const SPRITE_KEY = 'player';
 
 const HUNGER_GROWTH_PERIODICITY = 250; // millis

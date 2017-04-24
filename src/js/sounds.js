@@ -1,15 +1,14 @@
 const soundEmitter = new (require('events').EventEmitter);
 
 const soundFiles = {
-  'ludumdare38loopable': 'assets/sounds/ludumdare38loopable.m4a'
+  'ludumdare38loopable': 'assets/sounds/ludumdare38loopable.m4a',
+  'player_hit': 'assets/sounds/Hit_Hurt44.wav',
 };
 
 function load(game) {
   Object
     .entries(soundFiles)
     .map(([sound, file]) => game.load.audio(sound, file));
-
-
 
   return {
     init: function(game) {
@@ -26,11 +25,10 @@ function load(game) {
   }
 }
 
-
 module.exports = {
   load: load,
   play: function(name, volume, loop) {
     soundEmitter.emit("play", name, volume, loop);
   },
   list: Object.keys(soundFiles)
-}
+};

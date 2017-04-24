@@ -189,8 +189,7 @@ function update() {
 }
 
 function onPlayerHit(player, enemy) {
-  sounds.play('ludumdare38loopable')
-  console.log("playing again")
+  sounds.play('player_hit', 0.1);
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
   player.damage(1);
   player.knockback(angle);
