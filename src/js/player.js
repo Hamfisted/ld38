@@ -9,7 +9,6 @@ const sqrt2 = Math.sqrt(2);
 
 const Player = function Player(game, x=0, y=0) {
   Actor.call(this, game, x, y, SPRITE_KEY);
-  game.physics.arcade.enable(this);
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
   this.attackHitboxWidth = 26;

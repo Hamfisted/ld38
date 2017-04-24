@@ -33,7 +33,9 @@ let inputState;
 let debugInfo;
 let actorGroup;
 let enemyGroup;
+let enemyArr;
 let npcGroup;
+let npcArr;
 let hudGroup;
 let hud;
 let curPlayerHud;
@@ -149,38 +151,44 @@ function reset() {
   // sprite group creation - order matters!
   pretzelMakerGroup = game.add.group();
   pickupGroup = game.add.group();
+  npcGroup = game.add.group();
   actorGroup = game.add.group();
   enemyGroup = game.add.group();
-  npcGroup = game.add.group();
   hudGroup = game.add.group();
   hudGroup.fixedToCamera = true;
 
   resetGameGroup.add(pretzelMakerGroup)
   resetGameGroup.add(pickupGroup)
-  resetGameGroup.add(actorGroup)
-  resetGameGroup.add(enemyGroup)
   resetGameGroup.add(npcGroup)
+  resetGameGroup.add(enemyGroup)
+  resetGameGroup.add(actorGroup)
   resetGameGroup.add(hudGroup)
 
   enemyDetectionSet = [];
   enemyHurtBoxSet = [];
 
+  // can't add sprites to multiple groups -- use arrays
+  enemyArr = [];
+  npcArr = [];
 
   // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
-    enemyGroup.add(ant);
+    actorGroup.add(ant);
+    enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
     enemyHurtBoxSet.push(ant.damageHurtBox)
   });
 
   worldMap.spawn(game, PinkAnt, (ant) => {
-    enemyGroup.add(ant);
+    actorGroup.add(ant);
+    enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
     enemyHurtBoxSet.push(ant.damageHurtBox)
   });
 
   worldMap.spawn(game, YellowAnt, (ant) => {
-    enemyGroup.add(ant);
+    actorGroup.add(ant);
+    enemyArr.push(ant);
     enemyDetectionSet.push(ant.detectionBubble);
     enemyHurtBoxSet.push(ant.damageHurtBox)
   });
@@ -190,8 +198,8 @@ function reset() {
 
 
   worldMap.spawn(game, Npc, (npc) => {
-    actorGroup.add(npc)
-    npcGroup.add(npc);
+    actorGroup.add(npc);
+    npcArr.push(npc);
   });
 
   actorGroup.add(player);
@@ -243,27 +251,30 @@ function update() {
 
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
-  game.physics.arcade.collide(actorGroup);
   if (Config.activeEnemyCollision) {
     game.physics.arcade.overlap(player, enemyHurtBoxSet, onPlayerHit, null, this);
   }
 
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
-  game.physics.arcade.overlap(player.attackHitbox, enemyGroup, onEnemyHit, null, this);
+  game.physics.arcade.overlap(player.attackHitbox, enemyArr, onEnemyHit, null, this);
   game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
-  game.physics.arcade.collide(player, worldMap.getCollisionLayer());
-  game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
-  game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
-  game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
-  // game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
-  game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
-  game.physics.arcade.collide(enemyGroup, worldMap.getDoorwayLayer());
+  game.physics.arcade.collide(actorGroup, worldMap.getCollisionLayer());
 
-  game.physics.arcade.collide(player, worldMap.getVoidLayer());
-  game.physics.arcade.collide(enemyGroup, worldMap.getVoidLayer());
+  game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
+  game.physics.arcade.collide(player, npcArr, npcHandler, null, this);
+  game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
+  game.physics.arcade.collide(actorGroup, worldMap.getDoorwayLayer());
+
+  game.physics.arcade.collide(actorGroup, worldMap.getVoidLayer());
+
+  // depth sorting mothafucka!!!
+  actorGroup.sort('y', Phaser.Group.SORT_ASCENDING);
 }
 
 function onPlayerHit(player, enemyHurtBox) {
+  if (player.inHitStun) {
+    return;
+  }
   sounds.play('player_hit', 0.1);
   const angle = Math.atan2(player.body.y - enemyHurtBox.body.y, player.body.x - enemyHurtBox.body.x);
   player.knockback(angle);
@@ -310,7 +321,7 @@ function npcHandler(player, npc) {
 }
 
 function render() {
-  debugInfo.render(player, enemyGroup);
+  debugInfo.render(player, actorGroup, enemyArr);
 
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
   pixel.context.drawImage(game.canvas, 0, 0, game.width, game.height, 0, 0, pixel.width, pixel.height);
