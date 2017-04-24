@@ -6,9 +6,10 @@ const GreenAnt = function(game, x, y) {
   this.color = 'green';
   this.spriteName = 'ant_green_walk';
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
-  this.attackSpeed = 90;
-  this.wanderSpeed = 50;
+  this.attackSpeed = 80;
+  this.wanderSpeed = 30;
   this.health = 5;
+  this.damageAmount = 2;
 };
 
 GreenAnt.prototype = Object.create(Ant.prototype);

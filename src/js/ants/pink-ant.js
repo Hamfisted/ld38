@@ -9,6 +9,7 @@ const PinkAnt = function(game, x, y) {
   this.attackSpeed = 130;
   this.wanderSpeed = 90;
   this.health = 3;
+  this.damageAmount = 2;
 };
 
 PinkAnt.prototype = Object.create(Ant.prototype);

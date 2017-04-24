@@ -131,8 +131,8 @@ function reset() {
     c.removeAll();
   });
   player = new Player(game);
-  player.maxHealth = 8;
-  player.health = 8;
+  player.maxHealth = 10;
+  player.health = 10;
   player.maxFullness = 100;
   player.fullness = 100;
   player.onDie(function () {
@@ -286,7 +286,7 @@ function onPlayerHit(player, enemyHurtBox) {
   sounds.play('player_hit', 0.1);
   const angle = Math.atan2(player.body.y - enemyHurtBox.body.y, player.body.x - enemyHurtBox.body.x);
   player.knockback(angle);
-  player.damage(1);
+  player.damage(enemyHurtBox.parent.damageAmount);
 }
 
 function onEnemyHit(playerAttackHitbox, enemy) {
