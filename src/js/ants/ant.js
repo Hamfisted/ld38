@@ -65,7 +65,7 @@ Ant.prototype.update = function () {
   }
 };
 
-Ant.prototype.damage = function () {
+Ant.prototype.damage = function (amount) {
   const isDamageSuccess = Actor.prototype.damage.call(this, amount);
   if(isDamageSuccess) {
     sounds.play('hit_enemy');
