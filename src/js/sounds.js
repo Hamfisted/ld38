@@ -31,5 +31,6 @@ module.exports = {
   load: load,
   play: function(name, volume, loop) {
     soundEmitter.emit("play", name, volume, loop);
-  }
+  },
+  list: Object.keys(soundFiles)
 }
