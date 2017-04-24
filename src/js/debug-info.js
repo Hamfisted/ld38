@@ -16,6 +16,12 @@ function DebugInfo(game) {
   this.game = game;
   this.numAliveChildren = 0;
   this.numChildren = 0;
+
+  game.debug.renderShadow = true;
+
+  if (Config.debug) {
+    game.time.advancedTiming = true;
+  }
 }
 
 DebugInfo.prototype.update = function update(keys) {

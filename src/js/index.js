@@ -48,14 +48,6 @@ let textBoxGroup;
 let soundsInit;
 
 function init() {
-  // debug mode cfg
-  if (Config.debug) {
-    game.time.advancedTiming = true;
-    // game.debug.font = '8px Arial';
-    game.debug.renderShadow = true;
-  }
-
-
   //  Hide the un-scaled game canvas
   game.canvas.style['display'] = 'none';
 
