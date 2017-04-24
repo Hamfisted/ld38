@@ -111,12 +111,17 @@ function create() {
   textBoxGroup.add(textBox);
 
   soundsInit.init(game);
-  sounds.play('mainloop', 0.2, true);
-
   reset();
 }
 
 function reset() {
+
+
+  sounds.stop('fightloop');
+  if(!sounds.isPlaying('mainloop')) {
+    sounds.play('mainloop', 0.2, true);
+  }
+
   if(enemyGroup) {
     enemyGroup.forEach(function (e) { e.damageHurtBox.destroy(); })
   }

@@ -26,14 +26,23 @@ function load(game) {
       soundEmitter.on("play", function(name, volume, loop) {
         sounds[name].play(null, null, volume, loop);
       });
+      soundEmitter.on('stop', function (name) {
+        sounds[name].stop();
+      });
     }
-  }
+  };
 }
 
 module.exports = {
   load: load,
   play: function(name, volume, loop) {
     soundEmitter.emit("play", name, volume, loop);
+  },
+  stop: function(name, volume, loop) {
+    soundEmitter.emit("stop", name);
+  },
+  isPlaying: function(name) {
+    return sounds[name].isPlaying;
   },
   list: Object.keys(soundFiles)
 };

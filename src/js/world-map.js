@@ -4,6 +4,7 @@ const COLLISION_TILE_LAYER = "CollisionLayer";
 const DOORWAY_TILE_LAYER = "DoorwayLayer";
 const SCENARY_TILE_LAYER = "ScenaryLayer";
 const VOID_TILE_LAYER = "VoidLayer";
+const sounds = require('./sounds');
 
 const TILEMAP_CONFIG = {
   'mall_world': {
@@ -39,9 +40,9 @@ WorldMap.preload = function(game) {
     let env = TILEMAP_CONFIG[env_key];
     if (env['tilemap']) {
       game.load.tilemap(
-        env['tilemap_name'], 
-        env['tilemap'], 
-        null, 
+        env['tilemap_name'],
+        env['tilemap'],
+        null,
         Phaser.Tilemap.TILED_JSON
       );
     }
@@ -131,9 +132,12 @@ WorldMap.prototype.doorwayHandlerGenerator = function(game) {
   return (function(player, door) {
     if (worldMapRef.getEnvironmentKey() == 'mall_world') {
       worldMapRef.setEnvironmentKey('outside_world');
-    }
-    else {
+      sounds.stop('mainloop');
+      sounds.play('fightloop', 0.2, true);
+    } else {
       worldMapRef.setEnvironmentKey('mall_world');
+      sounds.stop('fightloop');
+      sounds.play('mainloop', 0.2, true);
     }
     worldMapRef.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME, worldMapRef.getEnvironmentKey());
   });
