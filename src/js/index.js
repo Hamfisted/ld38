@@ -125,6 +125,7 @@ function reset() {
     c.forEach(function (d) {
       d.destroy();
     });
+    c.removeAll();
   });
   player = new Player(game);
   player.maxHealth = 8;
