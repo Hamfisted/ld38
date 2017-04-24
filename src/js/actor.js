@@ -9,7 +9,7 @@ const Actor = function(game, x, y, image, objectLayerName) {
   this.knockbackForce = 0;
   this.knockbackVelocity = new Phaser.Point();
   this.inHitStun = false;
-  this.hitStunTimeout = 30;
+  this.hitStunTimeout = 300;
 };
 Actor.prototype = Object.create(Phaser.Sprite.prototype);
 Actor.prototype.constructor = Actor;
@@ -22,12 +22,17 @@ Actor.prototype.update = function () {
 }
 
 Actor.prototype.damage = function (amount) {
-  if (!this.inHitStun) {
-    this.inHitStun = true;
-    this.health -= amount;
-    this.game.time.events.add(this.hitStunTimeout, this.stopHitStun, this);
+  if (this.inHitStun) {
+    return;
   }
-}
+  this.inHitStun = true;
+  this.health -= amount;
+  this.game.time.events.add(this.hitStunTimeout, this.stopHitStun, this);
+  if (this.health <= 0) {
+    console.log('actor dead');
+    this.kill();
+  }
+};
 
 Actor.prototype.moveTowards = function (point, speed) {
   var distance = this.body.position.distance(point);
@@ -47,6 +52,9 @@ Actor.prototype.moveTowards = function (point, speed) {
 }
 
 Actor.prototype.knockback = function (angle) {
+  if (this.inHitStun) {
+    return;
+  }
   this.knockbackForce = knockbackForce;
   this.knockbackVelocity.x = Math.cos(angle) * knockbackForce;
   this.knockbackVelocity.y = Math.sin(angle) * knockbackForce;

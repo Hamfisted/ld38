@@ -12,6 +12,13 @@ const Player = function Player(game, x=0, y=0) {
   game.physics.arcade.enable(this);
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
+  this.attackHitboxWidth = 32;
+  this.attackHitboxDepth = 48;
+  this.attackHitbox = new Phaser.Sprite(game, 0, 0, null);
+  game.physics.arcade.enable(this.attackHitbox);
+  this.attackHitbox.body.enable = false;
+  this.addChild(this.attackHitbox);
+
   this.animationData = {
     bob: {
       rate: 3,
@@ -62,9 +69,11 @@ Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (cursors) {
-  if (this.isInDialogue || this.inHitStun || this.swingTimer.length) {
+  if (this.isInDialogue || this.swingTimer.length) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
+  } else if (this.inHitStun) {
+    // do nothing, maintain knockback velocity
   } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
     this.swing();
   } else {
@@ -122,11 +131,43 @@ Player.prototype.swing = function () {
   }
   sounds.play('whoosh', 0.5);
   this.changeAnimation('attack');
+  this.attackHitbox.body.enable = true;
+
+  // calculate attack hitbox
+  let w = this.attackHitboxDepth;
+  let h = this.attackHitboxWidth;
+  let offsetX = -this.body.width / 2;
+  let offsetY = -this.attackHitboxWidth / 2;
+  if (this.direction === 'left') {
+    offsetX = (this.body.width / 2) - w;
+  } else if (this.direction === 'up') {
+    w = this.attackHitboxWidth;
+    h = this.attackHitboxDepth;
+    offsetX = -this.attackHitboxWidth / 2;
+    offsetY = this.body.height - this.attackHitboxDepth;
+  } else if (this.direction === 'down') {
+    w = this.attackHitboxWidth;
+    h = this.attackHitboxDepth;
+    offsetX = -this.attackHitboxWidth / 2;
+    offsetY = -this.body.height / 2;
+  }
+  this.attackHitbox.body.setSize(w, h, offsetX, offsetY);
 
   this.canSwing = false;
   this.swingTimer.add(this.swingTimeout, function() {
     this.canSwing = true;
+    this.attackHitbox.body.enable = false;
   }, this);
+};
+
+Player.prototype.isSwinging = function () {
+  return !!this.swingTimer.length;
+};
+
+Player.prototype.hitEnemy = function (enemy) {
+  const angle = Math.atan2(this.body.y - enemy.body.y, this.body.x - enemy.body.x);
+  enemy.knockback(angle);
+  enemy.damage(1);
 };
 
 Player.prototype.pickupItem = function(pickup) {

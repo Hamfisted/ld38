@@ -13,6 +13,9 @@ const BehaviorState = {
 const Ant = function(game, x, y, imageName) {
   Actor.call(this, game, x, y, imageName || SPRITE_KEY);
   game.physics.arcade.enable(this);
+
+  this.health = 2;
+
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
   this.setState(BehaviorState.WANDER);
@@ -29,9 +32,14 @@ Ant.SPRITE_KEY = SPRITE_KEY;
 Ant.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 
 Ant.prototype.update = function () {
+  Actor.prototype.update.call(this);
   if (!Config.activeEnemies) {
     return;
   }
+  if (this.inHitStun) {
+    return;
+  }
+
   if (this.state === BehaviorState.WANDER) {
     var distance = this.moveTowards(this.moveTo, this.wanderSpeed);
     if (distance < 20) {

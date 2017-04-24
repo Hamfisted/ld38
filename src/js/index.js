@@ -105,6 +105,10 @@ function create() {
   enemyGroup = game.add.group();
   npcGroup = game.add.group();
   enemyDetectionSet = [];
+  hudGroup = game.add.group();
+  hudGroup.fixedToCamera = true;
+  textBoxGroup = this.game.add.group();
+  textBoxGroup.fixedToCamera = true;
 
   // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
@@ -123,10 +127,6 @@ function create() {
   });
   // End ants example
 
-  hudGroup = game.add.group();
-  hudGroup.fixedToCamera = true;
-  textBoxGroup = this.game.add.group();
-  textBoxGroup.fixedToCamera = true;
 
   worldMap.spawn(game, Npc, (npc) => {
     actorGroup.add(npc)
@@ -179,6 +179,7 @@ function update() {
   }
 
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
+  game.physics.arcade.overlap(player.attackHitbox, enemyGroup, onEnemyHit, null, this);
   game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
   game.physics.arcade.collide(player, worldMap.getCollisionLayer());
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
@@ -191,8 +192,14 @@ function update() {
 function onPlayerHit(player, enemy) {
   sounds.play('player_hit', 0.1);
   var angle = Math.atan2(player.body.y - enemy.body.y, player.body.x - enemy.body.x);
-  player.damage(1);
   player.knockback(angle);
+  player.damage(1);
+}
+
+function onEnemyHit(playerAttackHitbox, enemy) {
+  if (playerAttackHitbox.parent) {
+    playerAttackHitbox.parent.hitEnemy(enemy);
+  }
 }
 
 function onEnemyDetect(player, bubble) {
@@ -216,6 +223,10 @@ function npcHandler(player, npc) {
 
 function render() {
   if (Config.debug) {
+    if (player.attackHitbox.body.enable) {
+      game.debug.body(player.attackHitbox, 'rgba(255, 0, 0, 0.3)');
+    }
+
     const debugColor = 'rgba(0,255,0,0.8)';
     const debugFont = '10px Arial';
     game.debug.text(`fps ${game.time.fps}` || '-', 2, 10, debugColor, debugFont);
