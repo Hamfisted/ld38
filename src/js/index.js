@@ -235,9 +235,7 @@ function pickupCollisionHandler(player, pickup){
 }
 
 function pretzelMakerCollisionHandler(player, pretzelMaker){
-  pretzelMaker.configPrompt(player, textBox);
-  const pretzelEjecttionY = 60;
-  pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, pretzelMaker.pretzelColor));
+  pretzelMaker.configPrompt(player, textBox, pickupGroup);
 }
 
 function npcHandler(player, npc) {

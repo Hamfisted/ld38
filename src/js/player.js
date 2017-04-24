@@ -46,7 +46,7 @@ const Player = function Player(game, x=0, y=0) {
 
   this.quest = null;
   this.insectParts = {
-    yellow: 0,
+    yellow: 7,
     green: 0,
     pink: 0
   };
