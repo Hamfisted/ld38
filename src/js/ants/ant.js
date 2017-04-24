@@ -4,6 +4,8 @@ const sounds = require('../sounds');
 
 const SPRITE_KEY='ant';
 const OBJECT_LAYER_NAME='Ants';
+const ANT_SCREAM_PROBABILITY_A = 0.2;
+const ANT_SCREAM_PROBABILITY_B = 0.1;
 
 const BehaviorState = {
   WANDER: 1,
@@ -65,7 +67,15 @@ Ant.prototype.update = function () {
 
 Ant.prototype.damage = function () {
   const isDamageSuccess = Actor.prototype.damage.call(this);
-  if(isDamageSuccess) { sounds.play('hit_enemy'); }
+  if(isDamageSuccess) { 
+    sounds.play('hit_enemy'); 
+    if (Math.random() <= ANT_SCREAM_PROBABILITY_A) {
+      sounds.play('ant_scream_a');
+    }
+    else if (Math.random() <= ANT_SCREAM_PROBABILITY_B) {
+      sounds.play('ant_scream_b');
+    }
+  }
 }
 
 Ant.prototype.setState = function (state) {
