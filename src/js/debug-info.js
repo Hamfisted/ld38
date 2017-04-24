@@ -37,15 +37,24 @@ DebugInfo.prototype.update = function update(keys) {
   this.numAliveChildren = numChildrenOfGroup(this.game.world, true);
 };
 
-DebugInfo.prototype.render = function render(player) {
+DebugInfo.prototype.render = function render(player, enemyGroup) {
   if (!Config.debug) {
     return;
   }
   const game = this.game;
+  const hitboxColor = 'rgba(255, 0, 0, 0.3)';
+  const hurtboxColor = 'rgba(0, 255, 255, 0.2)';
 
   if (player.attackHitbox.body.enable) {
-    game.debug.body(player.attackHitbox, 'rgba(255, 0, 0, 0.2)');
+    game.debug.body(player.attackHitbox, hitboxColor);
   }
+
+  game.debug.body(player, hurtboxColor);
+  enemyGroup.forEach(function(enemy) {
+    if (enemy.alive) {
+      game.debug.body(enemy, hurtboxColor);
+    }
+  });
 
 
   game.debug.text(`fps ${game.time.fps}` || '-', 2, 10, debugColor, debugFont);
