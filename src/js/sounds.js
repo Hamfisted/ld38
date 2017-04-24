@@ -8,6 +8,9 @@ const soundFiles = {
   'hit_enemy': 'assets/sounds/hit_enemy.wav',
   'ant_scream_a': 'assets/sounds/ant_scream_a.wav',
   'ant_scream_b': 'assets/sounds/ant_scream_b.wav',
+  'pickup_bug_part': 'assets/sounds/pickup_bug_part.wav',
+  'pickup_pretzel': 'assets/sounds/pickup_pretzel.wav',
+  'chew': 'assets/sounds/chew.wav',
 };
 
 function load(game) {

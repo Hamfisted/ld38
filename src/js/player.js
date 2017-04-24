@@ -223,8 +223,9 @@ Player.prototype.facingUnitVector = function() {
 };
 
 Player.prototype.pickupItem = function(pickup) {
-  if (pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) {
+  if ((pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) && !this.pretzel) {
     this.pretzel = pickup.getMetaData();
+    sounds.play('pickup_pretzel', 0.1);
     return true;
   }
 
@@ -240,6 +241,7 @@ Player.prototype.pickupItem = function(pickup) {
 
   if (pickup.name == 'insectPart') {
     this.insectParts[pickup.color]++;
+    sounds.play('pickup_bug_part', 0.2);
     return true;
   }
 
@@ -247,6 +249,7 @@ Player.prototype.pickupItem = function(pickup) {
 }
 Player.prototype.useItem = function(pickup) {
   if (pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) {
+    sounds.play('chew', 0.6);
     this.pretzel = null;
   }
 }
