@@ -78,6 +78,7 @@ Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (keys) {
+
   if (this.isInDialogue || this.swingTimer.length || !this.alive) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
@@ -86,6 +87,12 @@ Player.prototype.updateControls = function (keys) {
   } else if (keys.interact.isDown && this.weapon && this.canSwing) {
     this.swing();
   } else {
+
+    if (keys.item.isDown && this.pretzel) {
+      this.health = this.health + this.pretzel.hp;
+      this.useItem(this.pretzel);
+    }
+
     if (keys.up.isDown) {
       this.direction = 'up';
       this.body.velocity.y = -MOVE_SPEED;
@@ -239,11 +246,8 @@ Player.prototype.pickupItem = function(pickup) {
   return false;
 }
 Player.prototype.useItem = function(pickup) {
-  if (pickup.name == 'pretzel') {
+  if (pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) {
     this.pretzel = null;
-  }
-  if (pickup.name == 'weapon') {
-    this.weapon = null;
   }
 }
 

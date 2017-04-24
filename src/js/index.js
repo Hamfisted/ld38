@@ -257,8 +257,6 @@ function update() {
 
   debugInfo.update(inputState.keys);
 
-
-
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
   if (Config.activeEnemyCollision) {
