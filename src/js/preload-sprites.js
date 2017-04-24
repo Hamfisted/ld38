@@ -31,6 +31,10 @@ module.exports = function preloadSprites(game) {
   game.load.spritesheet('player_left_attack', 'assets/sprites/player/left_attack.png', 32, 32);
   game.load.spritesheet('player_right_attack', 'assets/sprites/player/right_attack.png', 32, 32);
 
+  game.load.spritesheet('player_up_hurt', 'assets/sprites/player/up_hurt.png', 32, 32);
+  game.load.spritesheet('player_down_hurt', 'assets/sprites/player/down_hurt.png', 32, 32);
+  game.load.spritesheet('player_left_hurt', 'assets/sprites/player/left_hurt.png', 32, 32);
+  game.load.spritesheet('player_right_hurt', 'assets/sprites/player/right_hurt.png', 32, 32);
 
   game.load.image('ant', 'assets/sprites/ant.png');
   game.load.image('npc', 'assets/sprites/npc.png');
