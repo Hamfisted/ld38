@@ -191,6 +191,10 @@ function update() {
   game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
   game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
   game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
+  game.physics.arcade.collide(enemyGroup, worldMap.getDoorwayLayer());
+
+  game.physics.arcade.collide(player, worldMap.getVoidLayer());
+  game.physics.arcade.collide(enemyGroup, worldMap.getVoidLayer());
 }
 
 function onPlayerHit(player, enemy) {
