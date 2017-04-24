@@ -2,6 +2,7 @@ const Player = require('./player');
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
 const DOORWAY_TILE_LAYER = "DoorwayLayer";
+const VOID_TILE_LAYER = "VoidLayer";
 
 const TILEMAP_CONFIG = {
   'mall_world': {
@@ -102,10 +103,17 @@ WorldMap.prototype.setEnvironment = function(game, env_key) {
   this.collisionLayer.resizeWorld();
   this.doorwayLayer = this.map.createLayer(DOORWAY_TILE_LAYER);
   this.map.setCollisionByExclusion([], true, DOORWAY_TILE_LAYER);
+
+  this.voidLayer = this.map.createLayer(VOID_TILE_LAYER);
+  this.map.setCollisionByExclusion([], true, VOID_TILE_LAYER);
 };
 
 WorldMap.prototype.getDoorwayLayer = function() {
   return this.doorwayLayer;
+};
+
+WorldMap.prototype.getVoidLayer = function() {
+  return this.voidLayer;
 };
 
 WorldMap.prototype.getEnvironmentKey = function() {
