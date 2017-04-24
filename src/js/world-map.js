@@ -2,6 +2,7 @@ const Player = require('./player');
 const BACKGROUND_TILE_LAYER = "BackgroundLayer";
 const COLLISION_TILE_LAYER = "CollisionLayer";
 const DOORWAY_TILE_LAYER = "DoorwayLayer";
+const SCENARY_TILE_LAYER = "ScenaryLayer";
 const VOID_TILE_LAYER = "VoidLayer";
 
 const TILEMAP_CONFIG = {
@@ -92,6 +93,8 @@ WorldMap.prototype.setEnvironment = function(game, env_key) {
   this.map.addTilesetImage(TILEMAP_CONFIG[env_key]['tileset'], TILEMAP_CONFIG[env_key]['tiles_name']);
   this.map.addTilesetImage(TILEMAP_CONFIG['scene_objects']['tileset'], TILEMAP_CONFIG['scene_objects']['tiles_name']);
 
+  this.voidLayer = this.map.createLayer(VOID_TILE_LAYER);
+  this.map.setCollisionByExclusion([], true, VOID_TILE_LAYER);
   // Background layer is the floor, mostly
   this.backgroundlayer = this.map.createLayer(BACKGROUND_TILE_LAYER);
 
@@ -103,9 +106,8 @@ WorldMap.prototype.setEnvironment = function(game, env_key) {
   this.collisionLayer.resizeWorld();
   this.doorwayLayer = this.map.createLayer(DOORWAY_TILE_LAYER);
   this.map.setCollisionByExclusion([], true, DOORWAY_TILE_LAYER);
+  this.scenaryLayer = this.map.createLayer(SCENARY_TILE_LAYER);
 
-  this.voidLayer = this.map.createLayer(VOID_TILE_LAYER);
-  this.map.setCollisionByExclusion([], true, VOID_TILE_LAYER);
 };
 
 WorldMap.prototype.getDoorwayLayer = function() {
