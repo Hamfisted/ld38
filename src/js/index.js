@@ -229,6 +229,11 @@ function render() {
     };
     const numChildren = numAliveChildrenOfGroup(game.world);
     game.debug.text(`obj ${numChildren}` || '-', 2, 20, debugColor, debugFont);
+    let i = 0;
+    for (let key in Config){
+      i = i + 10;
+      game.debug.text(`${key}: ${Config[key]}`, 35, i, debugColor, debugFont);
+    }
   }
 
   //  Every loop we need to render the un-scaled game canvas to the displayed scaled canvas:
