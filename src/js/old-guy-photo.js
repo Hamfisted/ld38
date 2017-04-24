@@ -1,9 +1,12 @@
 // old-guy-photo.js
 
+const QuestItem = require('./quest-item');
+
 const OldGuyPhoto = function(game, x, y) {
-  Phaser.Sprite.call(this, game, x, y, 'old_guy_photo');
+  QuestItem.call(this, game, x, y, 'old_guy_photo');
+  this.name = 'old_guy_photo';
 }
-OldGuyPhoto.prototype = Object.create(Phaser.Sprite.prototype);
+OldGuyPhoto.prototype = Object.create(QuestItem.prototype);
 OldGuyPhoto.prototype.constructor = OldGuyPhoto
 
-module.exports = OldGuyPhoto
+module.exports = OldGuyPhoto;

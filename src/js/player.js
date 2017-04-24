@@ -214,19 +214,25 @@ Player.prototype.facingUnitVector = function() {
 Player.prototype.pickupItem = function(pickup) {
   if (pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) {
     this.pretzel = pickup.getMetaData();
+    return true;
   }
 
   if (pickup.type == 'weapon') {
     this.weapon = pickup.getMetaData();
+    return true;
   }
 
-  if (pickup.type == 'quest') {
+  if (pickup.type === 'quest' && !this.quest) {
     this.quest = pickup.getMetaData();
+    return true;
   }
 
   if (pickup.name == 'insectPart') {
     this.insectParts[pickup.color]++;
+    return true;
   }
+
+  return false;
 }
 Player.prototype.useItem = function(pickup) {
   if (pickup.name == 'pretzel') {

@@ -1,9 +1,12 @@
 // key.js
+const QuestItem = require('./quest-item');
 
 const Key = function(game, x, y) {
-  Phaser.Sprite.call(this, game, x, y, 'key');
+  QuestItem.call(this, game, x, y, 'key')
+  this.type = 'quest';
+  this.name = 'key';
 }
-Key.prototype = Object.create(Phaser.Sprite.prototype);
+Key.prototype = Object.create(QuestItem.prototype);
 Key.prototype.constructor = Key
 
 module.exports = Key

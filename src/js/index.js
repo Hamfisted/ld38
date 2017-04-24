@@ -224,8 +224,11 @@ function reset() {
   pickupGroup.add(hockeyStick);
   pickupGroup.add(insectPart);
 
-  pickupGroup.add(new OldGuyPhoto(game, 600, 600));
-  pickupGroup.add(new Key(game, 700, 600));
+  const oldGuyPhoto = new OldGuyPhoto(game, 600, 600);
+  const key = new Key(game, 700, 600);
+
+  pickupGroup.add(oldGuyPhoto);
+  pickupGroup.add(key);
 
   hud = Hud(game, hudDimension, pickupGroup);
 
@@ -310,7 +313,6 @@ function onEnemyHit(playerAttackHitbox, enemy) {
     emitter.start(false, 3000, 5);
 
     game.time.events.add(600, () => {emitter.destroy()}, this);
-
   }
 }
 
@@ -319,8 +321,8 @@ function onEnemyDetect(player, bubble) {
 }
 
 function pickupCollisionHandler(player, pickup){
-  player.pickupItem(pickup);
-  pickup.kill();
+  const pickedUp = player.pickupItem(pickup);
+  if(pickedUp) { pickup.kill(); }
 }
 
 function pretzelMakerCollisionHandler(player, pretzelMaker){

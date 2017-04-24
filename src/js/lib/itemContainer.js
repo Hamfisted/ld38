@@ -1,4 +1,4 @@
-function ItemContainer(game, dimensions, pickupGroup, itemType) {
+function ItemContainer(game, dimensions, pickupGroup, itemType, itemTypeLabel) {
   const itemGroup = game.make.group();
   itemGroup.x = dimensions.x;
   itemGroup.y = dimensions.y;
@@ -11,7 +11,7 @@ function ItemContainer(game, dimensions, pickupGroup, itemType) {
     return [name, sprite];
   });
 
-  const textObj = game.add.bitmapText(0, dimensions.h - 8, 'pixel8px', itemType, 8);
+  const textObj = game.add.bitmapText(0, dimensions.h - 8, 'pixel8px', itemTypeLabel || itemType, 8);
   itemGroup.add(textObj);
 
   return {
