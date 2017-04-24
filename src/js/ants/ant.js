@@ -165,8 +165,15 @@ Ant.prototype.die = function () {
 
   this.game.time.events.add(600, function () {
     emitter.destroy();
-    // TODO random offset
-    this.pickupGroup.add(new InsectPart(this.game, this.body.x, this.body.y, this.color))
+    const offsetRange = 50;
+
+    const randomXOffset = Math.random();
+    const randomYOffset = Math.random();
+
+    const randomX = this.body.center.x - (offsetRange * ( 2 * randomXOffset - 1)) / 2;
+    const randomY = this.body.center.y - (offsetRange * ( 2 * randomYOffset - 1)) / 2;
+
+    this.pickupGroup.add(new InsectPart(this.game, randomX, randomY, this.color));
   }, this);
 };
 
