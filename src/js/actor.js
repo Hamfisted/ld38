@@ -1,4 +1,3 @@
-const knockbackForce = 1000;
 const DISTANCE_CLOSE_ENOUGH = 5;
 const Actor = function(game, x, y, image, objectLayerName) {
   Phaser.Sprite.call(this, game, x, y, image);
@@ -6,20 +5,14 @@ const Actor = function(game, x, y, image, objectLayerName) {
   this.anchor.x = 0.5;
   this.anchor.y = 0.5;
 
-  this.knockbackForce = 0;
   this.knockbackVelocity = new Phaser.Point();
   this.inHitStun = false;
-  this.hitStunTimeout = 300;
+  this.hitStunTimeout = 360;
+  this.inKnockback = false;
+  this.knockbackTimeout = 500;
 };
 Actor.prototype = Object.create(Phaser.Sprite.prototype);
 Actor.prototype.constructor = Actor;
-
-Actor.prototype.update = function () {
-  if (this.knockbackForce !== 0) {
-    this.body.velocity.x = this.knockbackVelocity.x;
-    this.body.velocity.y = this.knockbackVelocity.y;
-  }
-}
 
 Actor.prototype.damage = function (amount) {
   if (this.inHitStun) {
@@ -54,18 +47,20 @@ Actor.prototype.moveTowards = function (point, speed) {
   return distance;
 }
 
-Actor.prototype.knockback = function (angle) {
-  if (this.inHitStun) {
+Actor.prototype.knockback = function (angle, force = 300) {
+  if (this.inKnockback) {
     return;
   }
-  this.knockbackForce = knockbackForce;
-  this.knockbackVelocity.x = Math.cos(angle) * knockbackForce;
-  this.knockbackVelocity.y = Math.sin(angle) * knockbackForce;
-  this.game.time.events.add(30, this.stopKnockback, this);
+  this.body.drag.x = 1200;
+  this.body.drag.y = 1200;
+  this.inKnockback = true;
+  this.body.velocity.x = Math.cos(angle) * force;
+  this.body.velocity.y = Math.sin(angle) * force;
+  this.game.time.events.add(this.knockbackTimeout, this.stopKnockback, this);
 };
 
 Actor.prototype.stopKnockback = function () {
-  this.knockbackForce = 0;
+  this.inKnockback = false;
 }
 
 Actor.prototype.stopHitStun = function () {

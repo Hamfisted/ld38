@@ -7,7 +7,7 @@ const YellowAnt = function(game, x, y) {
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 100;
   this.wanderSpeed = 70;
-  this.health = 1;
+  this.health = 2;
 };
 
 YellowAnt.prototype = Object.create(Ant.prototype);

@@ -197,7 +197,7 @@ function reset() {
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
   const greenPretzel = new Pretzel(game, 400, 400, 'green');
-  hockeyStick = new Weapon(game, 320, 300, 'hockey_stick');
+  hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
   insectPart = new InsectPart(game, 500, 500, 1);
 
   pickupGroup.add(yellowPretzel);
@@ -251,7 +251,7 @@ function update() {
   game.physics.arcade.collide(enemyGroup, worldMap.getCollisionLayer());
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
   game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
-  game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
+  // game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
   game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
   game.physics.arcade.collide(enemyGroup, worldMap.getDoorwayLayer());
 

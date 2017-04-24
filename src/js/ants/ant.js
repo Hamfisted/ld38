@@ -36,7 +36,7 @@ Ant.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 
 Ant.prototype.update = function () {
   Actor.prototype.update.call(this);
-  if (this.inHitStun) {
+  if (this.inKnockback) {
     return;
   }
 

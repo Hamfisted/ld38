@@ -44,7 +44,7 @@ DebugInfo.prototype.render = function render(player) {
   const game = this.game;
 
   if (player.attackHitbox.body.enable) {
-    game.debug.body(player.attackHitbox, 'rgba(255, 0, 0, 0.3)');
+    game.debug.body(player.attackHitbox, 'rgba(255, 0, 0, 0.2)');
   }
 
 

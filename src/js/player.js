@@ -12,8 +12,8 @@ const Player = function Player(game, x=0, y=0) {
   game.physics.arcade.enable(this);
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
-  this.attackHitboxWidth = 32;
-  this.attackHitboxDepth = 48;
+  this.attackHitboxWidth = 26;
+  this.attackHitboxDepth = 28;
   this.attackHitbox = new Phaser.Sprite(game, 0, 0, null);
   game.physics.arcade.enable(this.attackHitbox);
   this.attackHitbox.body.enable = false;
@@ -60,7 +60,8 @@ const Player = function Player(game, x=0, y=0) {
   this.isInDialogue = false;
   game.time.events.add(HUNGER_GROWTH_PERIODICITY, this.buildHunger, this, game);
 
-  this.hitStunTimeout = 300;
+  this.hitStunTimeout = 500;
+  this.knockbackTimeout = 200;
 };
 
 Player.SPRITE_KEY = SPRITE_KEY;
@@ -72,7 +73,7 @@ Player.prototype.updateControls = function (keys) {
   if (this.isInDialogue || this.swingTimer.length) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
-  } else if (this.inHitStun) {
+  } else if (this.inKnockback) {
     // do nothing, maintain knockback velocity
   } else if (keys.interact.isDown && this.weapon && this.canSwing) {
     this.swing();
@@ -96,12 +97,13 @@ Player.prototype.updateControls = function (keys) {
     } else {
       this.body.velocity.x = 0;
     }
+
+    if (this.body.velocity.x && this.body.velocity.y) {
+      this.body.velocity.x = Math.floor(this.body.velocity.x / sqrt2);
+      this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
+    }
   }
 
-  if (this.body.velocity.x && this.body.velocity.y) {
-    this.body.velocity.x = Math.floor(this.body.velocity.x / sqrt2);
-    this.body.velocity.y = Math.floor(this.body.velocity.y / sqrt2);
-  }
 
   if (this.swingTimer.length) {
     // continue playing animation
@@ -166,9 +168,30 @@ Player.prototype.isSwinging = function () {
 };
 
 Player.prototype.hitEnemy = function (enemy) {
-  const angle = -Math.atan2(this.attackHitbox.body.y - enemy.body.y, this.attackHitbox.body.x - enemy.body.x);
+  if (enemy.inHitStun) {
+    return false;
+  }
+
+  const enemyVec = [enemy.x - this.x, enemy.y - this.y];
+  const facingVec = this.facingUnitVector();
+  facingVec[0] *= 70;
+  facingVec[1] *= 70;
+
+  const angle = Math.atan2(facingVec[1] + enemyVec[1], facingVec[0] + enemyVec[0]);
   enemy.knockback(angle);
   enemy.damage(1);
+};
+
+Player.prototype.facingUnitVector = function() {
+  if (this.direction === 'up') {
+    return [0, -1];
+  } else if (this.direction === 'down') {
+    return [0, 1];
+  } else if (this.direction === 'left') {
+    return [-1, 0];
+  } else {
+    return [1, 0];
+  }
 };
 
 Player.prototype.pickupItem = function(pickup) {
