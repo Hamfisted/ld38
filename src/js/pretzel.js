@@ -2,18 +2,19 @@
 const Pickup = require('./pickup');
 
 const Pretzel = function(game, x, y, type) {
-  Pickup.call(this, game, x, y, 'green_pretzel');
-  this.name = 'green_pretzel'
-  this.type = type
-  if (type === 1){
+  this.type = type;
+  this.name = type + '_pretzel';
+
+  if(type === 'green') {
     this.hp = 10
-  }
-  else if (type === 2){
+  }else if(type === 'pink'){
     this.hp = 20
-  }
-  else {
+  }else {
     this.hp = 0
   }
+
+  Pickup.call(this, game, x, y, this.name);
+
 }
 Pretzel.prototype = Object.create(Pickup.prototype);
 Pretzel.prototype.constructor = Pretzel

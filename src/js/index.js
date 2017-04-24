@@ -140,11 +140,15 @@ function create() {
   cursors = game.input.keyboard.createCursorKeys();
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
-  pretzel = new Pretzel(game, 400, 400, 1);
+  const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
+  const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
+  const greenPretzel = new Pretzel(game, 400, 400, 'green');
   hockeyStick = new Weapon(game, 320, 300, 'hockey_stick');
   insectPart = new InsectPart(game, 500, 500, 1);
 
-  pickupGroup.add(pretzel);
+  pickupGroup.add(yellowPretzel);
+  pickupGroup.add(pinkPretzel);
+  pickupGroup.add(greenPretzel);
   pickupGroup.add(hockeyStick);
   pickupGroup.add(insectPart);
 
@@ -229,7 +233,7 @@ function pickupCollisionHandler(player, pickup){
 function pretzelMakerCollisionHandler(player, pretzelMaker){
   pretzelMaker.configPrompt(player, textBox);
   const pretzelEjecttionY = 60;
-  pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, 2));
+  pickupGroup.add(new Pretzel(this, pretzelMaker.x, pretzelMaker.y + pretzelEjecttionY, pretzelMaker.pretzelColor));
 }
 
 function npcHandler(player, npc) {
