@@ -5,6 +5,8 @@ const soundFiles = {
   'player_hit': 'assets/sounds/Hit_Hurt44.wav',
   'whoosh': 'assets/sounds/whoosh.wav',
   'hit_enemy': 'assets/sounds/hit_enemy.wav',
+  'ant_scream_a': 'assets/sounds/ant_scream_a.wav',
+  'ant_scream_b': 'assets/sounds/ant_scream_b.wav',
 };
 
 function load(game) {
