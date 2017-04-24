@@ -164,10 +164,8 @@ function create() {
   textBox = new TextBox(this.game, 50, 100, player);
   textBoxGroup.add(textBox);
 
-  const shitdawg = game.add.audio('shitdawg');
-
-  shitdawg.loopFull(0.6);
-
+  const ludumdare38loopable = game.add.audio('ludumdare38loopable');
+  ludumdare38loopable.play(null, 12000, 0.2, true);
 }
 
 
@@ -187,7 +185,6 @@ function update() {
   game.physics.arcade.collide(player, npcGroup, npcHandler, null, this);
 
   game.physics.arcade.collide(enemyGroup, enemyGroup, () => ({}), null, this);
-
 }
 
 function onPlayerHit(player, enemy) {
