@@ -14,6 +14,7 @@ const PinkPretzelMaker = require('./pink-pretzel-maker');
 const GreenPretzelMaker = require('./green-pretzel-maker');
 const YellowPretzelMaker = require('./yellow-pretzel-maker');
 const TextBox = require('./narrative/text-box');
+const Cutscene = require('./narrative/cutscene');
 const preloadSprites = require('./preload-sprites');
 const sounds = require('./sounds');
 const InputState = require('./input-state');
@@ -45,6 +46,7 @@ let greenPretzelMaker;
 let pretzelMakerGroup;
 let textBox;
 let textBoxGroup;
+let cutscene;
 let soundsInit;
 
 function init() {
@@ -170,6 +172,8 @@ function create() {
   //text box
   textBox = new TextBox(this.game, 50, 100, player);
   textBoxGroup.add(textBox);
+  cutscene = new Cutscene(this.game, inputState, textBox);
+  hudGroup.add(cutscene); // idk where this belongs but it doesn't really matter
 
   soundsInit.init(game);
   sounds.play('mainloop', 0.2, true);
@@ -244,7 +248,7 @@ function pretzelMakerCollisionHandler(player, pretzelMaker){
 }
 
 function npcHandler(player, npc) {
-  npc.chooseText(textBox);
+  npc.chooseText(cutscene);
   console.log("grunts")
 }
 

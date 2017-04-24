@@ -74,7 +74,7 @@ Player.prototype.updateControls = function (keys) {
     this.body.velocity.y = 0;
   } else if (this.inHitStun) {
     // do nothing, maintain knockback velocity
-  } else if (keys.interact.isDown) {
+  } else if (keys.interact.isDown && this.weapon && this.canSwing) {
     this.swing();
   } else {
     if (keys.up.isDown) {
@@ -127,9 +127,6 @@ Player.prototype.changeAnimation = function(type) {
 };
 
 Player.prototype.swing = function () {
-  if (!this.weapon || !this.canSwing) {
-    return;
-  }
   sounds.play('whoosh', 0.5);
   this.changeAnimation('attack');
   this.attackHitbox.body.enable = true;

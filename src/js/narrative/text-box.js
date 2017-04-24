@@ -55,6 +55,7 @@ TextBox.prototype.displayText = function(textString) {
 TextBox.prototype.update = function() {
   // Input handling
   if (!this.visible){return;}
+
   const interactionKey = Phaser.Keyboard.SPACEBAR;
   const upKey = Phaser.Keyboard.UP;
   const downKey = Phaser.Keyboard.DOWN;

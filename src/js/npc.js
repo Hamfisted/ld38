@@ -1,4 +1,5 @@
 const Actor = require('./actor');
+const Cutscene = require('./narrative/cutscene');
 const SPRITE_KEY = 'old_guy';
 const OBJECT_LAYER_NAME = 'Npcs';
 
@@ -10,7 +11,7 @@ const Npc = function(game, x, y) {
   this.bob();
   this.state = 0;
 
-  this.dialougueData = {
+  this.dialogueData = {
     0: [["Welcome! You're the first person I’ve seen in... a week? Two weeks?", "Doesn't matter. Welcome!"]],
     1: [["My family left me here and they haven't come back for me, but that’s okay!"],
         ["I eat dinner out of the pretzel shop trash!"],
@@ -49,12 +50,11 @@ Npc.prototype.bob = function(){
   this.animations.play('old_guy_idle', 3, true);
 }
 
-Npc.prototype.chooseText = function(textBox){
-  let choices = this.dialougueData[this.state]
+Npc.prototype.chooseText = function(cutscene){
+  let choices = this.dialogueData[this.state]
   let randomNum = Math.floor((Math.random() * choices.length));
   let choice = choices[randomNum];
-  choice.forEach(function(s){
-    textBox.displayText(s);
-  });
-}
-module.exports = Npc
+
+  cutscene.playLines(choice);
+};
+module.exports = Npc;
