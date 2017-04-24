@@ -33,11 +33,8 @@ ChoiceMenu.prototype.onCursorInput = function(direction) {
   } else {
     this.highlightedChoiceIndex++;
   }
-  if (this.highlightedChoiceIndex < 0) {
-    this.highlightedChoiceIndex = 0;
-  } else if (this.highlightedChoiceIndex >= this.choices.length) {
-    this.highlightedChoiceIndex = 0;
-  }
+  this.highlightedChoiceIndex = Math.max(this.highlightedChoiceIndex, 0);
+  this.highlightedChoiceIndex = Math.min(this.highlightedChoiceIndex, this.choices.length - 1);
   this.highlightChoice(this.highlightedChoiceIndex);
 };
 

@@ -1,6 +1,6 @@
 // pretzel-maker.js
 const numInsectPartsToCreatePretzel = 3;
-const pretzelEjecttionY = 60;
+const pretzelEjectionY = 60;
 const Pretzel = require('./pretzel');
 
 const PretzelMaker = function(game, x, y) {
@@ -13,7 +13,7 @@ PretzelMaker.prototype = Object.create(Phaser.Sprite.prototype);
 PretzelMaker.prototype.constructor = PretzelMaker;
 
 PretzelMaker.prototype.dispensePretzel = function() {
-  return new Pretzel(this.game, this.x, this.y + pretzelEjecttionY, this.pretzelColor)
+  return new Pretzel(this.game, this.x, this.y + pretzelEjectionY, this.pretzelColor)
 }
 
 PretzelMaker.prototype.configPrompt = function(player, textBox, pickupGroup) {

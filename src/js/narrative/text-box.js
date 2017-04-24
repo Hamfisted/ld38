@@ -85,14 +85,12 @@ TextBox.prototype.releasePlayer = function() {
 TextBox.prototype.onKeyUp = function() {
   if (this.timer.length === 0) { // animation finished
     if (this.isPrompting) {
-      const success = this.choiceMenu.selectChoice();
+      this.choiceMenu.selectChoice();
     } else {
       this.reset();
     }
   }
-  if (this.isInDialogue) {
-    this.skipAnimatingText();
-  }
+  this.skipAnimatingText();
 };
 
 TextBox.prototype.onCursorInput = function(direction) {
