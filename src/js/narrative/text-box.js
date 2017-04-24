@@ -26,34 +26,35 @@ TextBox.prototype.reset = function() {
   this.visible = false;
   this.textString = '';
   this.textObj.text = '';
+  this.releasePlayer();
 };
 
 TextBox.prototype.displayPrompt = function(textString, choices) {
-  this.player.isInDialogue = true;
   this.isPrompting = true;
-  this.visible = true;
-  this.textString = textString;
-  this.addCharByChar(this.textObj, textString);
-
+  this.displayText(textString)
   this.choiceMenu = new ChoiceMenu(this.game, choices, 10, 40);
   this.addChild(this.choiceMenu);
 };
 
 TextBox.prototype.clearPrompt = function() {
   this.isPrompting = false;
-  this.player.isInDialogue = false;
   this.reset();
+  this.removeChild(this.choiceMenu);
+  this.choiceMenu.destroy();
+  this.choiceMenu = null;
 };
 
 TextBox.prototype.displayText = function(textString) {
   this.player.isInDialogue = true;
   this.visible = true;
   this.textString = textString;
+  this.textObj.text = '';
   this.addCharByChar(this.textObj, textString);
 };
 
 TextBox.prototype.update = function() {
   // Input handling
+  if (!this.visible){return;}
   const interactionKey = Phaser.Keyboard.SPACEBAR;
   const upKey = Phaser.Keyboard.UP;
   const downKey = Phaser.Keyboard.DOWN;
@@ -63,10 +64,13 @@ TextBox.prototype.update = function() {
   const isDownKeyDown = this.game.input.keyboard.isDown(downKey);
 
   if (this.wasInteractionKeyDown && !isInteractionKeyDown) {
+    console.log("space was down but no longer")
     this.onKeyUp();
   } else if (this.wasUpKeyDown && !isUpKeyDown) {
+    console.log("up key was down and no longer")
     this.onCursorInput('up');
   } else if (this.wasDownKeyDown && !isDownKeyDown) {
+    console.log("down key was down and no longer")
     this.onCursorInput('down');
   }
   this.wasInteractionKeyDown = isInteractionKeyDown;
@@ -74,21 +78,19 @@ TextBox.prototype.update = function() {
   this.wasDownKeyDown = isDownKeyDown;
 };
 
+TextBox.prototype.releasePlayer = function() {
+  this.player.isInDialogue = false;
+}
+
 TextBox.prototype.onKeyUp = function() {
   if (this.timer.length === 0) { // animation finished
     if (this.isPrompting) {
-      const success = this.choiceMenu.selectChoice();
-      if (success) {
-        this.clearPrompt();
-      } else {
-        // do nothing because it was an invalid choice
-      }
+      this.choiceMenu.selectChoice();
+    } else {
+      this.reset();
     }
   }
-
-  if (this.isPrompting) {
-    this.skipAnimatingText();
-  }
+  this.skipAnimatingText();
 };
 
 TextBox.prototype.onCursorInput = function(direction) {

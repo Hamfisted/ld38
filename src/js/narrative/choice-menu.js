@@ -23,17 +23,18 @@ const ChoiceMenu = function(game, choices, x, y) {
 ChoiceMenu.prototype = Object.create(Phaser.Sprite.prototype);
 ChoiceMenu.prototype.constructor = ChoiceMenu;
 
+ChoiceMenu.prototype.reset = function() {
+  this.highlightedChoiceIndex = 0;
+}
+
 ChoiceMenu.prototype.onCursorInput = function(direction) {
   if (direction === 'up') {
     this.highlightedChoiceIndex--;
   } else {
     this.highlightedChoiceIndex++;
   }
-  if (this.highlightedChoiceIndex < 0) {
-    this.highlightedChoiceIndex = this.choices.length - 1;
-  } else if (this.highlightedChoiceIndex >= this.choices.length) {
-    this.highlightedChoiceIndex = 0;
-  }
+  this.highlightedChoiceIndex = Math.max(this.highlightedChoiceIndex, 0);
+  this.highlightedChoiceIndex = Math.min(this.highlightedChoiceIndex, this.choices.length - 1);
   this.highlightChoice(this.highlightedChoiceIndex);
 };
 
