@@ -36,9 +36,6 @@ Ant.OBJECT_LAYER_NAME = OBJECT_LAYER_NAME;
 
 Ant.prototype.update = function () {
   Actor.prototype.update.call(this);
-  if (!Config.activeEnemies) {
-    return;
-  }
   if (this.inHitStun) {
     return;
   }
@@ -134,6 +131,9 @@ Ant.prototype.giveUp = function () {
 };
 
 Ant.prototype.seePlayer = function (player) {
+  if (!Config.activeEnemies) {
+    return;
+  }
   this.moveTo.x = player.x;
   this.moveTo.y = player.y;
   this.setState(BehaviorState.ATTACK);

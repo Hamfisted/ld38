@@ -117,7 +117,8 @@ Player.prototype.updateControls = function (keys) {
 Player.prototype.changeAnimation = function(type) {
   const animData = this.animationData[type];
   const name = `player_${this.direction}_${type}`;
-  if (this.animations.name === name) {
+  // idk man
+  if (this.animations.name === name && type !== 'attack') {
     return;
   }
   this.loadTexture(name, 0);
