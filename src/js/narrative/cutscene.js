@@ -48,6 +48,9 @@ function Cutscene(game, inputState, textBox) {
       {
         duration: 0,
         action: function () {
+          if (this.callback) {
+            this.callback();
+          }
           this.textBox.reset();
           this.reset(0);
         }.bind(this)
@@ -61,15 +64,17 @@ Cutscene.prototype.constructor = Cutscene;
 
 Cutscene.prototype.reset = function () {
   this.currentDialogueIndex = -1;
+  this.callback = null;
 
   if (this.stateManager) {
     this.stateManager.destroy();
   }
 };
 
-Cutscene.prototype.playLines = function (lines) {
+Cutscene.prototype.playLines = function (lines, callback) {
   this.lines = lines;
   this.stateManager = new StateManager(this.game, this.states);
+  this.callback = callback;
 };
 
 Cutscene.prototype.update = function () {

@@ -11,13 +11,17 @@ const Npc = function(game, x, y) {
   this.bob();
   this.state = 0;
 
+  // unused
   this.dialogueData = {
-    0: [["Welcome! You're the first person I’ve seen in... a week? Two weeks?", "Doesn't matter. Welcome!"]],
+    // when you first talk to him
+    0: [["Welcome! You're the first person I’ve seen in... a week? Two weeks?", "Doesn't matter. Welcome!", ""]],
+    // randomly choose from these until you get him a pretzel
     1: [["My family left me here and they haven't come back for me, but that’s okay!"],
         ["I eat dinner out of the pretzel shop trash!"],
         ["Last week I spent a whole day counting ketchup packets!"],
         ["I remember when all of this was nothing but farmland and varmint country!"],
         [["Have you ever gotten locked in a bathroom stall?", "Me neither!"]]],
+    // randomly choose from these afterward
     2: [["I love it that someone else exists!"],
         ["I dated the mop for a while, but that was way before you arrived!"],
         [["Have you ever danced with the devil in the pale moonlight?", "Me neither!"]],
@@ -50,8 +54,9 @@ Npc.prototype.bob = function(){
   this.animations.play('old_guy_idle', 3, true);
 }
 
+// unused
 Npc.prototype.chooseText = function(cutscene){
-  let choices = this.dialogueData[this.state]
+  let choices = this.dialogueData[this.state];
   let randomNum = Math.floor((Math.random() * choices.length));
   let choice = choices[randomNum];
 

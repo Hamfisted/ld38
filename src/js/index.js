@@ -19,9 +19,12 @@ const preloadSprites = require('./preload-sprites');
 const sounds = require('./sounds');
 const InputState = require('./input-state');
 const DebugInfo = require('./debug-info');
+const QuestState = require('./narrative/quest-state');
 
+// quest items
 const OldGuyPhoto = require('./old-guy-photo');
 const Key = require('./key');
+const QuestPretzel = require('./quest-pretzel');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -34,6 +37,7 @@ let player;
 // let cursors;
 let inputState;
 let debugInfo;
+let questState;
 let actorGroup;
 let enemyGroup;
 let enemyArr;
@@ -101,13 +105,14 @@ function create() {
   worldMap = new WorldMap(game);
   inputState = new InputState(game);
   debugInfo = new DebugInfo(game);
+  questState = new QuestState(game);
 
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
   resetGameGroup = game.add.group();
   textBoxGroup = game.add.group();
   textBoxGroup.fixedToCamera = true;
-  textBox = new TextBox(game, 50, 100);
+  textBox = new TextBox(game, 30, 140);
   textBoxGroup.add(textBox);
 
   soundsInit.init(game);
@@ -130,7 +135,7 @@ function reset() {
     c.forEach(function (d) { d.destroy(); });
     c.removeAll();
   });
-  player = new Player(game);
+  player = new Player(game, null, null, questState);
   player.maxHealth = 10;
   player.health = 10;
   player.maxFullness = 100;
@@ -147,6 +152,7 @@ function reset() {
       }]
     );
   }.bind(this));
+
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
 
   // sprite group creation - order matters!
@@ -209,8 +215,9 @@ function reset() {
 
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
-  const greenPretzel = new Pretzel(game, 400, 400, 'green');
-  hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
+  const greenPretzel = new Pretzel(game, -10, -10, 'green');
+  // hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
+  hockeyStick = new Weapon(game, -10, -10, 'hockey_stick');
   insectPart = new InsectPart(game, 500, 500, 'green');
 
   pickupGroup.add(yellowPretzel);
@@ -221,9 +228,11 @@ function reset() {
 
   const oldGuyPhoto = new OldGuyPhoto(game, 600, 600);
   const key = new Key(game, 700, 600);
+  const questPretzel = new QuestPretzel(game, 400, 400);
 
   pickupGroup.add(oldGuyPhoto);
   pickupGroup.add(key);
+  pickupGroup.add(questPretzel);
 
   hud = Hud(game, hudDimension, pickupGroup);
 
@@ -244,6 +253,9 @@ function reset() {
 
   cutscene = new Cutscene(game, inputState, textBox);
   hudGroup.add(cutscene); // idk where this belongs but it doesn't really matter
+
+  questState.setPlayer(player);
+  questState.setPickupGroup(pickupGroup);
 }
 
 
@@ -324,9 +336,8 @@ function pretzelMakerCollisionHandler(player, pretzelMaker){
 }
 
 function npcHandler(player, npc) {
-  npc.chooseText(cutscene);
-  console.log("grunts")
-}
+  questState.triggerNpcInteraction(npc, cutscene);
+};
 
 function render() {
   debugInfo.render(player, actorGroup, enemyArr);
