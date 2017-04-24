@@ -22,20 +22,29 @@ const Player = function Player(game, x=0, y=0) {
     bob: {
       rate: 3,
       shouldLoop: true,
+      isDirectional: true,
     },
     walk: {
       rate: 10,
       shouldLoop: true,
+      isDirectional: true,
     },
     attack: {
       rate: 18,
       shouldLoop: false,
       frames: [1, 2, 3, 4], // skip the first one
+      isDirectional: true,
     },
     hurt: {
       rate: 7,
       shouldLoop: false,
       frames: [1, 2],
+      isDirectional: true,
+    },
+    death: {
+      rate: 3,
+      shouldLoop: true,
+      isDirectional: false,
     },
   };
 
@@ -69,7 +78,7 @@ Player.prototype = Object.create(Actor.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.updateControls = function (keys) {
-  if (this.isInDialogue || this.swingTimer.length) {
+  if (this.isInDialogue || this.swingTimer.length || !this.alive) {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
   } else if (this.inKnockback) {
@@ -104,7 +113,10 @@ Player.prototype.updateControls = function (keys) {
   }
 
 
-  if (this.swingTimer.length) {
+  if (!this.alive) {
+    // continue playing animation
+    this.die();
+  } else if (this.swingTimer.length) {
     // continue playing animation
   } else if (this.inHitStun) {
     this.changeAnimation('hurt');
@@ -117,7 +129,7 @@ Player.prototype.updateControls = function (keys) {
 
 Player.prototype.changeAnimation = function(type) {
   const animData = this.animationData[type];
-  const name = `player_${this.direction}_${type}`;
+  const name = animData.isDirectional ? `player_${this.direction}_${type}` : `player_${type}`;
   // idk man
   if (this.animations.name === name && type !== 'attack') {
     return;
@@ -160,6 +172,12 @@ Player.prototype.swing = function () {
   this.swingTimer.add(1, function() {
     this.attackHitbox.body.enable = true;
   }, this);
+};
+
+Player.prototype.die = function () {
+  this.alive = false;
+  this.health = 0;
+  this.changeAnimation('death');
 };
 
 Player.prototype.isSwinging = function () {

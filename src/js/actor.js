@@ -24,7 +24,7 @@ Actor.prototype.damage = function (amount) {
   this.game.time.events.add(this.hitStunTimeout, this.stopHitStun, this);
   if (this.health <= 0) {
     console.log('actor dead');
-    this.kill();
+    this.die();
   }
 
   return true;

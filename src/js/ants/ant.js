@@ -103,28 +103,6 @@ Ant.prototype.setPickupGroup = function (pickupGroup) {
   this.pickupGroup = pickupGroup;
 };
 
-Ant.prototype.kill = function () {
-  Actor.prototype.kill.call(this);
-  const emitter = this.game.add.emitter(this.x, this.y, 15);
-
-  emitter.makeParticles(this.spriteName);
-  emitter.minParticleScale = 0.1;
-  emitter.maxParticleScale = 0.5;
-  emitter.gravity = 200;
-  emitter.bounce.setTo(0.5, 0.5);
-  emitter.angularDrag = 30;
-
-  //  false means don't explode all the sprites at once, but instead release at a rate of 20 particles per frame
-  //  The 2000 value is the lifespan of each particle
-  emitter.start(false, 2000, 20);
-
-  this.game.time.events.add(600, function () {
-    emitter.destroy();
-    // TODO random offset
-    this.pickupGroup.add(new InsectPart(this.game, this.body.x, this.body.y, this.color))
-  }, this);
-}
-
 Ant.prototype.addDetectionBubble = function () {
   // can't ever give this an image, because phaser is friggin zany
   // http://www.html5gamedevs.com/topic/25475-spritebody-bounding-box-ignores-sprite-anchorsetto/
@@ -167,6 +145,29 @@ Ant.prototype.seePlayer = function (player) {
   this.moveTo.y = player.y;
   this.setState(BehaviorState.ATTACK);
   this.event = this.game.time.events.add(3000, this.giveUp, this);
+};
+
+Ant.prototype.die = function () {
+  this.kill();
+
+  const emitter = this.game.add.emitter(this.x, this.y, 15);
+
+  emitter.makeParticles(this.spriteName);
+  emitter.minParticleScale = 0.1;
+  emitter.maxParticleScale = 0.5;
+  emitter.gravity = 200;
+  emitter.bounce.setTo(0.5, 0.5);
+  emitter.angularDrag = 30;
+
+  //  false means don't explode all the sprites at once, but instead release at a rate of 20 particles per frame
+  //  The 2000 value is the lifespan of each particle
+  emitter.start(false, 2000, 20);
+
+  this.game.time.events.add(600, function () {
+    emitter.destroy();
+    // TODO random offset
+    this.pickupGroup.add(new InsectPart(this.game, this.body.x, this.body.y, this.color))
+  }, this);
 };
 
 module.exports = Ant;
