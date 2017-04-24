@@ -3,9 +3,11 @@ const Ant = require('./ant');
 const OBJECT_LAYER_NAME = 'YellowAnts';
 
 const YellowAnt = function(game, x, y) {
-  Ant.call(this, game, x, y, 'ant_yellow_flying');
+  this.spriteName = 'ant_yellow_flying';
+  this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 100;
   this.wanderSpeed = 70;
+  this.health = 1;
 };
 
 YellowAnt.prototype = Object.create(Ant.prototype);

@@ -2,7 +2,7 @@ const Config = require('../config');
 const Actor = require('../actor');
 const sounds = require('../sounds');
 
-const SPRITE_KEY='ant';
+const SPRITE_KEY= 'ant';
 const OBJECT_LAYER_NAME='Ants';
 const ANT_SCREAM_PROBABILITY_A = 0.2;
 const ANT_SCREAM_PROBABILITY_B = 0.1;
@@ -66,9 +66,9 @@ Ant.prototype.update = function () {
 };
 
 Ant.prototype.damage = function () {
-  const isDamageSuccess = Actor.prototype.damage.call(this);
-  if(isDamageSuccess) { 
-    sounds.play('hit_enemy'); 
+  const isDamageSuccess = Actor.prototype.damage.call(this, amount);
+  if(isDamageSuccess) {
+    sounds.play('hit_enemy');
     if (Math.random() <= ANT_SCREAM_PROBABILITY_A) {
       sounds.play('ant_scream_a');
     }
@@ -96,6 +96,26 @@ Ant.prototype.wander = function () {
   this.moveTo.x = this.body.x + Math.cos(heading) * distance;
   this.moveTo.y = this.body.y + Math.sin(heading) * distance;
 };
+
+Ant.prototype.kill = function () {
+  Actor.prototype.kill.call(this);
+  const emitter = this.game.add.emitter(this.x, this.y, 15);
+
+  emitter.makeParticles(this.spriteName);
+  emitter.minParticleScale = 0.1;
+  emitter.maxParticleScale = 0.5;
+  emitter.gravity = 200;
+  emitter.bounce.setTo(0.5, 0.5);
+  emitter.angularDrag = 30;
+
+  //  false means don't explode all the sprites at once, but instead release at a rate of 20 particles per frame
+  //  The 2000 value is the lifespan of each particle
+  emitter.start(false, 2000, 20);
+
+  this.game.time.events.add(600, function () {
+    emitter.destroy();
+  }, this);
+}
 
 Ant.prototype.addDetectionBubble = function () {
   // can't ever give this an image, because phaser is friggin zany

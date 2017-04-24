@@ -199,6 +199,8 @@ function onPlayerHit(player, enemy) {
 function onEnemyHit(playerAttackHitbox, enemy) {
   if (playerAttackHitbox.parent) {
     playerAttackHitbox.parent.hitEnemy(enemy);
+    enemy.damage(1);
+    this.game.camera.shake(0.005, 500);
   }
 }
 
