@@ -22,8 +22,8 @@ const antBehavior = [
     },
     to: function(ant) {
       if(ant.seesPlayer) { return BehaviorState.ATTACK; }
-      if(ant.moveTowards(ant.moveTo, ant.wanderSpeed) < 20) { return BehaviorState.WAIT; }
       if(ant.giveUp) { return BehaviorState.WAIT; }
+      if(ant.moveTowards(ant.moveTo, ant.wanderSpeed) < 20) { return BehaviorState.WAIT; }
     },
     update: function (ant) {
       ant.moveTowards(ant.moveTo, ant.wanderSpeed);

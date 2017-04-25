@@ -5,10 +5,15 @@ function behaviorRunner(ant, behaviorArray, startingBehavior) {
 
   let currentBehavior = getState(startingBehavior);
 
+  let start = true;
+
   return {
     update() {
       const transitionBehavior = getState(currentBehavior.to(ant) || currentBehavior.state);
-      if (transitionBehavior.state !== currentBehavior.state) { transitionBehavior.start(ant);}
+
+
+      if (start || (transitionBehavior.state !== currentBehavior.state)) { transitionBehavior.start(ant);}
+      start = false;
       currentBehavior = transitionBehavior;
       transitionBehavior.update(ant);
     }
