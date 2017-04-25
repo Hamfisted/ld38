@@ -172,7 +172,6 @@ function reset() {
   enemyArr = [];
   npcArr = [];
 
-  // Example to load ants
   worldMap.spawn(game, GreenAnt, (ant) => {
     ant.setPickupGroup(pickupGroup);
     actorGroup.add(ant);
@@ -196,7 +195,6 @@ function reset() {
     enemyDetectionSet.push(ant.detectionBubble);
     enemyHurtBoxSet.push(ant.damageHurtBox)
   });
-  // End ants example
 
   worldMap.spawn(game, Npc, (npc) => {
     actorGroup.add(npc);
@@ -265,7 +263,12 @@ function update() {
 
   game.physics.arcade.overlap(player, pickupGroup, pickupCollisionHandler, null, this);
   game.physics.arcade.overlap(player.attackHitbox, enemyArr, onEnemyHit, null, this);
-  game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
+  // game.physics.arcade.overlap(player, enemyDetectionSet, onEnemyDetect, null, this);
+
+  enemyDetectionSet.forEach(function (e) {
+    onEnemyDetect(player, e, game.physics.arcade.overlap(player, e))
+  });
+
   game.physics.arcade.collide(actorGroup, worldMap.getCollisionLayer());
 
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
@@ -309,8 +312,8 @@ function onEnemyHit(playerAttackHitbox, enemy) {
   }
 }
 
-function onEnemyDetect(player, bubble) {
-  bubble.parent.seePlayer(player);
+function onEnemyDetect(player, bubble, overlap) {
+  bubble.parent.seePlayer(player, overlap);
 }
 
 function pickupCollisionHandler(player, pickup){

@@ -3,27 +3,26 @@ const Actor = require('../actor');
 const sounds = require('../sounds');
 const InsectPart = require('../insect-part');
 
+const behaviorRunner = require('./behavior-runner');
+const genericAntBehavior = require('./generic-ant-behavior');
+
 const SPRITE_KEY= 'ant';
 const OBJECT_LAYER_NAME='Ants';
 const ANT_SCREAM_PROBABILITY_A = 0.2;
 const ANT_SCREAM_PROBABILITY_B = 0.1;
 
-const BehaviorState = {
-  WANDER: 1,
-  ATTACK: 2,
-  WAIT: 3,
-};
 
 const Ant = function(game, x, y, imageName) {
   Actor.call(this, game, x, y, imageName || SPRITE_KEY);
   game.physics.arcade.enable(this);
+
+  this.behavior = behaviorRunner(this, genericAntBehavior.antBehavior, genericAntBehavior.BehaviorState.WANDER);
 
   this.health = 2;
 
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
   this.addHurtBox();
-  this.setState(BehaviorState.WANDER);
   this.pickupGroup = null;
 
   this.animations.add('walk');
@@ -43,21 +42,7 @@ Ant.prototype.update = function () {
     return;
   }
 
-  if (this.state === BehaviorState.WANDER) {
-    var distance = this.moveTowards(this.moveTo, this.wanderSpeed);
-    if (distance < 20) {
-      this.setState(BehaviorState.WAIT);
-    }
-  }
-  else if (this.state === BehaviorState.ATTACK) {
-    this.moveTowards(this.moveTo, this.attackSpeed);
-  }
-  else if (this.state === BehaviorState.WAIT) {
-    this.body.velocity.x = 0;
-    this.body.velocity.y = 0;
-  }
-
-  // face the horizontal direction it is moving in
+  this.behavior.update();
   if (this.body.velocity.x > 0) {
     this.scale.x = -1; // flipped
   } else if (this.body.velocity.x < 0) {
@@ -77,27 +62,6 @@ Ant.prototype.damage = function (amount) {
     }
   }
 }
-
-Ant.prototype.setState = function (state) {
-  if(!this.game) { return; }
-  this.game.time.events.remove(this.event);
-  this.state = state;
-  if (this.state === BehaviorState.WAIT) {
-    this.event = this.game.time.events.add(1000, this.wander, this);
-  }
-  if (this.state === BehaviorState.WANDER) {
-    this.event = this.game.time.events.add(3000, this.giveUp, this);
-  }
-};
-
-Ant.prototype.wander = function () {
-  if(!this.game) { return; }
-  this.setState(BehaviorState.WANDER);
-  var heading = this.game.rnd.realInRange(0, Phaser.Math.PI2);
-  var distance = this.game.rnd.integerInRange(1, 3) * 75;
-  this.moveTo.x = this.body.x + Math.cos(heading) * distance;
-  this.moveTo.y = this.body.y + Math.sin(heading) * distance;
-};
 
 Ant.prototype.setPickupGroup = function (pickupGroup) {
   this.pickupGroup = pickupGroup;
@@ -131,20 +95,12 @@ Ant.prototype.addHurtBox = function () {
   this.addChild(this.damageHurtBox);
 };
 
-Ant.prototype.giveUp = function () {
-  // callback as a failsafe to give up moving towards a goal
-  console.log("give up");
-  this.setState(BehaviorState.WAIT);
-};
-
-Ant.prototype.seePlayer = function (player) {
+Ant.prototype.seePlayer = function (player, overlap) {
+  this.seesPlayer = overlap;
+  this.playerMemory = { x: player.x, y: player.y };
   if (!Config.activeEnemies || !player.alive) {
     return;
   }
-  this.moveTo.x = player.x;
-  this.moveTo.y = player.y;
-  this.setState(BehaviorState.ATTACK);
-  this.event = this.game.time.events.add(3000, this.giveUp, this);
 };
 
 Ant.prototype.die = function () {
