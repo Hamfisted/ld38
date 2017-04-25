@@ -96,6 +96,16 @@ const antBehavior = [
       if (ant.seesPlayer){
         ant.moveTo.x = ant.playerMemory.x;
         ant.moveTo.y = ant.playerMemory.y;
+      }else{
+        const yDiff = ant.playerMemory.y - ant.body.y;
+        const xDiff = ant.playerMemory.x - ant.body.x;
+
+        const zoomDist = 1000;
+        ant.moveTo = {
+          x: ant.body.x + zoomDist * xDiff,
+          y: ant.body.y + zoomDist * yDiff,
+        }
+
       }
       ant.moveTowards(ant.moveTo, -backoffSpeed);
     }
@@ -116,7 +126,18 @@ const antBehavior = [
       if (ant.seesPlayer){
         ant.moveTo.x = ant.playerMemory.x;
         ant.moveTo.y = ant.playerMemory.y;
+      } else {
+        const yDiff = ant.playerMemory.y - ant.body.y;
+        const xDiff = ant.playerMemory.x - ant.body.x;
+
+        const zoomDist = 1000;
+        ant.moveTo = {
+          x: ant.body.x + zoomDist * xDiff,
+          y: ant.body.y + zoomDist * yDiff,
+        }
+
       }
+
       ant.moveTowards(ant.moveTo, swoopSpeed);
     }
   }
