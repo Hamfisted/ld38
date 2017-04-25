@@ -12,7 +12,7 @@ const TextBox = function(game, x, y) {
   this.visible = false;
   this.isPrompting = false;
   this.textObj = this.game.add.bitmapText(16, 10, 'pixel8px', '', 8);
-  this.textObj.maxWidth = this.targetWidth - 20;
+  this.textObj.maxWidth = this.targetWidth - 30;
   this.addChild(this.textObj);
 
   // text animation timer

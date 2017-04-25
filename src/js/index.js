@@ -19,8 +19,10 @@ const preloadSprites = require('./preload-sprites');
 const sounds = require('./sounds');
 const InputState = require('./input-state');
 const DebugInfo = require('./debug-info');
+const QuestState = require('./narrative/quest-state');
 
-const OldGuyPhoto = require('./old-guy-photo');
+// quest items
+const QuestItem = require('./quest-item');
 const Key = require('./key');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
@@ -31,9 +33,9 @@ const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
 let worldMap;
 let player;
-// let cursors;
 let inputState;
 let debugInfo;
+let questState;
 let actorGroup;
 let enemyGroup;
 let enemyArr;
@@ -101,13 +103,14 @@ function create() {
   worldMap = new WorldMap(game);
   inputState = new InputState(game);
   debugInfo = new DebugInfo(game);
+  questState = new QuestState(game);
 
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
   resetGameGroup = game.add.group();
   textBoxGroup = game.add.group();
   textBoxGroup.fixedToCamera = true;
-  textBox = new TextBox(game, 50, 100);
+  textBox = new TextBox(game, 30, 140);
   textBoxGroup.add(textBox);
 
   soundsInit.init(game);
@@ -130,7 +133,7 @@ function reset() {
     c.forEach(function (d) { d.destroy(); });
     c.removeAll();
   });
-  player = new Player(game);
+  player = new Player(game, null, null, questState);
   player.maxHealth = 10;
   player.health = 10;
   player.maxFullness = 100;
@@ -147,6 +150,7 @@ function reset() {
       }]
     );
   }.bind(this));
+
   worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
 
   // sprite group creation - order matters!
@@ -196,31 +200,31 @@ function reset() {
     enemyHurtBoxSet.push(ant.damageHurtBox)
   });
 
-  worldMap.spawn(game, Npc, (npc) => {
+  worldMap.spawnNpc(game, Npc, (npc) => {
     actorGroup.add(npc);
     npcArr.push(npc);
   });
 
+  worldMap.spawnQuestItem(game, QuestItem, (questItem) => {
+    pickupGroup.add(questItem);
+  });
+
   actorGroup.add(player);
   game.camera.follow(player);
-  // cursors = game.input.keyboard.createCursorKeys();
 
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
-  const greenPretzel = new Pretzel(game, 400, 400, 'green');
-  hockeyStick = new Weapon(game, 280, 420, 'hockey_stick');
-  insectPart = new InsectPart(game, 500, 500, 'green');
+  const greenPretzel = new Pretzel(game, -10, -10, 'green');
+  hockeyStick = new Weapon(game, -10, -10, 'hockey_stick');
+  // insectPart = new InsectPart(game, 500, 500, 'green');
 
   pickupGroup.add(yellowPretzel);
   pickupGroup.add(pinkPretzel);
   pickupGroup.add(greenPretzel);
   pickupGroup.add(hockeyStick);
-  pickupGroup.add(insectPart);
+  // pickupGroup.add(insectPart);
 
-  const oldGuyPhoto = new OldGuyPhoto(game, 600, 600);
-  const key = new Key(game, 700, 600);
-
-  pickupGroup.add(oldGuyPhoto);
+  const key = new Key(game, -10, -10);
   pickupGroup.add(key);
 
   hud = Hud(game, hudDimension, pickupGroup);
@@ -242,6 +246,9 @@ function reset() {
 
   cutscene = new Cutscene(game, inputState, textBox);
   hudGroup.add(cutscene); // idk where this belongs but it doesn't really matter
+
+  questState.setPlayer(player);
+  questState.setPickupGroup(pickupGroup);
 }
 
 
@@ -274,6 +281,7 @@ function update() {
   game.physics.arcade.collide(player, pretzelMakerGroup, pretzelMakerCollisionHandler, null, this);
   game.physics.arcade.collide(player, npcArr, npcHandler, null, this);
   game.physics.arcade.collide(player, worldMap.getDoorwayLayer(), worldMap.doorwayHandlerGenerator(game), null, this);
+  game.physics.arcade.collide(player, worldMap.getOutDoorwayLayer(), worldMap.outDoorwayHandlerGenerator(game), null, this);
   game.physics.arcade.collide(actorGroup, worldMap.getDoorwayLayer());
 
   game.physics.arcade.collide(actorGroup, worldMap.getVoidLayer());
@@ -326,9 +334,8 @@ function pretzelMakerCollisionHandler(player, pretzelMaker){
 }
 
 function npcHandler(player, npc) {
-  npc.chooseText(cutscene);
-  console.log("grunts")
-}
+  questState.triggerNpcInteraction(npc, cutscene);
+};
 
 function render() {
   debugInfo.render(player, actorGroup, enemyArr);

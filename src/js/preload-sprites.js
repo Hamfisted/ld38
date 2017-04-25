@@ -6,6 +6,8 @@ module.exports = function preloadSprites(game) {
   game.load.spritesheet('hearts63x21', 'assets/sprites/hearts63x21.png', 21, 21);
   game.load.spritesheet('player', 'assets/sprites/player.png', 32, 32);
   game.load.spritesheet('old_guy_idle', 'assets/sprites/old_guy_idle.png', 32, 32);
+  game.load.spritesheet('mouse_man', 'assets/sprites/mouse_man.png', 32, 32);
+  game.load.spritesheet('mouse_man_idle', 'assets/sprites/mouse_man_idle.png', 32, 32);
   game.load.spritesheet('ant_green_walk', 'assets/sprites/ant_green_walk.png', 32, 32);
   game.load.spritesheet('ant_pink_walk', 'assets/sprites/ant_pink_walk.png', 32, 32);
   game.load.spritesheet('ant_yellow_flying', 'assets/sprites/ant_yellow_flying.png', 32, 32);
@@ -51,6 +53,7 @@ module.exports = function preloadSprites(game) {
   game.load.image('ant_yellow_part', 'assets/sprites/ant_yellow_part.png');
   game.load.image('ant_green_part', 'assets/sprites/ant_green_part.png');
   game.load.image('ant_pink_part', 'assets/sprites/ant_pink_part.png');
+  game.load.image('quest_pretzel', 'assets/sprites/yellow_pretzel.png'); //fixme
   game.load.image('yellow_pretzel', 'assets/sprites/yellow_pretzel.png');
   game.load.image('green_pretzel', 'assets/sprites/green_pretzel.png');
   game.load.image('pink_pretzel', 'assets/sprites/pink_pretzel.png');

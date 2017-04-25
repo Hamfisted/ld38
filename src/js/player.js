@@ -7,8 +7,9 @@ const OBJECT_LAYER_NAME = 'PlayerLayer';
 const MOVE_SPEED = 150;
 const sqrt2 = Math.sqrt(2);
 
-const Player = function Player(game, x=0, y=0) {
+const Player = function Player(game, x=0, y=0, questState) {
   Actor.call(this, game, x, y, SPRITE_KEY);
+  this.questState = questState;
   this.body.setSize(16, 16, 8, 16);  // w h x y
 
   this.attackHitboxWidth = 26;
@@ -54,9 +55,9 @@ const Player = function Player(game, x=0, y=0) {
 
   this.quest = null;
   this.insectParts = {
-    yellow: 7,
+    yellow: 0,
     green: 0,
-    pink: 0
+    pink: 0,
   };
   this.pretzel = null;
   this.weapon = null;
@@ -223,6 +224,16 @@ Player.prototype.facingUnitVector = function() {
 };
 
 Player.prototype.pickupItem = function(pickup) {
+  if (pickup.type === 'quest' && !this.quest) {
+    this.quest = pickup.getMetaData();
+    if (this.quest.name === 'yellow_pretzel') { //todo
+      this.questState.hasPickedUpQuestPretzel = true;
+    } else if (this.quest.name === 'old_guy_photo') {
+      this.questState.hasPickedUpOldGuyPhoto = true;
+    }
+    return true;
+  }
+
   if ((pickup.name == 'pretzel' || pickup.name.indexOf("pretzel") >= 0) && !this.pretzel) {
     this.pretzel = pickup.getMetaData();
     sounds.play('pickup_pretzel', 0.1);
@@ -231,11 +242,6 @@ Player.prototype.pickupItem = function(pickup) {
 
   if (pickup.type == 'weapon') {
     this.weapon = pickup.getMetaData();
-    return true;
-  }
-
-  if (pickup.type === 'quest' && !this.quest) {
-    this.quest = pickup.getMetaData();
     return true;
   }
 
@@ -253,6 +259,10 @@ Player.prototype.useItem = function(pickup) {
     this.pretzel = null;
   }
 }
+
+Player.prototype.removeQuestItem = function() {
+  this.quest = null;
+};
 
 Player.prototype.buildHunger = function (game) {
   this.fullness--;
