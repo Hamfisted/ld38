@@ -45,7 +45,7 @@ DebugInfo.prototype.render = function render(player, actorGroup, enemyArr) {
   const hitboxColor = 'rgba(255, 0, 0, 0.3)';
   const hurtboxColor = 'rgba(0, 255, 255, 0.2)';
   const enemyDamagebox = 'rgba(0, 255, 0, 0.4)';
-  const detectionBox = 'rgba(0, 0, 255, 0.5)';
+  const detectionBox = 'rgba(0, 0, 255, 0.1)';
 
   if (player.attackHitbox.body.enable) {
     game.debug.body(player.attackHitbox, hitboxColor);
