@@ -1,6 +1,8 @@
 // weapon.js
 const Pickup = require('./pickup');
 
+const OBJECT_LAYER_NAME = 'Items';
+
 const QuestItem = function(game, x, y, name) {
   Pickup.call(this, game, x, y, name);
   this.type = 'quest';

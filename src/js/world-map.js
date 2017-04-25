@@ -85,6 +85,22 @@ WorldMap.prototype.spawn = function(game, objectClass, callback) {
   }
 }
 
+WorldMap.prototype.spawnNpc = function(game, objectClass, callback) {
+  const objects = this.getObjectsLayer(objectClass.OBJECT_LAYER_NAME);
+  for (let obj of objects) {
+    var objInstance = new objectClass(game, obj['x'], obj['y'], obj['name']);
+    callback(objInstance);
+  }
+}
+
+WorldMap.prototype.spawnQuestItem = function(game, objectClass, callback) {
+  const objects = this.getObjectsLayer('Items');
+  for (let obj of objects) {
+    var objInstance = new objectClass(game, obj['x'], obj['y'], obj['name']);
+    callback(objInstance);
+  }
+}
+
 WorldMap.prototype.setEnvironment = function(game, env_key) {
   if (this.map) {
     this.map.destroy();

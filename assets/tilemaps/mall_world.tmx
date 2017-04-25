@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="60" tilewidth="16" tileheight="16" nextobjectid="213">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="60" tilewidth="16" tileheight="16" nextobjectid="217">
  <tileset firstgid="1" name="mall_world" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="117" columns="13">
   <image source="tiles/mall_world.png" trans="ffc0ff" width="222" height="154"/>
  </tileset>
@@ -73,8 +73,8 @@
   <object id="20" name="old_guy" type="old_guy" gid="119" x="368" y="432" width="16" height="16"/>
   <object id="212" name="mouse_man" type="mouse_man" gid="119" x="2928" y="192" width="16" height="16"/>
  </objectgroup>
- <objectgroup name="Items" offsetx="1776" offsety="224">
-  <object id="207" name="old_guy_photo" type="old_guy_photo" gid="119" x="368" y="432" width="16" height="16"/>
+ <objectgroup name="Items">
+  <object id="216" name="old_guy_photo" type="old_guy_photo" gid="119" x="2144" y="656" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="PlayerLayer" offsetx="16" offsety="16">
   <object id="19" name="init" gid="120" x="272" y="416" width="16" height="16"/>

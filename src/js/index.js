@@ -22,6 +22,7 @@ const DebugInfo = require('./debug-info');
 const QuestState = require('./narrative/quest-state');
 
 // quest items
+const QuestItem = require('./quest-item');
 const OldGuyPhoto = require('./old-guy-photo');
 const Key = require('./key');
 const QuestPretzel = require('./quest-pretzel');
@@ -204,9 +205,13 @@ function reset() {
   });
   // End ants example
 
-  worldMap.spawn(game, Npc, (npc) => {
+  worldMap.spawnNpc(game, Npc, (npc) => {
     actorGroup.add(npc);
     npcArr.push(npc);
+  });
+
+  worldMap.spawnQuestItem(game, QuestItem, (questItem) => {
+    pickupGroup.add(questItem);
   });
 
   actorGroup.add(player);
@@ -225,12 +230,12 @@ function reset() {
   pickupGroup.add(hockeyStick);
   // pickupGroup.add(insectPart);
 
-  const oldGuyPhoto = new OldGuyPhoto(game, 600, 600);
+  // const oldGuyPhoto = new OldGuyPhoto(game, -10, -10);
+  // pickupGroup.add(oldGuyPhoto);
   // const key = new Key(game, 700, 600);
   const key = new Key(game, -10, -10);
   const questPretzel = new QuestPretzel(game, 400, 400);
 
-  pickupGroup.add(oldGuyPhoto);
   pickupGroup.add(key);
   pickupGroup.add(questPretzel);
 

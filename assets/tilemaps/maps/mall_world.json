@@ -440,17 +440,15 @@
                 {
                  "gid":119,
                  "height":16,
-                 "id":207,
+                 "id":216,
                  "name":"old_guy_photo",
                  "rotation":0,
                  "type":"old_guy_photo",
                  "visible":true,
                  "width":16,
-                 "x":368,
-                 "y":432
+                 "x":2144,
+                 "y":656
                 }],
-         "offsetx":1776,
-         "offsety":224,
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -508,7 +506,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":213,
+ "nextobjectid":217,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
