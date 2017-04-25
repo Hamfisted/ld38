@@ -98,8 +98,6 @@ const antBehavior = [
         ant.moveTo.y = ant.playerMemory.y;
       }
       ant.moveTowards(ant.moveTo, -backoffSpeed);
-
-      swoopSpeed
     }
   },
   {
@@ -115,6 +113,10 @@ const antBehavior = [
       if(ant.done) { return BehaviorState.WANDER; }
     },
     update: function (ant) {
+      if (ant.seesPlayer){
+        ant.moveTo.x = ant.playerMemory.x;
+        ant.moveTo.y = ant.playerMemory.y;
+      }
       ant.moveTowards(ant.moveTo, swoopSpeed);
     }
   }
