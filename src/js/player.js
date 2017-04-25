@@ -226,7 +226,7 @@ Player.prototype.facingUnitVector = function() {
 Player.prototype.pickupItem = function(pickup) {
   if (pickup.type === 'quest' && !this.quest) {
     this.quest = pickup.getMetaData();
-    if (this.quest.name === 'yellow_pretzel') { //todo
+    if (this.quest.name === 'quest_pretzel') { //todo
       this.questState.hasPickedUpQuestPretzel = true;
     } else if (this.quest.name === 'old_guy_photo') {
       this.questState.hasPickedUpOldGuyPhoto = true;
