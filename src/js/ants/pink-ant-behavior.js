@@ -14,7 +14,6 @@ const antBehavior = [
   {
     state: BehaviorState.WANDER,
     start: function(ant) {
-      console.log("start WANDER mode")
       ant.bored = false;
       ant.event = ant.game.time.events.add(3000, function () {
         ant.giveUp = true;
@@ -37,12 +36,9 @@ const antBehavior = [
   {
     state: BehaviorState.ATTACK,
     start: function(ant) {
-      console.log("start ATTACK mode")
       ant.done = false
     },
     to: function (ant) {
-      console.log("ant.seesPlayer = %j", ant.seesPlayer);
-      console.log("ant.sawSwing = %j", ant.sawSwing);
       if (!ant.seesPlayer) { return BehaviorState.ANGRY_RUNNING; }
       if (ant.sawSwing) { return BehaviorState.BACKOFF; }
     },
@@ -57,7 +53,6 @@ const antBehavior = [
   {
     state: BehaviorState.ANGRY_RUNNING,
     start: function(ant) {
-      console.log("start ANGRY_RUNNING mode")
       ant.event = ant.game.time.events.add(3000, function() {
         ant.giveUp = true;;
       }, ant);
@@ -73,7 +68,6 @@ const antBehavior = [
   {
     state: BehaviorState.WAIT,
     start: function(ant) {
-      console.log("start WAIT mode")
       ant.giveUp = false;
       ant.event = ant.game.time.events.add(1000, function() {
         ant.bored = true;
@@ -91,7 +85,6 @@ const antBehavior = [
   {
     state: BehaviorState.BACKOFF,
     start: function(ant) {
-      console.log("start BACKOFF mode")
       ant.event = ant.game.time.events.add(2000, function() {
         ant.swoop = true;
       }, ant);
@@ -112,7 +105,6 @@ const antBehavior = [
   {
     state: BehaviorState.SWOOP,
     start: function(ant) {
-      console.log("start SWOOP mode")
       ant.swoop = false;
       ant.event = ant.game.time.events.add(1000, function() {
         ant.done = true;
