@@ -3,6 +3,8 @@ function behaviorRunner(ant, behaviorArray, startingBehavior) {
 
   const getState = (s) => behaviorArray.filter((b) => b.state === s)[0];
 
+
+
   let currentBehavior = getState(startingBehavior);
 
   let start = true;
@@ -12,7 +14,10 @@ function behaviorRunner(ant, behaviorArray, startingBehavior) {
       const transitionBehavior = getState(currentBehavior.to(ant) || currentBehavior.state);
 
 
-      if (start || (transitionBehavior.state !== currentBehavior.state)) { transitionBehavior.start(ant);}
+      if (start || (transitionBehavior.state !== currentBehavior.state)) {
+        ant.game.time.events.remove(ant.event);
+        transitionBehavior.start(ant);
+      }
       start = false;
       currentBehavior = transitionBehavior;
       transitionBehavior.update(ant);
