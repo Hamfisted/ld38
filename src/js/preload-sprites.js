@@ -53,6 +53,7 @@ module.exports = function preloadSprites(game) {
   game.load.image('ant_yellow_part', 'assets/sprites/ant_yellow_part.png');
   game.load.image('ant_green_part', 'assets/sprites/ant_green_part.png');
   game.load.image('ant_pink_part', 'assets/sprites/ant_pink_part.png');
+  game.load.image('quest_pretzel', 'assets/sprites/yellow_pretzel.png'); //fixme
   game.load.image('yellow_pretzel', 'assets/sprites/yellow_pretzel.png');
   game.load.image('green_pretzel', 'assets/sprites/green_pretzel.png');
   game.load.image('pink_pretzel', 'assets/sprites/pink_pretzel.png');

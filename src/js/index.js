@@ -23,9 +23,7 @@ const QuestState = require('./narrative/quest-state');
 
 // quest items
 const QuestItem = require('./quest-item');
-const OldGuyPhoto = require('./old-guy-photo');
 const Key = require('./key');
-const QuestPretzel = require('./quest-pretzel');
 
 const GAME_DIMENSION = { w: 256, h: 240 };
 
@@ -35,7 +33,6 @@ const hudDimension = { x: 0, y: 0, w: GAME_DIMENSION.w, h: 48}
 
 let worldMap;
 let player;
-// let cursors;
 let inputState;
 let debugInfo;
 let questState;
@@ -216,7 +213,6 @@ function reset() {
 
   actorGroup.add(player);
   game.camera.follow(player);
-  // cursors = game.input.keyboard.createCursorKeys();
 
   const yellowPretzel = new Pretzel(game, -10, -10, 'yellow'); // A hack to get them to show up in pickup
   const pinkPretzel = new Pretzel(game, -10, -10, 'pink'); // A hack to get them to show up in pickup
@@ -230,14 +226,8 @@ function reset() {
   pickupGroup.add(hockeyStick);
   // pickupGroup.add(insectPart);
 
-  // const oldGuyPhoto = new OldGuyPhoto(game, -10, -10);
-  // pickupGroup.add(oldGuyPhoto);
-  // const key = new Key(game, 700, 600);
   const key = new Key(game, -10, -10);
-  const questPretzel = new QuestPretzel(game, 400, 400);
-
   pickupGroup.add(key);
-  pickupGroup.add(questPretzel);
 
   hud = Hud(game, hudDimension, pickupGroup);
 
