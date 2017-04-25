@@ -17,12 +17,11 @@ const questDefinitions = [
   // he gives you a weapon
   {
     npcLines: [
-      ["You know it hasn't felt like I've had a pretzel since 1958."],
       ["I don't have many teeth, but man I want to gum on a pretzel!"],
       ["Can you hear that? My stomach is growling louder than that locomotive I took to the mines in '42."],
     ],
     successLines: [
-      "Eating this makes me feel like pacman!",
+      "You know it feels like I haven't had a pretzel since '58.\n Thank you!",
       "This here hockey stick reminds me of the one I used to beat the St. Louis Eagles in '38.",
       "Take it and maybe you'll...\n ***dozes***",
     ],
@@ -38,11 +37,12 @@ const questDefinitions = [
   // he gives you a key
   {
     npcLines: [
+      ["These pretzels are making me thirsty!"],
       ["I love it that someone else exists!"],
       ["I dated the mop for a while, but that was way before you arrived!"],
       ["Have you ever danced with the devil in the pale moonlight?", "Me neither!"],
       ["Bugs are deadly and delicious!"],
-      ["I can hear the mad scrambling of the thirsty rampaging hordes, clawing at the gates, desperate for ingress, the fury of nature licking the walls, emasculated by the structures of mankind. I deny them with my entire spirit."],
+      ["I can hear the mad scrambling of the thirsty rampaging hordes, clawing at the gates, desperate for ingress, the fury of nature licking the walls, emasculated by the structures of mankind.", "I deny them with my entire spirit."],
       ["You remind me of the daughter that abandoned me.", "You're much nicer, though!"],
       ["It's scary when you leave me alone in here, but that’s okay!"],
       ["Talk to me and stuff!"],
