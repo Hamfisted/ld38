@@ -7,7 +7,7 @@ const BehaviorState = {
   SWOOP: 6,
 };
 
-const backoffSpeed = 80;
+const backoffSpeed = 100;
 const swoopSpeed = 300;
 
 const antBehavior = [

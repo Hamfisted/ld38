@@ -17,7 +17,7 @@ Pickup.prototype.update = function () {
 
   const seconds = new Date().getTime() / 1000;
   const movementsPerSecond = 10;
-  const height = 4;
+  const height = 8;
 
   this.body.y = this.originalY + Math.sin(seconds * movementsPerSecond) * (height / (2 * Math.PI));
 };
