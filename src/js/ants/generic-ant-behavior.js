@@ -37,8 +37,8 @@ const antBehavior = [
     },
     update: function (ant, player) {
       if (ant.seesPlayer){
-        ant.moveTo.x = ant.playerMemory.x;
-        ant.moveTo.y = ant.playerMemory.y;
+        ant.moveTo.x = ant.playerMemory.x - ant.body.width / 2;
+        ant.moveTo.y = ant.playerMemory.y - ant.body.height / 2;
       }
       ant.moveTowards(ant.moveTo, ant.attackSpeed);
     }

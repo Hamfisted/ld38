@@ -44,8 +44,8 @@ const antBehavior = [
     },
     update: function (ant, player) {
       if (ant.seesPlayer){
-        ant.moveTo.x = ant.playerMemory.x;
-        ant.moveTo.y = ant.playerMemory.y;
+        ant.moveTo.x = ant.playerMemory.x - ant.body.width / 2;
+        ant.moveTo.y = ant.playerMemory.y - ant.body.height / 2;
       }
       ant.moveTowards(ant.moveTo, ant.attackSpeed);
     }
@@ -94,11 +94,11 @@ const antBehavior = [
     },
     update: function (ant) {
       if (ant.seesPlayer){
-        ant.moveTo.x = ant.playerMemory.x;
-        ant.moveTo.y = ant.playerMemory.y;
+        ant.moveTo.x = ant.playerMemory.x - ant.body.width / 2;
+        ant.moveTo.y = ant.playerMemory.y - ant.body.height / 2;
       }else{
-        const yDiff = ant.playerMemory.y - ant.body.y;
-        const xDiff = ant.playerMemory.x - ant.body.x;
+        const xDiff = ant.playerMemory.x - ant.body.width / 2 - ant.body.x;
+        const yDiff = ant.playerMemory.y - ant.body.height / 2 - ant.body.y;
 
         const zoomDist = 1000;
         ant.moveTo = {
@@ -125,11 +125,13 @@ const antBehavior = [
     },
     update: function (ant) {
       if (ant.seesPlayer){
-        ant.moveTo.x = ant.playerMemory.x;
-        ant.moveTo.y = ant.playerMemory.y;
+        ant.moveTo.x = ant.playerMemory.x - ant.body.width / 2;
+        ant.moveTo.y = ant.playerMemory.y - ant.body.height / 2;
       } else {
-        const yDiff = ant.playerMemory.y - ant.body.y;
-        const xDiff = ant.playerMemory.x - ant.body.x;
+
+
+        const xDiff = ant.playerMemory.x - ant.body.width / 2 - ant.body.x;
+        const yDiff = ant.playerMemory.y - ant.body.height / 2 - ant.body.y;
 
         const zoomDist = 1000;
         ant.moveTo = {
