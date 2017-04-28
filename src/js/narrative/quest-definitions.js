@@ -70,6 +70,9 @@ const questDefinitions = [
       ["You crack me up!"],
       ["I'm wrinkled and wise!"],
     ],
+    mouseManLines: [
+      ["You found me, the Mouse Man! This is the end of the game.\nThanks for playing!"]
+    ],
     isComplete: function(questState, player) {
       return false;
     },
