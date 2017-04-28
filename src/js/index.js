@@ -324,7 +324,7 @@ function onEnemyHit(playerAttackHitbox, enemy) {
 
     game.camera.shake(0.005, 500);
 
-    const emitter = this.game.add.emitter(enemy.body.x, enemy.body.y, 15);
+    const emitter = this.game.add.emitter(enemy.body.center.x, enemy.body.center.y, 15);
 
     emitter.makeParticles( [ 'muzzleflash2', 'muzzleflash4' ] );
     emitter.gravity = 1000;
