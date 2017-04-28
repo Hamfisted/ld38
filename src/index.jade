@@ -11,11 +11,35 @@ html(lang='en')
     .loading-container
       h1#loading Loading...
     #game
-    pre.
+    pre.controls.
       Controls:
       Arrow keys / WASD / ZQSD to move
       Space to attack/interact
       F to eat a pretzel
 
+
+    pre.credits
+      | Created in 72 hours for&nbsp;
+      a(href="https://ldjam.com/events/ludum-dare/38/mall-world") Ludum Dare 38
+      | &nbsp;by:
+      pre.
+        -- Art &amp; Animation--
+        Chris Scott
+        Xing Ye
+
+        -- Music --
+        James Do
+
+        -- Programming --
+        Matt Dannenberg
+        Chris Kim
+        Diane Losardo
+        Tyler Parker
+        Brian Shaginaw
+        Greg Thompson
+
+        -- Writing --
+        Leo Faierman
+        Laura Patterson
     script(src='src/js/vendor/phaser-v2.6.2.min.js')
     script(src='bundle.js')
