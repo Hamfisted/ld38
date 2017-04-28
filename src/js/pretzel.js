@@ -10,7 +10,7 @@ const Pretzel = function(game, x, y, type) {
   }else if(type === 'pink'){
     this.hp = 8
   }else {
-    this.hp = 2
+    this.hp = 6
   }
 
   Pickup.call(this, game, x, y, this.name);
