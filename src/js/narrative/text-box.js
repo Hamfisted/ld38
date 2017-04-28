@@ -74,31 +74,19 @@ TextBox.prototype.setPlayer = function(player) {
   this.player = player;
 }
 
-TextBox.prototype.update = function() {
+TextBox.prototype.updateInput = function(keys) {
   // Input handling
-  if (!this.visible){return;}
+  if (!this.visible) {
+    return;
+  }
 
-  const interactionKey = Phaser.Keyboard.SPACEBAR;
-  const upKey = Phaser.Keyboard.UP;
-  const downKey = Phaser.Keyboard.DOWN;
-
-  const isInteractionKeyDown = this.game.input.keyboard.isDown(interactionKey);
-  const isUpKeyDown = this.game.input.keyboard.isDown(upKey);
-  const isDownKeyDown = this.game.input.keyboard.isDown(downKey);
-
-  if (this.wasInteractionKeyDown && !isInteractionKeyDown) {
-    console.log("space was down but no longer")
+  if (keys.interact.wasJustReleased) {
     this.onKeyUp();
-  } else if (this.wasUpKeyDown && !isUpKeyDown) {
-    console.log("up key was down and no longer")
+  } else if (keys.up.wasJustReleased) {
     this.onCursorInput('up');
-  } else if (this.wasDownKeyDown && !isDownKeyDown) {
-    console.log("down key was down and no longer")
+  } else if (keys.down.wasJustReleased) {
     this.onCursorInput('down');
   }
-  this.wasInteractionKeyDown = isInteractionKeyDown;
-  this.wasUpKeyDown = isUpKeyDown;
-  this.wasDownKeyDown = isDownKeyDown;
 };
 
 TextBox.prototype.releasePlayer = function() {

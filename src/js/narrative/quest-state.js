@@ -37,14 +37,19 @@ QuestState.prototype.triggerNpcInteraction = function (npc, cutscene) {
     }
 
   } else {
-    const lines = this.chooseRandomText();
+    const lines = this.chooseRandomText(npc);
     this.displayDialogue(cutscene, lines);
   }
 };
 
-QuestState.prototype.chooseRandomText = function () {
+QuestState.prototype.chooseRandomText = function (npc) {
   const currentQuest = questDefinitions[this.questIndex];
-  const choices = currentQuest.npcLines;
+  let choices;
+  if (npc.name === "mouse_man") {
+    choices = currentQuest.mouseManLines || currentQuest.npcLines;
+  } else {
+    choices = currentQuest.npcLines;
+  }
   const randomIndex = Math.floor((Math.random() * choices.length));
   return choices[randomIndex];
 };

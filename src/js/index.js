@@ -103,7 +103,6 @@ function create() {
   worldMap = new WorldMap(game);
   inputState = new InputState(game);
   debugInfo = new DebugInfo(game);
-  questState = new QuestState(game);
 
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
@@ -133,6 +132,7 @@ function reset() {
     c.forEach(function (d) { d.destroy(); });
     c.removeAll();
   });
+  questState = new QuestState(game);
   player = new Player(game, null, null, questState);
   player.maxHealth = 10;
   player.health = 10;
@@ -241,8 +241,8 @@ function reset() {
 
   curPlayerHud = hud.playerHud(player);
   // pretzel makers
-  yellowPretzelMaker = new YellowPretzelMaker(game, 200, 240);
-  greenPretzelMaker = new GreenPretzelMaker(game, 280, 240);
+  greenPretzelMaker = new GreenPretzelMaker(game, 200, 240);
+  yellowPretzelMaker = new YellowPretzelMaker(game, 280, 240);
   pinkPretzelMaker = new PinkPretzelMaker(game, 360, 240);
   pretzelMakerGroup.add(yellowPretzelMaker);
   pretzelMakerGroup.add(greenPretzelMaker);
@@ -269,6 +269,7 @@ function update() {
   }
 
   debugInfo.update(inputState.keys);
+  textBox.updateInput(inputState.keys);
 
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
