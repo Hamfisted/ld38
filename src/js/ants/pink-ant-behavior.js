@@ -120,6 +120,7 @@ const antBehavior = [
     },
     to: function (ant) {
       if(ant.seesPlayer && ant.done) { return BehaviorState.ATTACK; }
+      if(ant.sawSwing) { return BehaviorState.BACKOFF; }
       if(ant.done) { return BehaviorState.WANDER; }
     },
     update: function (ant) {

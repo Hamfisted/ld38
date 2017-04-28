@@ -10,7 +10,7 @@ const PinkAnt = function(game, x, y) {
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 130;
   this.wanderSpeed = 90;
-  this.health = 4;
+  this.health = 3;
   this.damageAmount = 1;
 
   this.behavior = behaviorRunner(this, pinkAnt.antBehavior, pinkAnt.BehaviorState.WANDER);

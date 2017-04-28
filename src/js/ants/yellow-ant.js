@@ -8,7 +8,7 @@ const YellowAnt = function(game, x, y) {
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 200;
   this.wanderSpeed = 40;
-  this.health = 3;
+  this.health = 2;
   this.damageAmount = 1;
 };
 

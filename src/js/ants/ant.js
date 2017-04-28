@@ -97,7 +97,7 @@ Ant.prototype.addHurtBox = function () {
 
 Ant.prototype.seePlayer = function (player, overlap) {
   this.seesPlayer = overlap;
-  this.sawSwing = !player.canSwing;
+  this.sawSwing = (!player.canSwing && this.seesPlayer);
   this.playerMemory = { x: player.x, y: player.y };
   if (!Config.activeEnemies || !player.alive) {
     return;
