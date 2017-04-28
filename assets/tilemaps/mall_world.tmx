@@ -61,8 +61,8 @@
  <objectgroup name="YellowAnts">
   <object id="173" name="Yellow Ant" gid="123" x="2368" y="608" width="16" height="16"/>
   <object id="190" name="Yellow Ant" gid="123" x="2624" y="592" width="16" height="16"/>
-  <object id="205" name="Yellow Ant" gid="123" x="2704" y="336" width="16" height="16"/>
-  <object id="217" name="Yellow Ant" gid="123" x="2208" y="704" width="16" height="16"/>
+  <object id="205" name="Yellow Ant" gid="123" x="2640" y="704" width="16" height="16"/>
+  <object id="217" name="Yellow Ant" gid="123" x="2176" y="752" width="16" height="16"/>
   <object id="218" name="Yellow Ant" gid="123" x="2336" y="752" width="16" height="16"/>
   <object id="219" name="Yellow Ant" gid="123" x="2096" y="544" width="16" height="16"/>
  </objectgroup>
