@@ -23,7 +23,7 @@ const questDefinitions = [
     successLines: [
       "You know it feels like I haven't had a pretzel since '58.\n Thank you!",
       "This here hockey stick reminds me of the one I used to beat the St. Louis Eagles in '38.",
-      "Take it and maybe you'll...\n ***dozes***",
+      "Take it and maybe you'll...\n***dozes***",
     ],
     isComplete: function(questState, player) {
       return questState.hasPickedUpQuestPretzel;
@@ -31,6 +31,23 @@ const questDefinitions = [
     onComplete: function(questState, player) {
       questState.removeQuestItem();
       questState.giveWeaponToPlayer('hockey_stick');
+    },
+  },
+  // give him his family photo
+  // he gives you a key
+  {
+    npcLines: [
+      ["Oh no! I plum don't know where the polaroid of my late wife Gertrude is. Can you help me find it?", "This feels like the time I lost her engagement ring in...\n***dozes***"]
+    ],
+    successLines: [
+      "Thank you kindly for finding the photograph! Here's a key--it unlocks...\n***dozes***",
+    ],
+    isComplete: function(questState, player) {
+      return questState.hasPickedUpOldGuyPhoto;
+    },
+    onComplete: function(questState, player) {
+      questState.removeQuestItem();
+      questState.giveQuestItemToPlayer('key');
     },
   },
   // give him his family photo
@@ -52,24 +69,6 @@ const questDefinitions = [
       ["Have you ever taken acid?", "Me neither!"],
       ["You crack me up!"],
       ["I'm wrinkled and wise!"],
-    ],
-    successLines: [
-      "Thanks for the photo, here's a key\n *what do we write here?*",
-    ],
-    isComplete: function(questState, player) {
-      return questState.hasPickedUpOldGuyPhoto;
-    },
-    onComplete: function(questState, player) {
-      questState.removeQuestItem();
-      questState.giveQuestItemToPlayer('key');
-    },
-  },
-  // give him his family photo
-  // he gives you a key
-  {
-    npcLines: [
-      ["Something about mouse man"],
-      ["Something about door"],
     ],
     isComplete: function(questState, player) {
       return false;
