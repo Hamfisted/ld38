@@ -262,11 +262,11 @@ function reset() {
 
 function update() {
   inputState.update(); // let this go first plz
-  if (inputState.keys.restart.wasJustReleased) {
-    // press R
-    reset()
-    return;
-  }
+  // if (inputState.keys.restart.wasJustReleased) {
+  //   // press R
+  //   reset()
+  //   return;
+  // }
 
   debugInfo.update(inputState.keys);
   textBox.updateInput(inputState.keys);
