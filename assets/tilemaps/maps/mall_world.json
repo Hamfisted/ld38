@@ -136,6 +136,18 @@
                  "width":16,
                  "x":2464,
                  "y":432
+                }, 
+                {
+                 "gid":121,
+                 "height":16,
+                 "id":221,
+                 "name":"Green Ant",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":2144,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -220,18 +232,6 @@
                  "width":16,
                  "x":2768,
                  "y":240
-                }, 
-                {
-                 "gid":122,
-                 "height":16,
-                 "id":197,
-                 "name":"Pink Ant",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":3117,
-                 "y":242.5
                 }, 
                 {
                  "gid":122,
@@ -458,8 +458,8 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":552,
-                 "y":664
+                 "x":560,
+                 "y":640
                 }, 
                 {
                  "gid":120,
@@ -480,7 +480,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":221,
+ "nextobjectid":222,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
