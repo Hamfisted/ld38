@@ -304,7 +304,14 @@ function onPlayerHit(player, enemyHurtBox) {
   }
   sounds.play('player_hit', 0.1);
   const angle = Math.atan2(player.body.y - enemyHurtBox.body.y, player.body.x - enemyHurtBox.body.x);
-  player.knockback(angle);
+
+  const { x, y } = enemyHurtBox.parent.body.velocity;
+
+  const speed = Math.sqrt(x * x + y * y);
+  const forceMultiplier = 1.5;
+  const forceFormula = 300 + speed * forceMultiplier
+
+  player.knockback(angle, forceFormula);
   player.damage(enemyHurtBox.parent.damageAmount);
 }
 

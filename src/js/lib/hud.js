@@ -23,8 +23,8 @@ function Hud(game, hudDimension, pickupGroup) {
     const pretzelContainer = ItemContainer(game, {x: 55, y: 5, w: 50, h: 40}, pickupGroup, 'pretzel');
     const questContainer = ItemContainer(game, {x: 105, y: 5, w: 50, h: 40}, pickupGroup, 'quest', 'item');
 
-    const yellowInsectPart = InsectPartCounter(game, {x: 140, y: 2, w: 50, h: 15}, 'yellow');
-    const greenInsectPart = InsectPartCounter(game, {x: 140, y: 15, w: 50, h: 15}, 'green');
+    const greenInsectPart = InsectPartCounter(game, {x: 140, y: 2, w: 50, h: 15}, 'green');
+    const yellowInsectPart = InsectPartCounter(game, {x: 140, y: 15, w: 50, h: 15}, 'yellow');
     const pinkInsectPart = InsectPartCounter(game, {x: 140, y: 28, w: 50, h: 15}, 'pink');
 
     const heartSetLocation = { x: 180, y: 30, h: 14 };
