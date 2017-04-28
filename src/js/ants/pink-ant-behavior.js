@@ -7,7 +7,7 @@ const BehaviorState = {
   SWOOP: 6,
 };
 
-const backoffSpeed = 60;
+const backoffSpeed = 80;
 const swoopSpeed = 300;
 
 const antBehavior = [
@@ -85,8 +85,10 @@ const antBehavior = [
   {
     state: BehaviorState.BACKOFF,
     start: function(ant) {
+      ant.backwards = true;
       ant.event = ant.game.time.events.add(2000, function() {
         ant.swoop = true;
+        ant.backwards = false;
       }, ant);
     },
     to: function (ant) {
@@ -128,8 +130,6 @@ const antBehavior = [
         ant.moveTo.x = ant.playerMemory.x - ant.body.width / 2;
         ant.moveTo.y = ant.playerMemory.y - ant.body.height / 2;
       } else {
-
-
         const xDiff = ant.playerMemory.x - ant.body.width / 2 - ant.body.x;
         const yDiff = ant.playerMemory.y - ant.body.height / 2 - ant.body.y;
 

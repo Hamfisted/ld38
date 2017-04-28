@@ -19,6 +19,7 @@ const Ant = function(game, x, y, imageName) {
   this.behavior = behaviorRunner(this, genericAntBehavior.antBehavior, genericAntBehavior.BehaviorState.WANDER);
 
   this.health = 2;
+  this.backwards = false;
 
   this.moveTo = new Phaser.Point(100, 100);
   this.addDetectionBubble();
@@ -43,9 +44,9 @@ Ant.prototype.update = function () {
   }
 
   this.behavior.update();
-  if (this.body.velocity.x > 0) {
+  if ((!this.backwards && this.body.velocity.x > 0) || (this.backwards && this.body.velocity.x < 0)) {
     this.scale.x = -1; // flipped
-  } else if (this.body.velocity.x < 0) {
+  } else if ((!this.backwards && this.body.velocity.x < 0) || (this.backwards && this.body.velocity.x > 0)) {
     this.scale.x = 1; // facing default direction
   }
 };
