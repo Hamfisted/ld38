@@ -1,5 +1,5 @@
 const Ant = require('./ant');
-const pinkAnt  = require('./pink-ant-behavior');
+const pinkBehavior  = require('./pink-ant-behavior');
 const behaviorRunner = require('./behavior-runner');
 
 const OBJECT_LAYER_NAME = 'PinkAnts';
@@ -13,7 +13,7 @@ const PinkAnt = function(game, x, y) {
   this.health = 3;
   this.damageAmount = 1;
 
-  this.behavior = behaviorRunner(this, pinkAnt.antBehavior, pinkAnt.BehaviorState.WANDER);
+  this.behavior = behaviorRunner(this, pinkBehavior.antBehavior, pinkBehavior.BehaviorState.WANDER);
 };
 
 PinkAnt.prototype = Object.create(Ant.prototype);
