@@ -146,6 +146,7 @@ function reset() {
         message: 'yes',
         onChoose: function() {
           textBox.clearPrompt();
+          worldMap.setEnvironmentKey('mall_world');
           worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
           player.revive(10);
           player.changeAnimation('bob');
