@@ -8,8 +8,8 @@ const GreenAnt = function(game, x, y) {
   this.sprite = Ant.call(this, game, x, y, this.spriteName);
   this.attackSpeed = 80;
   this.wanderSpeed = 30;
-  this.health = 5;
-  this.damageAmount = 2;
+  this.health = 3;
+  this.damageAmount = 1;
 };
 
 GreenAnt.prototype = Object.create(Ant.prototype);
