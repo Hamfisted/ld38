@@ -103,7 +103,6 @@ function create() {
   worldMap = new WorldMap(game);
   inputState = new InputState(game);
   debugInfo = new DebugInfo(game);
-  questState = new QuestState(game);
 
   game.renderer.renderSession.roundPixels = true;  // avoid camera jitter
 
@@ -133,6 +132,7 @@ function reset() {
     c.forEach(function (d) { d.destroy(); });
     c.removeAll();
   });
+  questState = new QuestState(game);
   player = new Player(game, null, null, questState);
   player.maxHealth = 10;
   player.health = 10;
