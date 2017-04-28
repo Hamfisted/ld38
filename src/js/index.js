@@ -241,8 +241,8 @@ function reset() {
 
   curPlayerHud = hud.playerHud(player);
   // pretzel makers
-  yellowPretzelMaker = new YellowPretzelMaker(game, 200, 240);
-  greenPretzelMaker = new GreenPretzelMaker(game, 280, 240);
+  greenPretzelMaker = new GreenPretzelMaker(game, 200, 240);
+  yellowPretzelMaker = new YellowPretzelMaker(game, 280, 240);
   pinkPretzelMaker = new PinkPretzelMaker(game, 360, 240);
   pretzelMakerGroup.add(yellowPretzelMaker);
   pretzelMakerGroup.add(greenPretzelMaker);
@@ -269,6 +269,7 @@ function update() {
   }
 
   debugInfo.update(inputState.keys);
+  textBox.updateInput(inputState.keys);
 
   curPlayerHud.update(player);
   player.updateControls(inputState.keys);
