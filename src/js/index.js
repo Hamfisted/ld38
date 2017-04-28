@@ -139,13 +139,21 @@ function reset() {
   player.maxFullness = 100;
   player.fullness = 100;
   player.onDie(function () {
+
     textBox.displayPrompt(
-      'Would you like to play again?',
+      'Would you like to continue?',
       [{
         message: 'yes',
         onChoose: function() {
           textBox.clearPrompt();
-          reset();
+          worldMap.initGameObjectPosition(player, Player.OBJECT_LAYER_NAME);
+          player.revive(10);
+          player.changeAnimation('bob');
+          sounds.stop('fightloop');
+          if(!sounds.isPlaying('mainloop')) {
+            sounds.play('mainloop', 0.2, true);
+          }
+
         }.bind(this)
       }]
     );
