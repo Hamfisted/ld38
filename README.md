@@ -1,5 +1,8 @@
 # ld38 [![Dependency Status](https://david-dm.org/dy-dx/science-kit.png)](https://david-dm.org/dy-dx/science-kit) [![devDependency Status](https://david-dm.org/dy-dx/science-kit/dev-status.png)](https://david-dm.org/dy-dx/science-kit#info=devDependencies)
 
+## Find Game here:
+https://hamfisted.github.io/ld38/
+
 
 Seed project for quickly creating web experiments using Gulp and Browserify.
 
